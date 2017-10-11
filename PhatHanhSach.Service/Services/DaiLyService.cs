@@ -19,6 +19,8 @@ namespace PhatHanhSach.Service
 
         IEnumerable<DaiLy> GetAll();
 
+        IEnumerable<DaiLy> GetAllActive();
+
         DaiLy GetByCode(string code);
 
         void Save();
@@ -29,9 +31,9 @@ namespace PhatHanhSach.Service
         private IDaiLyRepository daiLyRepository;
         private IUnitOfWork unitOfWork;
 
-        public DaiLyService(IDaiLyRepository postCategoryRepository, IUnitOfWork unitOfWork)
+        public DaiLyService(IDaiLyRepository daiLyRepository, IUnitOfWork unitOfWork)
         {
-            this.daiLyRepository = postCategoryRepository;
+            this.daiLyRepository = daiLyRepository;
             this.unitOfWork = unitOfWork;
         }
 
@@ -54,7 +56,12 @@ namespace PhatHanhSach.Service
         {
             return daiLyRepository.GetAll();
         }
-    
+
+        public IEnumerable<DaiLy> GetAllActive()
+        {
+            return daiLyRepository.GetMulti(x => x.TrangThai == true);
+        }
+
         public DaiLy GetByCode(string code)
         {
             return daiLyRepository.GetSingleByStringCodeId(code);
@@ -64,6 +71,5 @@ namespace PhatHanhSach.Service
         {
             unitOfWork.Commit();
         }
-
     }
 }

@@ -11,7 +11,7 @@ namespace PhatHanhSach.Web.Extensions
             daiLy.TenDaiLy = daiLyVm.TenDaiLy;
             daiLy.SoDienThoai = daiLyVm.SoDienThoai;
             daiLy.DiaChi = daiLyVm.DiaChi;
-            daiLy.TrangThai = daiLyVm.TrangThai;
+            daiLy.TrangThai = true;
         }
     }
 }

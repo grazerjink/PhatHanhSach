@@ -172,6 +172,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\DaiLyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -4476,8 +4477,9 @@
     <Content Include="Views\Shared\Navigator.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\ThemDaiLy.cshtml" />
-    <Content Include="Views\Home\SuaDaiLy.cshtml" />
+    <Content Include="Views\DaiLy\DanhSachDaiLy.cshtml" />
+    <Content Include="Views\DaiLy\ThemDaiLy.cshtml" />
+    <Content Include="Views\DaiLy\CapNhatDaiLy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">

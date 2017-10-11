@@ -1,16 +1,15 @@
 ﻿@model PhatHanhSach.Web.Models.DaiLyViewModel
-
 @{
-    ViewBag.Title = "ThemDaiLy";
+    ViewBag.Title = "CapNhat";
     Layout = "~/Views/Shared/Layout.cshtml";
 }
-            
+
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Thêm đại lý</h3>
+                <h3>Cập nhật đại lý</h3>
             </div>
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -30,24 +29,24 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_content">
-                        @using (Html.BeginForm("ThemDaiLy", "Home", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                        @using (Html.BeginForm("CapNhatDaiLy", "DaiLy", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
                         {
                             @Html.AntiForgeryToken()
                             <span class="section">Thông tin đại lý</span>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Mã đại lý <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.MaDaiLy, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã của đại lý..." })
-                                        </div>
-                                    </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Mã đại lý <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(m => m.MaDaiLy, new { @class = "form-control col-md-7 col-xs-12" })
+                                </div>
+                            </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Tên đại lý <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.TenDaiLy, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tên của đại lý..." })
+                                            @Html.TextBoxFor(m => m.TenDaiLy, new { @class = "form-control col-md-7 col-xs-12" })
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -55,7 +54,7 @@
                                             Số điện thoại <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập số điện thoại...", type = "tel" })
+                                            @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control col-md-7 col-xs-12", type = "tel" })
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -63,28 +62,18 @@
                                             Địa chỉ <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin địa chỉ của đại lý..." })
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Trạng thái <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="checkbox">
-                                                @Html.CheckBoxFor(m => m.TrangThai, new { @class = "flat form-control col-md-7 col-xs-12", @checked = "checked" })  Đang hoạt động
-                                            </div>
+                                            @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control col-md-7 col-xs-12" })
                                         </div>
                                     </div>
 
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <a href="/" class="btn btn-default">Quay về</a>
+                                            <a href="/DaiLy/DanhSachDaiLy" class="btn btn-default">Quay về</a>
 
                                             <div class="pull-right">
-                                                <button id="reset" type="reset" class="btn btn-default">Hủy bỏ</button>
-                                                <button id="send" type="submit" class="btn btn-success">Thêm mới</button>
+                                                <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
+                                                <button id="send" type="submit" class="btn btn-success">Cập nhật</button>
 
                                             </div>
                                         </div>
@@ -96,5 +85,5 @@
         </div>
     </div>
 </div>
-<!-- /page content -->   
+<!-- /page content -->
 

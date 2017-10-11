@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4e22b709a16641e4817902ed1418c755" Name="Diagram1">
+        <EntityTypeShape EntityType="PhatHanhSachModel.BaoCaoDL" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CongNoDL" Width="1.5" PointX="5.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CongNoNXB" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CtBaoCaoDL" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CtDoanhThu" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CtPhieuNhap" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CtPhieuXuat" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CtThanhToan" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.DaiLy" Width="1.5" PointX="1.5" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.DoanhThu" Width="1.5" PointX="3.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.NhaXuatBan" Width="1.5" PointX="1.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.PhieuNhap" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.PhieuXuat" Width="1.5" PointX="0.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.Sach" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.sysdiagram" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.ThanhToan" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.TonKho" Width="1.5" PointX="3" PointY="27.125" IsExpanded="true" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_BaoCaoDL_DaiLy" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CongNoDL_BaoCaoDL" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtBaoCaoDL_BaoCaoDL" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CongNoDL_DaiLy" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CongNoNXB_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CongNoNXB_ThanhToan" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtBaoCaoDL_Sach" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtDoanhThu_DoanhThu" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtDoanhThu_Sach" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtPhieuNhap_PhieuNhap" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtPhieuNhap_Sach" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtPhieuXuat_PhieuXuat" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtPhieuXuat_Sach" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtThanhToan_Sach" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_CtThanhToan_ThanhToan" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_PhieuXuat_DaiLy" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_PhieuNhap_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_ThanhToan_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="PhatHanhSachModel.FK_TonKho_Sach" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

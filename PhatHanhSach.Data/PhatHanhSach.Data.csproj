@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73D0DCB3-E59A-4EA9-A48E-EB81EFCC49DF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhatHanhSach.Data</RootNamespace>
+    <AssemblyName>PhatHanhSach.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\DbFactory.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Models\BaoCaoDL.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CongNoDL.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CongNoNXB.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CtBaoCaoDL.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CtDoanhThu.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CtPhieuNhap.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CtPhieuXuat.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CtThanhToan.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DaiLy.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DoanhThu.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NhaXuatBan.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhatHanhSachModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhatHanhSachModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhatHanhSachModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhatHanhSachModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuNhap.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuXuat.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sach.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThanhToan.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TonKho.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BaoCaoDLRepository.cs" />
+    <Compile Include="Repositories\CongNoDLRepository.cs" />
+    <Compile Include="Repositories\CongNoNXBRepository.cs" />
+    <Compile Include="Repositories\CtBaoCaoDLRepository.cs" />
+    <Compile Include="Repositories\CtDoanhThuRepository.cs" />
+    <Compile Include="Repositories\CtPhieuNhapRepository.cs" />
+    <Compile Include="Repositories\CtPhieuXuatRepository.cs" />
+    <Compile Include="Repositories\CtThanhToanRepository.cs" />
+    <Compile Include="Repositories\DaiLyRepository.cs" />
+    <Compile Include="Repositories\DoanhThuRepository.cs" />
+    <Compile Include="Repositories\NhaXuatBanRepository.cs" />
+    <Compile Include="Repositories\PhieuNhapRepository.cs" />
+    <Compile Include="Repositories\PhieuXuatRepository.cs" />
+    <Compile Include="Repositories\SachRepository.cs" />
+    <Compile Include="Repositories\ThanhToanRepository.cs" />
+    <Compile Include="Repositories\TonKhoRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\PhatHanhSachModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PhatHanhSachModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Models\PhatHanhSachModel.edmx.diagram">
+      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\PhatHanhSachModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PhatHanhSachModel.Context.cs</LastGenOutput>
+      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\PhatHanhSachModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
+      <LastGenOutput>PhatHanhSachModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

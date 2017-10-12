@@ -13,5 +13,89 @@ namespace PhatHanhSach.Web.Extensions
             daiLy.DiaChi = daiLyVm.DiaChi;
             daiLy.TrangThai = true;
         }
+
+        public static void UpdatePhieuNhap(this PhieuNhap pn, PhieuNhapViewModel pnVm)
+        {
+            pn.TrangThai = true;
+        }
+
+        public static void UpdatePhieuXuat(this PhieuXuat px, PhieuXuatViewModel pxVm)
+        {
+            px.TrangThai = true;
+        }
+
+        public static void UpdateNhaXuatBan(this NhaXuatBan nxb, NhaXuatBanViewModel nxbVm)
+        {
+            nxb.MaNXB = nxbVm.MaNXB;
+            nxb.TenNXB = nxbVm.TenNXB;
+            nxb.SoDienThoai = nxbVm.SoDienThoai;
+            nxb.DiaChi = nxbVm.DiaChi;
+            nxb.SoTaiKhoan = nxbVm.SoTaiKhoan;
+            nxb.TrangThai = true;
+        }
+
+        public static void UpdateSach(this Sach sach, SachViewModel sachVm)
+        {
+            sach.MaSach = sachVm.MaSach;
+            sach.TenSach = sachVm.TenSach;
+            sach.TacGia = sachVm.TacGia;
+            sach.LinhVuc = sachVm.LinhVuc;
+            sach.TrangThai = true;
+        }
+
+        public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)
+        {
+            thanhToan.TrangThai = true;
+        }
+
+        public static void UpdateDoanhThu(this DoanhThu doanhThu, DoanhThuViewModel doanhThuVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCtPhieuNhap(this CtPhieuNhap ctPhieuNhap, CtPhieuNhapViewModel ctPhieuNhapVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCtPhieuXuat(this CtPhieuXuat ctPhieuXuat, CtPhieuXuatViewModel ctPhieuXuatVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCtBaoCaoDL(this CtBaoCaoDL ctBaoCaoDL, CtBaoCaoDLViewModel ctBaoCaoDLVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCtDoanhThu(this CtDoanhThu ctDoanhThu, CtDoanhThuViewModel ctDoanhThuVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCtThanhToan(this CtThanhToan ctThanhToan, CtThanhToanViewModel ctThanhToanVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateBaoCaoDL(this BaoCaoDL baoCaoDL, BaoCaoDLViewModel baoCaoDLVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCongNoDL(this CongNoDL congNoDL, CongNoDLViewModel congNoDLVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateCongNoNXB(this CongNoNXB congNoNXB, CongNoNXBViewModel congNoNXBVm)
+        {
+            //// TODO:
+        }
     }
 }

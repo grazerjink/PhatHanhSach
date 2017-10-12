@@ -141,6 +141,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PhatHanhSachModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="ConnectionString.config" />
     <None Include="Models\PhatHanhSachModel.edmx.diagram">
       <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
     </None>

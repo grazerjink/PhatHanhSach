@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="ConnectionString.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

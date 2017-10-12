@@ -174,13 +174,29 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\DaiLyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhieuNhapController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
+    <Compile Include="Models\BaoCaoDLViewModel.cs" />
+    <Compile Include="Models\CongNoDLViewModel.cs" />
+    <Compile Include="Models\CongNoNXBViewModel.cs" />
+    <Compile Include="Models\CtBaoCaoDLViewModel.cs" />
+    <Compile Include="Models\CtDoanhThuViewModel.cs" />
+    <Compile Include="Models\CtPhieuNhapViewModel.cs" />
+    <Compile Include="Models\CtPhieuXuatViewModel.cs" />
+    <Compile Include="Models\CtThanhToanViewModel.cs" />
     <Compile Include="Models\DaiLyViewModel.cs" />
+    <Compile Include="Models\DoanhThuViewModel.cs" />
+    <Compile Include="Models\NhaXuatBanViewModel.cs" />
+    <Compile Include="Models\PhieuNhapViewModel.cs" />
+    <Compile Include="Models\PhieuXuatViewModel.cs" />
+    <Compile Include="Models\SachViewModel.cs" />
+    <Compile Include="Models\ThanhToanViewModel.cs" />
+    <Compile Include="Models\TonKhoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4481,6 +4497,7 @@
     <Content Include="Views\DaiLy\DanhSachDaiLy.cshtml" />
     <Content Include="Views\DaiLy\ThemDaiLy.cshtml" />
     <Content Include="Views\DaiLy\CapNhatDaiLy.cshtml" />
+    <Content Include="Views\PhieuNhap\ThemPhieuNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">

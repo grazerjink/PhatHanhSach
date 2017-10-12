@@ -15,9 +15,9 @@ var validator = (function($){
     /* general text messages
     */
     message = {
-        invalid         : 'invalid input',
+        invalid         : 'Nhập không đúng định dạng.',
         checked         : 'must be checked',
-        empty           : 'please put something here',
+        empty           : 'Thông tin bắt buộc, không được bỏ trống.',
         min             : 'input is too short',
         max             : 'input is too long',
         number_min      : 'too low',
@@ -127,7 +127,7 @@ var validator = (function($){
                         regex = /^[0-9]+$/i;
                         break;
                     case 'phone' :
-                        regex = /^\+?([0-9]|[-|' '])+$/i;
+                        regex = /^\+?([0-9]|[-|' ']){10,11}$/i;
                         break;
                     default :
                         regex = pattern;

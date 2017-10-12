@@ -1,0 +1,8 @@
+﻿.item .alert {
+    max-width: 100%;
+}
+
+.error {
+    font-weight: bolder;
+    color: red;
+}

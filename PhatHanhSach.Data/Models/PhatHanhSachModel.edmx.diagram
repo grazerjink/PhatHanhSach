@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4e22b709a16641e4817902ed1418c755" Name="Diagram1">
+      <Diagram DiagramId="fff1dbd12db94154bcae41a5d428fac6" Name="Diagram1">
         <EntityTypeShape EntityType="PhatHanhSachModel.BaoCaoDL" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CongNoDL" Width="1.5" PointX="5.75" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CongNoNXB" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="PhatHanhSachModel.PhieuNhap" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.PhieuXuat" Width="1.5" PointX="0.75" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.Sach" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachModel.sysdiagram" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.ThanhToan" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.TonKho" Width="1.5" PointX="3" PointY="27.125" IsExpanded="true" />
         <AssociationConnector Association="PhatHanhSachModel.FK_BaoCaoDL_DaiLy" ManuallyRouted="false" />

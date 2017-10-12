@@ -18,7 +18,6 @@ namespace PhatHanhSach.Data.Models
         public PhatHanhSachEntities()
             : base("name=PhatHanhSachEntities")
         {
-            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -40,7 +39,6 @@ namespace PhatHanhSach.Data.Models
         public virtual DbSet<PhieuNhap> PhieuNhaps { get; set; }
         public virtual DbSet<PhieuXuat> PhieuXuats { get; set; }
         public virtual DbSet<Sach> Saches { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThanhToan> ThanhToans { get; set; }
         public virtual DbSet<TonKho> TonKhoes { get; set; }
     }

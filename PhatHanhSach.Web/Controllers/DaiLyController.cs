@@ -3,6 +3,7 @@ using PhatHanhSach.Data.Models;
 using PhatHanhSach.Service;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -34,13 +35,18 @@ namespace PhatHanhSach.Web.Controllers
         [HttpPost]
         public ActionResult ThemDaiLy(DaiLyViewModel model)
         {
-            var newDaiLy = new DaiLy();
-            newDaiLy.UpdateDaiLy(model);
-
-            daiLyService.Add(newDaiLy);
-            daiLyService.Save();
-
-            return RedirectToAction("ThemDaiLy");
+            if(ModelState.IsValid)
+            {
+                var newDaiLy = new DaiLy();
+                newDaiLy.UpdateDaiLy(model);
+                daiLyService.Add(newDaiLy);
+                daiLyService.Save();
+                return RedirectToAction("ThemDaiLy", "DaiLy");
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -54,13 +60,15 @@ namespace PhatHanhSach.Web.Controllers
         [HttpPost]
         public ActionResult CapNhatDaiLy(DaiLyViewModel model)
         {
-            var edittedDaiLy = new DaiLy();
-            edittedDaiLy.UpdateDaiLy(model);
+            if (ModelState.IsValid)
+            {
+                var edittedDaiLy = new DaiLy();
+                edittedDaiLy.UpdateDaiLy(model);
+                daiLyService.Update(edittedDaiLy);
+                daiLyService.Save();
+            }
 
-            daiLyService.Update(edittedDaiLy);
-            daiLyService.Save();
-
-            return View();
+            return View(model);
         }
         
         public ActionResult XoaDaiLy(string id)

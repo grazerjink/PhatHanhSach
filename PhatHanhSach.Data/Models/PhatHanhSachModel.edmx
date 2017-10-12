@@ -99,7 +99,7 @@
           </Key>
           <Property Name="MaDaiLy" Type="nchar" MaxLength="5" Nullable="false" />
           <Property Name="TenDaiLy" Type="nvarchar" MaxLength="250" />
-          <Property Name="SoDienThoai" Type="nvarchar" MaxLength="10" />
+          <Property Name="SoDienThoai" Type="nvarchar" MaxLength="11" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="250" />
           <Property Name="TrangThai" Type="bit" />
         </EntityType>
@@ -157,16 +157,6 @@
           <Property Name="TacGia" Type="nvarchar" MaxLength="250" />
           <Property Name="LinhVuc" Type="nvarchar" MaxLength="250" />
           <Property Name="TrangThai" Type="bit" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="ThanhToan">
           <Key>
@@ -434,7 +424,6 @@
           <EntitySet Name="PhieuNhap" EntityType="Self.PhieuNhap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuXuat" EntityType="Self.PhieuXuat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sach" EntityType="Self.Sach" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TonKho" EntityType="Self.TonKho" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BaoCaoDL_DaiLy" Association="Self.FK_BaoCaoDL_DaiLy">
@@ -630,7 +619,7 @@
           </Key>
           <Property Name="MaDaiLy" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="TenDaiLy" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="SoDienThoai" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SoDienThoai" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TrangThai" Type="Boolean" />
           <NavigationProperty Name="BaoCaoDLs" Relationship="Self.FK_BaoCaoDL_DaiLy" FromRole="DaiLy" ToRole="BaoCaoDL" />
@@ -705,16 +694,6 @@
           <NavigationProperty Name="CtPhieuXuats" Relationship="Self.FK_CtPhieuXuat_Sach" FromRole="Sach" ToRole="CtPhieuXuat" />
           <NavigationProperty Name="CtThanhToans" Relationship="Self.FK_CtThanhToan_Sach" FromRole="Sach" ToRole="CtThanhToan" />
           <NavigationProperty Name="TonKhoes" Relationship="Self.FK_TonKho_Sach" FromRole="Sach" ToRole="TonKho" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="ThanhToan">
           <Key>
@@ -986,7 +965,6 @@
           <EntitySet Name="PhieuNhaps" EntityType="Self.PhieuNhap" />
           <EntitySet Name="PhieuXuats" EntityType="Self.PhieuXuat" />
           <EntitySet Name="Saches" EntityType="Self.Sach" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="ThanhToans" EntityType="Self.ThanhToan" />
           <EntitySet Name="TonKhoes" EntityType="Self.TonKho" />
           <AssociationSet Name="FK_BaoCaoDL_DaiLy" Association="Self.FK_BaoCaoDL_DaiLy">
@@ -1236,17 +1214,6 @@
                 <ScalarProperty Name="TacGia" ColumnName="TacGia" />
                 <ScalarProperty Name="LinhVuc" ColumnName="LinhVuc" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="PhatHanhSachModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

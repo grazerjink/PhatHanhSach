@@ -49,24 +49,24 @@ namespace PhatHanhSach.Web.Extensions
             sach.TrangThai = true;
         }
 
-        public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)
-        {
-            thanhToan.TrangThai = true;
-        }
-
-        public static void UpdateDoanhThu(this DoanhThu doanhThu, DoanhThuViewModel doanhThuVm)
-        {
-            //// TODO:
-        }
-
         public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
         {
-            //// TODO:
+            tonKho.Id = tonKhoVm.Id;
+            tonKho.MaSach = tonKhoVm.MaSach;
+            tonKho.SoLuong = tonKhoVm.SoLuong;
+            tonKho.ThoiGian = tonKhoVm.ThoiGian;
+            tonKho.GiaNhap = tonKhoVm.GiaNhap;
+            tonKho.GiaXuat = tonKhoVm.GiaXuat;
         }
 
         public static void UpdateCtPhieuNhap(this CtPhieuNhap ctPhieuNhap, CtPhieuNhapViewModel ctPhieuNhapVm)
         {
-            //// TODO:
+            ctPhieuNhap.MaPhieuNhap = ctPhieuNhapVm.MaPhieuNhap;
+            ctPhieuNhap.Id = ctPhieuNhapVm.Id;
+            ctPhieuNhap.MaSach = ctPhieuNhapVm.MaSach;
+            ctPhieuNhap.SoLuongNhap = ctPhieuNhapVm.SoLuongNhap;
+            ctPhieuNhap.ThanhTien = ctPhieuNhapVm.ThanhTien;
+            ctPhieuNhap.GiaNhap = ctPhieuNhapVm.GiaNhap;
         }
 
         public static void UpdateCtPhieuXuat(this CtPhieuXuat ctPhieuXuat, CtPhieuXuatViewModel ctPhieuXuatVm)
@@ -100,6 +100,16 @@ namespace PhatHanhSach.Web.Extensions
         }
 
         public static void UpdateCongNoNXB(this CongNoNXB congNoNXB, CongNoNXBViewModel congNoNXBVm)
+        {
+            //// TODO:
+        }
+
+        public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)
+        {
+            thanhToan.TrangThai = true;
+        }
+
+        public static void UpdateDoanhThu(this DoanhThu doanhThu, DoanhThuViewModel doanhThuVm)
         {
             //// TODO:
         }

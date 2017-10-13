@@ -13,7 +13,6 @@ namespace PhatHanhSach.Web.Controllers
         IPhieuNhapService phieuNhapService;
         ISachService sachService;
         INhaXuatBanService nhaXuatBanService;
-        List<CtPhieuNhapViewModel> listCtPhieuNhap;
         string maSach = "";
 
         public PhieuNhapController(IPhieuNhapService phieuNhapService, ISachService sachService, INhaXuatBanService nhaXuatBanService)
@@ -21,7 +20,6 @@ namespace PhatHanhSach.Web.Controllers
             this.phieuNhapService = phieuNhapService;
             this.sachService = sachService;
             this.nhaXuatBanService = nhaXuatBanService;
-            listCtPhieuNhap = new List<CtPhieuNhapViewModel>();
         }
 
         public ActionResult DanhSachPhieuNhap()
@@ -49,21 +47,21 @@ namespace PhatHanhSach.Web.Controllers
                 phieuNhap.UpdatePhieuNhap(pnViewModel);
 
                 var idNXB = nhaXuatBanService.GetByCode(phieuNhap.MaNXB);
+
+                pnViewModel.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+                pnViewModel.ctPhieuNhap = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(new CtPhieuNhap());
+                pnViewModel.ctPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+                pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(new NhaXuatBan());
+                pnViewModel.NhaXuatBan.MaNXB = pnViewModel.MaNXB.ToUpper();
+                Session["dsCtPhieuNhap"] = new List<CtPhieuNhapViewModel>();
+
                 if (idNXB == null)
-                {
-                    pnViewModel.ctPhieuNhap = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(new CtPhieuNhap());
-                    pnViewModel.ctPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap;
-                    pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan,NhaXuatBanViewModel>(new NhaXuatBan());
-                    pnViewModel.NhaXuatBan.MaNXB = pnViewModel.MaNXB;    
-                    return View("ThemNhaXuatBan", pnViewModel);
+                {                       
+                    return RedirectToAction("ThemNhaXuatBan", pnViewModel);
                 }
                 else
                 {
-                    pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(new NhaXuatBan());
-                    pnViewModel.NhaXuatBan.MaNXB = pnViewModel.MaNXB;
-                    pnViewModel.ctPhieuNhap = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(new CtPhieuNhap());
-                    pnViewModel.ctPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap;
-                    return View("ThemChiTietPhieuNhap", pnViewModel);
+                    return RedirectToAction("ThemChiTietPhieuNhap", pnViewModel);
                 }
             }
             else
@@ -72,37 +70,37 @@ namespace PhatHanhSach.Web.Controllers
             }
         }
         
-        [HttpPost]
         public ActionResult ThemNhaXuatBan(PhieuNhapViewModel pnViewModel)
         {            
             return View(pnViewModel);
         }
-
-        [HttpPost]
+        
         public ActionResult ThemChiTietPhieuNhap(PhieuNhapViewModel pnViewModel)
-        {
-            CtPhieuNhap newCtPhieuNhap = new CtPhieuNhap();
-            newCtPhieuNhap.UpdateCtPhieuNhap(pnViewModel.ctPhieuNhap);
-
-            if (Request.Form["save"] != null)
+        {   
+            if (Request.Form["create"] != null)
             {
-                if (!newCtPhieuNhap.MaSach.Equals(maSach))
+                //// Thêm phiếu nhập và ct phiếu nhập vào csdl
+            }
+            else if(Request.Form["save"] != null)
+            {
+                CtPhieuNhap newCtPhieuNhap = new CtPhieuNhap();
+                newCtPhieuNhap.UpdateCtPhieuNhap(pnViewModel.ctPhieuNhap);
+                newCtPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+
+                if (!newCtPhieuNhap.MaSach.ToUpper().Equals(maSach))
                 {
-                    maSach = newCtPhieuNhap.MaSach;
+                    maSach = newCtPhieuNhap.MaSach.ToUpper();
                     var newCtPhieuNhapViewModel = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(newCtPhieuNhap);
-                    listCtPhieuNhap.Add(newCtPhieuNhapViewModel);
-                    ViewBag.dsCtPhieuNhap = listCtPhieuNhap;
+                    ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapViewModel);
+                    return RedirectToAction("ThemChiTietPhieuNhap", pnViewModel);
                 }
                 else
                 {
                     ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
                 }
             }
-            else if (Request.Form["create"] != null)
-            {
-                //// Thêm phiếu nhập và ct phiếu nhập vào csdl
-            }
-
+            var dsSach = sachService.GetAll();
+            ViewBag.dsSach = Mapper.Map<IEnumerable<Sach>, IEnumerable<SachViewModel>>(dsSach);
             return View(pnViewModel);
         }
     }

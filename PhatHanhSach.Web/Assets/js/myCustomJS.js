@@ -6,3 +6,12 @@ listTagNXB.forEach(it => {
 $("#listNXB").autocomplete({
     source: listCodeNXB
 });
+
+var listTagSach = $(".sach").toArray();
+var listCodeSach = [];
+listTagSach.forEach(it => {
+    listCodeSach.push(it.innerHTML);
+})
+$("#listSach").autocomplete({
+    source: listCodeSach
+});

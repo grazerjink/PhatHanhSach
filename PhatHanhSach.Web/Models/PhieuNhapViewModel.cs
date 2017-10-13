@@ -20,8 +20,8 @@ namespace PhatHanhSach.Web.Models
 
         public bool TrangThai { get; set; }
 
-        public virtual IEnumerable<CtPhieuNhap> CtPhieuNhaps { get; set; }
+        public NhaXuatBanViewModel NhaXuatBan { get; set; }
 
-        public virtual NhaXuatBan NhaXuatBan { get; set; }
+        public CtPhieuNhapViewModel ctPhieuNhap { get; set; }
     }
 }

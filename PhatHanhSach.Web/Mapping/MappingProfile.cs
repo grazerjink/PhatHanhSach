@@ -9,6 +9,9 @@ namespace PhatHanhSach.Web.Mapping
         public MappingProfile()
         {
             CreateMap<DaiLy,DaiLyViewModel>();
+            CreateMap<NhaXuatBan, NhaXuatBanViewModel>();
+            CreateMap<PhieuNhap, PhieuNhapViewModel>();
+            CreateMap<CtPhieuNhap, CtPhieuNhapViewModel>();
         }
     }
 }

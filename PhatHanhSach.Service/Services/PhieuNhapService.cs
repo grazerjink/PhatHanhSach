@@ -17,7 +17,7 @@ namespace PhatHanhSach.Service
 
         PhieuNhap Delete(PhieuNhap phieuNhap);
 
-        IEnumerable<PhieuNhap> GetAll();
+        IEnumerable<PhieuNhap> GetAll(string[] includes = null);
 
         PhieuNhap GetByCode(string code);
 
@@ -50,9 +50,12 @@ namespace PhatHanhSach.Service
             return phieuNhapRepository.Delete(phieuNhap);
         }
 
-        public IEnumerable<PhieuNhap> GetAll()
+        public IEnumerable<PhieuNhap> GetAll(string[] includes = null)
         {
-            return phieuNhapRepository.GetAll();
+            if (includes != null)
+                return phieuNhapRepository.GetAll(includes);
+            else
+                return phieuNhapRepository.GetAll();
         }
 
         public PhieuNhap GetByCode(string code)

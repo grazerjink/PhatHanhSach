@@ -1,9 +1,8 @@
 ﻿@model PhatHanhSach.Web.Models.PhieuNhapViewModel
 
 @{
-    ViewBag.Title = "ThemPhieuNhap";
+    ViewBag.Title = "ThemNhaXuatBan";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var dsNXB = (IEnumerable<PhatHanhSach.Web.Models.NhaXuatBanViewModel>) ViewBag.DanhSachNXB;
 }
 
 @section headerStyles {
@@ -13,8 +12,6 @@
 @section footerJS {
     <!-- validator -->
     <script src="~/Assets/vendors/validator/validator.js"></script>
-    <!-- autocomplete jquery -->
-    <script src="~/Assets/js/myCustomJS.js"></script>
 }
 
 <!-- page content -->
@@ -22,7 +19,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Thêm phiếu nhập sách</h3>
+                <h3>Thêm nhà xuất bản</h3>
             </div>
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -42,63 +39,50 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_content">
-                        @using (Html.BeginForm("ThemPhieuNhap", "PhieuNhap", FormMethod.Post, new { @class = "form-horizontal form-label-left", @novalidate = "" }))
+                        @using (Html.BeginForm("ThemNhaXuatBan", "PhieuNhap", FormMethod.Post, new { @class = "form-horizontal form-label-left", @novalidate = "" }))
                         {
                             @Html.AntiForgeryToken()
-                            <span class="section">Thông tin phiếu nhập</span>
+                            <span class="section">Thông tin nhà xuất bản</span>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã phiếu nhập sách <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaPhieuNhap, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã của phiếu nhập...", @required = "" })
-                                </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Thời gian nhập <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    <div class="xdisplay_inputx form-group has-feedback">
-                                        @Html.TextBoxFor(m => m.ThoiGianNhap, new { @id = "single_cal3", @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Nhập thông tin thời gian nhập sách...", @required = "", @aria_describedby = "inputSuccess2Status3" })
-                                    </div>
-                                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                </div>
-                            </div>
-                            <div class="item form-group ui-widget">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listNXB">
                                     Mã nhà xuất bản <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaNXB, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã nhà xuất bản...", @required = "" })
-                                    <i class="error">*** Sẽ phải cập nhật nếu chưa tồn tại nhà xuất bản.</i>
+                                    @Html.TextBoxFor(m => m.NhaXuatBan.MaNXB, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã của nhà xuất bản...", @required = "", disabled = ""})
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Họ tên người giao phiếu <span class="required">*</span>
+                                    Tên nhà xuất bản <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.NguoiGiao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập họ tên người giao phiếu...", @required = "" })
+                                    @Html.TextBoxFor(m => m.NhaXuatBan.TenNXB, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tên của nhà xuất bản...", @required = "" })
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tổng số lượng <span class="required">*</span>
+                                    Số điện thoại <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.TongSoLuong, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tổng số lượng sách...", type = "number", @required = "" })
+                                    @Html.TextBoxFor(m => m.NhaXuatBan.SoDienThoai, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập số điện thoại...", type = "tel", @required = "" })
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tổng số tiền <span class="required">*</span>
+                                    Địa chỉ <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.TongTien, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tổng số tiền sách...", type = "number", @required = "" })
+                                    @Html.TextBoxFor(m => m.NhaXuatBan.DiaChi, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin địa chỉ...", @required = "" })
                                 </div>
-                            </div>                     
-
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Số tài khoản <span class="required">*</span>
+                                </label>
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(m => m.NhaXuatBan.SoTaiKhoan, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập số tài khoản giao dịch...", @required = "" })
+                                </div>
+                            </div>
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
                                     @Html.ValidationSummary(false, "", new { @class = "error" })
@@ -108,11 +92,11 @@
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="pull-left">
-                                        <a href="/" class="btn btn-default">Quay về</a>
+                                        <a href="/PhieuNhap/DanhSachPhieuNhap" class="btn btn-default">Quay về</a>
                                     </div>
                                     <div class="pull-right">
                                         <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
-                                        <button id="next" type="submit" class="btn btn-primary">Tiếp tục</button>
+                                        <button id="next" type="submit" class="btn btn-success">Tiếp tục</button>
                                     </div>
                                 </div>
                             </div>
@@ -121,16 +105,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="hidden">
-            <ul>
-                @foreach(var nxb in dsNXB)
-                {
-                    <li class="nxb">@nxb.MaNXB</li>
-                }
-            </ul>
-        </div>
     </div>
 </div>
 <!-- /page content -->
-

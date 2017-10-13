@@ -16,6 +16,12 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdatePhieuNhap(this PhieuNhap pn, PhieuNhapViewModel pnVm)
         {
+            pn.MaPhieuNhap = pnVm.MaPhieuNhap;
+            pn.MaNXB = pnVm.MaNXB;
+            pn.NguoiGiao = pnVm.NguoiGiao;
+            pn.ThoiGianNhap = pnVm.ThoiGianNhap;
+            pn.TongSoLuong = pnVm.TongSoLuong;
+            pn.TongTien = pnVm.TongTien;
             pn.TrangThai = true;
         }
 

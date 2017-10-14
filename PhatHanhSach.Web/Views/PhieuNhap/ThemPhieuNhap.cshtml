@@ -71,7 +71,6 @@
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     @Html.TextBoxFor(m => m.MaNXB, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã nhà xuất bản...", @required = "" })
-                                    <i class="error">*** Sẽ phải cập nhật nếu chưa tồn tại nhà xuất bản.</i>
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -82,7 +81,8 @@
                                     @Html.TextBoxFor(m => m.NguoiGiao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập họ tên người giao phiếu...", @required = "" })
                                 </div>
                             </div>
-                            <div class="item form-group">
+
+                            @*<div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Tổng số lượng <span class="required">*</span>
                                 </label>
@@ -97,7 +97,7 @@
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     @Html.TextBoxFor(m => m.TongTien, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tổng số tiền sách...", type = "number", @required = "" })
                                 </div>
-                            </div>                     
+                            </div>*@                     
 
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">

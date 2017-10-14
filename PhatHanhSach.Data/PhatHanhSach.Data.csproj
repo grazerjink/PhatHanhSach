@@ -136,21 +136,6 @@
     <Compile Include="Repositories\TonKhoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
-    <EntityDeploy Include="Models\PhatHanhSachModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PhatHanhSachModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ConnectionString.config" />
-    <None Include="Models\PhatHanhSachModel.edmx.diagram">
-      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Models\PhatHanhSachModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
@@ -161,6 +146,19 @@
       <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
       <LastGenOutput>PhatHanhSachModel.cs</LastGenOutput>
     </Content>
+    <None Include="App.Config" />
+    <Content Include="ConnectionString.config" />
+    <EntityDeploy Include="Models\PhatHanhSachModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PhatHanhSachModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\PhatHanhSachModel.edmx.diagram">
+      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

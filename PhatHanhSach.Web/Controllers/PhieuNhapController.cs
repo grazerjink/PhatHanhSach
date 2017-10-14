@@ -13,13 +13,18 @@ namespace PhatHanhSach.Web.Controllers
         IPhieuNhapService phieuNhapService;
         ISachService sachService;
         INhaXuatBanService nhaXuatBanService;
-        string maSach = "";
+        ICtPhieuNhapService ctPhieuNhapService;
 
-        public PhieuNhapController(IPhieuNhapService phieuNhapService, ISachService sachService, INhaXuatBanService nhaXuatBanService)
+        public PhieuNhapController(
+            IPhieuNhapService phieuNhapService, 
+            ICtPhieuNhapService ctPhieuNhapService, 
+            ISachService sachService, 
+            INhaXuatBanService nhaXuatBanService)
         {
             this.phieuNhapService = phieuNhapService;
             this.sachService = sachService;
             this.nhaXuatBanService = nhaXuatBanService;
+            this.ctPhieuNhapService = ctPhieuNhapService;
         }
 
         public ActionResult DanhSachPhieuNhap()
@@ -29,7 +34,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(dsPhieuNhapViewModel);
         }
 
-        // GET: PhieuNhap
+        [HttpGet]
         public ActionResult ThemPhieuNhap()
         {
             var dsNXB = nhaXuatBanService.GetAll();
@@ -44,24 +49,26 @@ namespace PhatHanhSach.Web.Controllers
             if (ModelState.IsValid)
             {
                 var phieuNhap = new PhieuNhap();
-                phieuNhap.UpdatePhieuNhap(pnViewModel);
+                phieuNhap.UpdatePhieuNhap(pnViewModel);                
+                pnViewModel.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+
+                Session["dsCtPhieuNhap"] = new List<CtPhieuNhapViewModel>();
+                Session["MaSach"] = "";
 
                 var idNXB = nhaXuatBanService.GetByCode(phieuNhap.MaNXB);
-
-                pnViewModel.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
-                pnViewModel.ctPhieuNhap = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(new CtPhieuNhap());
-                pnViewModel.ctPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
-                pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(new NhaXuatBan());
-                pnViewModel.NhaXuatBan.MaNXB = pnViewModel.MaNXB.ToUpper();
-                Session["dsCtPhieuNhap"] = new List<CtPhieuNhapViewModel>();
-
                 if (idNXB == null)
-                {                       
-                    return RedirectToAction("ThemNhaXuatBan", pnViewModel);
+                {
+                    var dsNXB = nhaXuatBanService.GetAll();
+                    var dsNXBViewModel = Mapper.Map<IEnumerable<NhaXuatBan>, IEnumerable<NhaXuatBanViewModel>>(dsNXB);
+                    ViewBag.DanhSachNXB = dsNXBViewModel;
+
+                    ModelState.AddModelError("", "Thông tin đại lý không tồn tại.");
+                    return View(pnViewModel);
                 }
                 else
                 {
-                    return RedirectToAction("ThemChiTietPhieuNhap", pnViewModel);
+                    TempData["PhieuNhapVM"] = pnViewModel;
+                    return RedirectToAction("ThemChiTietPhieuNhap");
                 }
             }
             else
@@ -69,34 +76,83 @@ namespace PhatHanhSach.Web.Controllers
                 return View(pnViewModel);
             }
         }
-        
-        public ActionResult ThemNhaXuatBan(PhieuNhapViewModel pnViewModel)
-        {            
+
+        [HttpGet]
+        public ActionResult ThemChiTietPhieuNhap()
+        {
+            var dsSach = sachService.GetAll();
+            ViewBag.dsSach = Mapper.Map<IEnumerable<Sach>, IEnumerable<SachViewModel>>(dsSach);
+            var pnViewModel = (PhieuNhapViewModel)TempData["PhieuNhapVM"];
             return View(pnViewModel);
         }
-        
+
+        [HttpPost]
         public ActionResult ThemChiTietPhieuNhap(PhieuNhapViewModel pnViewModel)
-        {   
+        {
             if (Request.Form["create"] != null)
             {
-                //// Thêm phiếu nhập và ct phiếu nhập vào csdl
+                double tongTien = 0;
+                int tongSoLuong = 0;
+
+                PhieuNhap newPhieuNhap = new PhieuNhap();
+                newPhieuNhap.UpdatePhieuNhap(pnViewModel);
+                var addedPhieuNhap = phieuNhapService.Add(newPhieuNhap);
+                phieuNhapService.Save();
+
+                foreach (var ctpn in (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"])
+                {
+                    tongTien += (ctpn.GiaNhap * ctpn.SoLuongNhap);
+                    tongSoLuong += ctpn.SoLuongNhap;
+                    CtPhieuNhap ctPhieuNhap = new CtPhieuNhap();
+                    ctPhieuNhap.UpdateCtPhieuNhap(ctpn);
+                    ctPhieuNhapService.Add(ctPhieuNhap);
+                }
+
+                addedPhieuNhap.TongSoLuong = tongSoLuong;
+                addedPhieuNhap.TongTien = tongTien;
+                phieuNhapService.Update(addedPhieuNhap);
+                phieuNhapService.Save();
+
+                Session["dsCtPhieuNhap"] = null;
+                Session["MaSach"] = null;
+
+                return RedirectToAction("DanhSachPhieuNhap");
             }
             else if(Request.Form["save"] != null)
             {
-                CtPhieuNhap newCtPhieuNhap = new CtPhieuNhap();
-                newCtPhieuNhap.UpdateCtPhieuNhap(pnViewModel.ctPhieuNhap);
-                newCtPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+                if(ModelState.IsValid)
+                {                    
+                    CtPhieuNhap newCtPhieuNhap = new CtPhieuNhap();
+                    newCtPhieuNhap.UpdateCtPhieuNhap(pnViewModel.ctPhieuNhap);
+                    newCtPhieuNhap.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
+                    newCtPhieuNhap.ThanhTien = newCtPhieuNhap.SoLuongNhap * newCtPhieuNhap.GiaNhap;
 
-                if (!newCtPhieuNhap.MaSach.ToUpper().Equals(maSach))
-                {
-                    maSach = newCtPhieuNhap.MaSach.ToUpper();
-                    var newCtPhieuNhapViewModel = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(newCtPhieuNhap);
-                    ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapViewModel);
-                    return RedirectToAction("ThemChiTietPhieuNhap", pnViewModel);
+                    var sach = sachService.GetByCode(newCtPhieuNhap.MaSach);
+                    if (sach == null)
+                    {
+                        ModelState.AddModelError("", "Thông tin sách không tồn tại.");
+                    }
+                    else
+                    {
+                        if (!newCtPhieuNhap.MaSach.ToUpper().Equals(Session["MaSach"].ToString().ToUpper()))
+                        {
+                            Session["MaSach"] = newCtPhieuNhap.MaSach.ToUpper();
+                            var newCtPhieuNhapViewModel = Mapper.Map<CtPhieuNhap, CtPhieuNhapViewModel>(newCtPhieuNhap);
+                            ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapViewModel);
+
+                            pnViewModel.ctPhieuNhap = null;
+                            TempData["PhieuNhapVM"] = pnViewModel;
+                            return RedirectToAction("ThemChiTietPhieuNhap");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
+                        }
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
+                    ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách rồi.");
                 }
             }
             var dsSach = sachService.GetAll();

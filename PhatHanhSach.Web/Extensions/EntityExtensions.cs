@@ -46,6 +46,7 @@ namespace PhatHanhSach.Web.Extensions
             sach.TenSach = sachVm.TenSach;
             sach.TacGia = sachVm.TacGia;
             sach.LinhVuc = sachVm.LinhVuc;
+            sach.GiaBan = sachVm.GiaBan;
             sach.TrangThai = true;
         }
 
@@ -56,7 +57,6 @@ namespace PhatHanhSach.Web.Extensions
             tonKho.SoLuong = tonKhoVm.SoLuong;
             tonKho.ThoiGian = tonKhoVm.ThoiGian;
             tonKho.GiaNhap = tonKhoVm.GiaNhap;
-            tonKho.GiaXuat = tonKhoVm.GiaXuat;
         }
 
         public static void UpdateCtPhieuNhap(this CtPhieuNhap ctPhieuNhap, CtPhieuNhapViewModel ctPhieuNhapVm)

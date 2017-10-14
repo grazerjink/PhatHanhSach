@@ -18,6 +18,7 @@ namespace PhatHanhSach.Data.Models
         public PhatHanhSachEntities()
             : base("name=PhatHanhSachEntities")
         {
+            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

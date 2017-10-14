@@ -156,6 +156,7 @@
           <Property Name="TenSach" Type="nvarchar" MaxLength="250" />
           <Property Name="TacGia" Type="nvarchar" MaxLength="250" />
           <Property Name="LinhVuc" Type="nvarchar" MaxLength="250" />
+          <Property Name="GiaBan" Type="float" />
           <Property Name="TrangThai" Type="bit" />
         </EntityType>
         <EntityType Name="ThanhToan">
@@ -177,7 +178,6 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="MaSach" Type="nchar" MaxLength="5" />
           <Property Name="GiaNhap" Type="float" />
-          <Property Name="GiaXuat" Type="float" />
           <Property Name="SoLuong" Type="int" />
           <Property Name="ThoiGian" Type="datetime" />
         </EntityType>
@@ -687,6 +687,7 @@
           <Property Name="TenSach" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TacGia" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LinhVuc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GiaBan" Type="Double" />
           <Property Name="TrangThai" Type="Boolean" />
           <NavigationProperty Name="CtBaoCaoDLs" Relationship="Self.FK_CtBaoCaoDL_Sach" FromRole="Sach" ToRole="CtBaoCaoDL" />
           <NavigationProperty Name="CtDoanhThus" Relationship="Self.FK_CtDoanhThu_Sach" FromRole="Sach" ToRole="CtDoanhThu" />
@@ -717,7 +718,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="MaSach" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <Property Name="GiaNhap" Type="Double" />
-          <Property Name="GiaXuat" Type="Double" />
           <Property Name="SoLuong" Type="Int32" />
           <Property Name="ThoiGian" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Sach" Relationship="Self.FK_TonKho_Sach" FromRole="TonKho" ToRole="Sach" />
@@ -1213,6 +1213,7 @@
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
                 <ScalarProperty Name="TacGia" ColumnName="TacGia" />
                 <ScalarProperty Name="LinhVuc" ColumnName="LinhVuc" />
+                <ScalarProperty Name="GiaBan" ColumnName="GiaBan" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1236,7 +1237,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MaSach" ColumnName="MaSach" />
                 <ScalarProperty Name="GiaNhap" ColumnName="GiaNhap" />
-                <ScalarProperty Name="GiaXuat" ColumnName="GiaXuat" />
                 <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
                 <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
               </MappingFragment>

@@ -95,7 +95,6 @@
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     @Html.TextBoxFor(m => m.ctPhieuNhap.MaSach, new { @id = "listSach", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin mã sách...", @required = "" })
-                                    <i class="error">*** Sẽ phải tự cập nhật thêm thông tin sách nếu là sách mới.</i>
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
@@ -114,14 +113,15 @@
                                     @Html.TextBoxFor(m => m.ctPhieuNhap.GiaNhap, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập đơn giá nhập của sách...", @required = "" })
                                 </div>
                             </div>
-                            <div class="item form-group">
+                            @*<div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Thành tiền <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.ThanhTien, new { @class = "form-control col-md-7 col-xs-12", placeholder = "0.00", type = "number", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuNhap.ThanhTien, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled", placeholder = "0.00", type = "number", @required = "" })
                                 </div>
-                            </div>
+                            </div>*@
+
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
                                     @Html.ValidationSummary(false, "", new { @class = "error" })

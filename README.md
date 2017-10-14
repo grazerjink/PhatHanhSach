@@ -7,7 +7,8 @@
 + **B4**: Build project lại một lần nữa rồi có thể Run được rồi.
 
 ### Chức năng đã xây dựng
-+ Thêm, xóa, sửa danh sách **đại lý**.
++ Chức năng thêm, xóa, sửa danh sách **đại lý**.
++ Chức năng thêm danh sách **phiếu nhập sách** và trigger cập nhật bảng Tồn Kho trong CSDL.
 + Phần còn lại đang tiếp tục xây dựng.
 
 ___

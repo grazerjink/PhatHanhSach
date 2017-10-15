@@ -23,7 +23,6 @@ namespace PhatHanhSach.Data.Models
         public string MaPhieuDoanhThu { get; set; }
         public Nullable<System.DateTime> ThoiGianBatDau { get; set; }
         public Nullable<System.DateTime> ThoiGianKetThuc { get; set; }
-        public Nullable<System.DateTime> ThoIGianLap { get; set; }
         public Nullable<double> TongLai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

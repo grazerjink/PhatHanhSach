@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="786ce614e56d4931ab9a7752816ddc1f" Name="Diagram1">
-        <EntityTypeShape EntityType="PhatHanhSachModel.BaoCaoDL" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachModel.CongNoDL" Width="1.5" PointX="5.75" PointY="15" IsExpanded="true" />
+      <Diagram DiagramId="405ad2752c354b989647c1e71fec3b52" Name="Diagram1">
+        <EntityTypeShape EntityType="PhatHanhSachModel.BaoCaoDL" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.CongNoDL" Width="1.5" PointX="5.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CongNoNXB" Width="1.5" PointX="6" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CtBaoCaoDL" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CtDoanhThu" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="PhatHanhSachModel.CtPhieuXuat" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.CtThanhToan" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.DaiLy" Width="1.5" PointX="1.5" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachModel.DoanhThu" Width="1.5" PointX="3.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachModel.DoanhThu" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.NhaXuatBan" Width="1.5" PointX="1.5" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.PhieuNhap" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PhatHanhSachModel.PhieuXuat" Width="1.5" PointX="0.75" PointY="21.875" IsExpanded="true" />

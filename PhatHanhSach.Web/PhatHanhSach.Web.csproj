@@ -173,6 +173,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\BaoCaoController.cs" />
     <Compile Include="Controllers\DaiLyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhieuNhapController.cs" />
@@ -3686,7 +3687,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ThongKe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\vendors\animate.css\.bower.json" />
@@ -4527,6 +4527,11 @@
     <Content Include="Views\PhieuXuat\DanhSachPhieuXuat.cshtml" />
     <Content Include="Views\PhieuXuat\ThemChiTietPhieuXuat.cshtml" />
     <Content Include="Views\PhieuXuat\ThemPhieuXuat.cshtml" />
+    <Content Include="Views\BaoCao\TaoBaoCao.cshtml" />
+    <Content Include="Views\ThongKe\TonKho.cshtml" />
+    <Content Include="Views\ThongKe\DoanhThu.cshtml" />
+    <Content Include="Views\ThongKe\CongNoDaiLy.cshtml" />
+    <Content Include="Views\ThongKe\CongNoNXB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">

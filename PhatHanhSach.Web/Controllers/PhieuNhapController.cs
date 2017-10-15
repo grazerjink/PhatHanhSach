@@ -46,29 +46,38 @@ namespace PhatHanhSach.Web.Controllers
         [HttpPost]
         public ActionResult ThemPhieuNhap(PhieuNhapViewModel pnViewModel)
         {
+            var dsNXB = nhaXuatBanService.GetAll();
+            var dsNXBViewModel = Mapper.Map<IEnumerable<NhaXuatBan>, IEnumerable<NhaXuatBanViewModel>>(dsNXB);
+            ViewBag.DanhSachNXB = dsNXBViewModel;
+
             if (ModelState.IsValid)
             {
-                var phieuNhap = new PhieuNhap();
-                phieuNhap.UpdatePhieuNhap(pnViewModel);                
-                pnViewModel.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
-
-                Session["dsCtPhieuNhap"] = new List<CtPhieuNhapViewModel>();
-                Session["MaSach"] = "";
-
-                var idNXB = nhaXuatBanService.GetByCode(phieuNhap.MaNXB);
-                if (idNXB == null)
+                var ktraPX = phieuNhapService.GetByCode(pnViewModel.MaPhieuNhap.ToUpper());
+                if (ktraPX == null)
                 {
-                    var dsNXB = nhaXuatBanService.GetAll();
-                    var dsNXBViewModel = Mapper.Map<IEnumerable<NhaXuatBan>, IEnumerable<NhaXuatBanViewModel>>(dsNXB);
-                    ViewBag.DanhSachNXB = dsNXBViewModel;
+                    var phieuNhap = new PhieuNhap();
+                    phieuNhap.UpdatePhieuNhap(pnViewModel);
+                    pnViewModel.MaPhieuNhap = pnViewModel.MaPhieuNhap.ToUpper();
 
-                    ModelState.AddModelError("", "Thông tin đại lý không tồn tại.");
-                    return View(pnViewModel);
+                    Session["dsCtPhieuNhap"] = new List<CtPhieuNhapViewModel>();
+                    Session["MaSach"] = "";
+
+                    var idNXB = nhaXuatBanService.GetByCode(phieuNhap.MaNXB);
+                    if (idNXB == null)
+                    {          
+                        ModelState.AddModelError("", "Thông tin đại lý không tồn tại.");
+                        return View(pnViewModel);
+                    }
+                    else
+                    {
+                        TempData["PhieuNhapVM"] = pnViewModel;
+                        return RedirectToAction("ThemChiTietPhieuNhap");
+                    }
                 }
                 else
                 {
-                    TempData["PhieuNhapVM"] = pnViewModel;
-                    return RedirectToAction("ThemChiTietPhieuNhap");
+                    ModelState.AddModelError("", "Mã phiếu nhập đã tồn tại.");
+                    return View(pnViewModel);
                 }
             }
             else

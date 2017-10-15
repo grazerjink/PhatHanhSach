@@ -27,6 +27,12 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdatePhieuXuat(this PhieuXuat px, PhieuXuatViewModel pxVm)
         {
+            px.MaPhieuXuat = pxVm.MaPhieuXuat;
+            px.MaDaiLy = pxVm.MaDaiLy;
+            px.NguoiNhan = pxVm.NguoiNhan;
+            px.ThoiGianXuat = pxVm.ThoiGianXuat;
+            px.TongSoLuong = pxVm.TongSoLuong;
+            px.TongTien = pxVm.TongTien;
             px.TrangThai = true;
         }
 
@@ -56,7 +62,6 @@ namespace PhatHanhSach.Web.Extensions
             tonKho.MaSach = tonKhoVm.MaSach;
             tonKho.SoLuong = tonKhoVm.SoLuong;
             tonKho.ThoiGian = tonKhoVm.ThoiGian;
-            tonKho.GiaNhap = tonKhoVm.GiaNhap;
         }
 
         public static void UpdateCtPhieuNhap(this CtPhieuNhap ctPhieuNhap, CtPhieuNhapViewModel ctPhieuNhapVm)
@@ -71,7 +76,12 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdateCtPhieuXuat(this CtPhieuXuat ctPhieuXuat, CtPhieuXuatViewModel ctPhieuXuatVm)
         {
-            //// TODO:
+            ctPhieuXuat.MaPhieuXuat = ctPhieuXuatVm.MaPhieuXuat;
+            ctPhieuXuat.Id = ctPhieuXuatVm.Id;
+            ctPhieuXuat.MaSach = ctPhieuXuatVm.MaSach;
+            ctPhieuXuat.SoLuongXuat = ctPhieuXuatVm.SoLuongXuat;
+            ctPhieuXuat.ThanhTien = ctPhieuXuatVm.ThanhTien;
+            ctPhieuXuat.GiaXuat = ctPhieuXuatVm.GiaXuat;
         }
 
         public static void UpdateCtBaoCaoDL(this CtBaoCaoDL ctBaoCaoDL, CtBaoCaoDLViewModel ctBaoCaoDLVm)

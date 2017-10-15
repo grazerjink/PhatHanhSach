@@ -1,6 +1,6 @@
 CREATE TRIGGER trgThemCapNhatCtPhieuNhap
 ON CtPhieuNhap
-AFTER INSERT, UPDATE, DELETE
+AFTER INSERT, UPDATE
 AS
 BEGIN
 	DECLARE @ngayNhap datetime = (SELECT pn.ThoiGianNhap FROM inserted ct JOIN PhieuNhap pn ON pn.MaPhieuNhap = ct.MaPhieuNhap)
@@ -9,7 +9,7 @@ BEGIN
 	DECLARE @soLuongTon int = (SELECT TOP(1) SoLuong FROM TonKho WHERE ThoiGian <= @ngayNhap AND MaSach = @maSach ORDER BY ThoiGian DESC)
 	DECLARE @giaNhap float = (SELECT GiaNhap FROM inserted)
 	IF @soLuongTon IS NULL
-		INSERT INTO TonKho (MaSach,SoLuong,ThoiGian,GiaNhap) VALUES (@maSach,@soLuongNhap,@ngayNhap,@giaNhap)
+		INSERT INTO TonKho (MaSach,SoLuong,ThoiGian) VALUES (@maSach,@soLuongNhap,@ngayNhap)
 	ELSE
-		INSERT INTO TonKho (MaSach,SoLuong,ThoiGian,GiaNhap) VALUES (@maSach,@soLuongTon+@soLuongNhap,@ngayNhap,@giaNhap)
+		INSERT INTO TonKho (MaSach,SoLuong,ThoiGian) VALUES (@maSach,@soLuongTon+@soLuongNhap,@ngayNhap)
 END

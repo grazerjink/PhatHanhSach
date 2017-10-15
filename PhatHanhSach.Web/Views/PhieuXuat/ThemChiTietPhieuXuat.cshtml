@@ -1,9 +1,9 @@
-﻿@model PhatHanhSach.Web.Models.PhieuNhapViewModel
+﻿@model PhatHanhSach.Web.Models.PhieuXuatViewModel
 @{
-    ViewBag.Title = "ThemChiTietPhieuNhap";
+    ViewBag.Title = "ThemChiTietPhieuXuat";
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsSach = (IEnumerable<PhatHanhSach.Web.Models.SachViewModel>) ViewBag.dsSach;
-    var dsCtPn = (List<PhatHanhSach.Web.Models.CtPhieuNhapViewModel>) Session["dsCtPhieuNhap"];
+    var dsCtPx = (List<PhatHanhSach.Web.Models.CtPhieuXuatViewModel>) Session["dsCtPhieuXuat"];
 }
 
 @section headerStyles {
@@ -41,7 +41,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Danh sách chi tiết - phiếu nhập <b>@Model.MaPhieuNhap</b></h3>
+                <h3>Danh sách chi tiết - phiếu xuất <b>@Model.MaPhieuXuat</b></h3>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -56,24 +56,24 @@
                                 <tr>
                                     <th>Mã phiếu </th>
                                     <th>Mã sách </th>
-                                    <th>Số lượng nhập </th>
-                                    <th>Đơn giá nhập </th>
+                                    <th>Số lượng xuất </th>
+                                    <th>Đơn giá xuất </th>
                                     <th>Thành tiền </th>
                                     <th>*</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (dsCtPn != null)
+                                @if (dsCtPx != null)
                                 {
-                                    foreach (var ct in dsCtPn)
+                                    foreach (var ct in dsCtPx)
                                     {
                                         <tr>
-                                            <td>@ct.MaPhieuNhap</td>
+                                            <td>@ct.MaPhieuXuat</td>
                                             <td>@ct.MaSach</td>
-                                            <td>@ct.SoLuongNhap</td>
-                                            <td>@ct.GiaNhap</td>
+                                            <td>@ct.SoLuongXuat</td>
+                                            <td>@ct.GiaXuat</td>
                                             <td>@ct.ThanhTien</td>
-                                            <td class="text-center"><a href="/PhieuNhap/XoaPhieuNhap/@ct.MaPhieuNhap" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                            <td class="text-center"><a href="/PhieuNhap/XoaPhieuNhap/@ct.MaPhieuXuat" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                         </tr>
                                     }
                                 }                                
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="x_content">
-                        @using (Html.BeginForm("ThemChiTietPhieuNhap", "PhieuNhap", FormMethod.Post, new { @class = "form-horizontal form-label-left", @novalidate = "" }))
+                        @using (Html.BeginForm("ThemChiTietPhieuXuat", "PhieuXuat", FormMethod.Post, new { @class = "form-horizontal form-label-left", @novalidate = "" }))
                         {
                             @Html.AntiForgeryToken()
                             <span class="section">Nhập thông chi tiết</span>
@@ -94,7 +94,7 @@
                                     Mã sách <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.MaSach, new { @id = "listSach", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin mã sách...", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuXuat.MaSach, new { @id = "listSach", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin mã sách...", @required = "" })
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
@@ -102,23 +102,23 @@
                                     Số lượng <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.SoLuongNhap, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách nhập", @required = "" })
-                                </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Đơn giá nhập <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.GiaNhap, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập đơn giá nhập của sách...", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuXuat.SoLuongXuat, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách xuất", @required = "" })
                                 </div>
                             </div>
                             @*<div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Đơn giá bán <span class="required">*</span>
+                                </label>
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(m => m.ctPhieuXuat.GiaXuat, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập đơn giá nhập của sách...", @required = "" })
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Thành tiền <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.ThanhTien, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled", placeholder = "0.00", type = "number", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuXuat.ThanhTien, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled", placeholder = "0.00", type = "number", @required = "" })
                                 </div>
                             </div>*@
 
@@ -142,7 +142,7 @@
                             <div class="ln_solid"></div>
 
                             <div class="pull-right">
-                                <button class="btn btn-success" name="create">Tạo phiếu nhập</button>
+                                <button class="btn btn-success" name="create">Tạo phiếu xuất</button>
                             </div>
                             <div class="pull-left">
                                 <a class="btn btn-default" href="/">Về trang chính</a>

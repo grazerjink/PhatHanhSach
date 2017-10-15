@@ -30,6 +30,7 @@ namespace PhatHanhSach.Data.Models
         public string TacGia { get; set; }
         public string LinhVuc { get; set; }
         public Nullable<double> GiaBan { get; set; }
+        public Nullable<double> GiaNhap { get; set; }
         public Nullable<bool> TrangThai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

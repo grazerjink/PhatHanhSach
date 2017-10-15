@@ -18,8 +18,8 @@ namespace PhatHanhSach.Service
         TonKho Delete(TonKho tonKho);
 
         IEnumerable<TonKho> GetAll();
-
-        TonKho GetByCode(string code);
+        
+        TonKho GetByCode(string code, DateTime date);
 
         void Save();
     }
@@ -55,15 +55,14 @@ namespace PhatHanhSach.Service
             return tonKhoRepository.GetAll();
         }
 
-        public TonKho GetByCode(string code)
-        {
-            return tonKhoRepository.GetSingleByStringCodeId(code);
-        }
-
         public void Save()
         {
             unitOfWork.Commit();
         }
 
+        public TonKho GetByCode(string code, DateTime date)
+        {
+            return tonKhoRepository.GetMulti(x => x.ThoiGian <= date && x.MaSach == code).OrderByDescending(x => x.ThoiGian).OrderByDescending(x => x.Id).FirstOrDefault();
+        }
     }
 }

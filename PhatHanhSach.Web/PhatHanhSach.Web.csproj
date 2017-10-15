@@ -176,6 +176,7 @@
     <Compile Include="Controllers\DaiLyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhieuNhapController.cs" />
+    <Compile Include="Controllers\PhieuXuatController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4521,6 +4522,9 @@
     <Content Include="Views\PhieuNhap\ThemPhieuNhap.cshtml" />
     <Content Include="Views\PhieuNhap\DanhSachPhieuNhap.cshtml" />
     <Content Include="Views\PhieuNhap\ThemChiTietPhieuNhap.cshtml" />
+    <Content Include="Views\PhieuXuat\DanhSachPhieuXuat.cshtml" />
+    <Content Include="Views\PhieuXuat\ThemChiTietPhieuXuat.cshtml" />
+    <Content Include="Views\PhieuXuat\ThemPhieuXuat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">

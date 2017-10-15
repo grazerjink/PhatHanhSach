@@ -7,6 +7,15 @@ $("#listNXB").autocomplete({
     source: listCodeNXB
 });
 
+var listTagDaiLy = $(".daiLy").toArray();
+var listCodeDaiLy = [];
+listTagDaiLy.forEach(it => {
+    listCodeDaiLy.push(it.innerHTML);
+})
+$("#listDaiLy").autocomplete({
+    source: listCodeDaiLy
+});
+
 var listTagSach = $(".sach").toArray();
 var listCodeSach = [];
 listTagSach.forEach(it => {

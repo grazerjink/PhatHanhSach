@@ -177,6 +177,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhieuNhapController.cs" />
     <Compile Include="Controllers\PhieuXuatController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3685,6 +3686,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ThongKe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\vendors\animate.css\.bower.json" />

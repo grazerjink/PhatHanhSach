@@ -115,6 +115,13 @@ namespace PhatHanhSach.Web.Controllers
                     CtPhieuNhap ctPhieuNhap = new CtPhieuNhap();
                     ctPhieuNhap.UpdateCtPhieuNhap(ctpn);
                     ctPhieuNhapService.Add(ctPhieuNhap);
+
+                    var sach = sachService.GetByCode(ctpn.MaSach);
+                    if(sach.GiaNhap != ctpn.GiaNhap)
+                    {
+                        sach.GiaNhap = ctpn.GiaNhap;
+                        sachService.Update(sach);
+                    }
                 }
 
                 addedPhieuNhap.TongSoLuong = tongSoLuong;

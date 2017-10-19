@@ -10,11 +10,11 @@ namespace PhatHanhSach.Web.Controllers
 {
     public class PhieuXuatController : Controller
     {
-        private IPhieuXuatService phieuXuatService;
-        private ISachService sachService;
-        private IDaiLyService daiLyService;
-        private ICtPhieuXuatService ctPhieuXuatService;
-        private ITonKhoService tonKhoService;
+        IPhieuXuatService phieuXuatService;
+        ISachService sachService;
+        IDaiLyService daiLyService;
+        ICtPhieuXuatService ctPhieuXuatService;
+        ITonKhoService tonKhoService;
 
         public PhieuXuatController(
             IPhieuXuatService phieuXuatService,

@@ -10,8 +10,10 @@ namespace PhatHanhSach.Web.Models
         public int Id { get; set; }
         public string MaBaoCao { get; set; }
         public string MaSach { get; set; }
-        public int SoLuongBan { get; set; }
         public double DonGiaXuat { get; set; }
+        public int SoLuongBan { get; set; }
         public double ThanhTien { get; set; }
+        public int SoLuongCon { get; set; }
+        public double TienNo { get; set; }
     }
 }

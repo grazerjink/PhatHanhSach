@@ -1,0 +1,93 @@
+﻿@model IEnumerable<PhatHanhSach.Web.Models.BaoCaoDLViewModel>
+
+@{
+    ViewBag.Title = "BaoCaoDaiLy";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section headerStyles {
+    <!-- Datatables -->
+    <link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+}
+
+@section footerJS {
+    <!-- Datatables -->
+    <script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+}
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Danh sách báo cáo đại lý</h3>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered bulk_action">
+                            <thead>
+                                <tr>
+                                    <th>Mã báo cáo </th>
+                                    <th>Thông tin đại lý </th>
+                                    <th>Khoảng thời gian </th>
+                                    <th>Tổng tiền thanh toán </th>
+                                    <th>Tổng tiền còn nợ </th>
+                                    <th>Ngày lập phiếu </th>
+                                    <th>Chi tiết </th>
+                                    <th>*</th>
+                                    <th>*</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var bc in Model)
+                                {
+                                    <tr>
+                                        <td>@bc.MaBaoCao</td>
+                                        <td>@bc.DaiLy.MaDaiLy - @bc.DaiLy.TenDaiLy</td>
+                                        <td>@bc.ThoiGianBatDau - @bc.ThoiGianKetThuc</td>
+                                        <td>@bc.TongTienThanhToan</td>
+                                        <td>@bc.TongTienConNo</td>
+                                        <td>@bc.ThoiGianLapPhieu</td>
+                                        <td class="text-center"><a href="/PhieuXuat/ChiTietPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
+                                        <td class="text-center"><a href="/PhieuXuat/CapNhatPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
+                                        <td class="text-center"><a href="/PhieuXuat/XoaPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pull-right">
+                        <a class="btn btn-success" href="/BaoCao/TaoBaoCao">Tạo báo cáo</a>
+                    </div>
+                    <div class="pull-left">
+                        <a class="btn btn-default" href="/">Về trang chính</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

@@ -25,10 +25,10 @@
     <!-- bootstrap-daterangepicker -->
     <link href="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
+    @RenderSection("headerStyles", false)
+
     <!-- Custom Theme Style -->
     <link href="~/Assets/build/css/custom.min.css" rel="stylesheet">
-
-    @RenderSection("headerStyles",false)
 </head>
 
 <body class="nav-md">
@@ -43,10 +43,10 @@
             @{ Html.RenderPartial("Footer"); }
         </div>
     </div>
-
+    
     <!-- jQuery -->
     <script src="~/Assets/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI -->
+    <!-- jQuery UI CSS -->
     <script src="~/Assets/vendors/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap -->
     <script src="~/Assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -84,10 +84,10 @@
     <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
     <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-    @RenderSection("footerJS",false)
-
     <!-- Custom Theme Scripts -->
     <script src="~/Assets/build/js/custom.min.js"></script>
+
+    @RenderSection("footerJS",false)
 
 </body>
 </html>

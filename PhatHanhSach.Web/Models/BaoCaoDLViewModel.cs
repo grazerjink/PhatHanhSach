@@ -11,8 +11,11 @@ namespace PhatHanhSach.Web.Models
         public string MaDaiLy { get; set; }
         public DateTime ThoiGianBatDau { get; set; }
         public DateTime ThoiGianKetThuc { get; set; }
-        public DateTime ThoiGianLap { get; set; }
-        public double TongTien { get; set; }
+        public DateTime ThoiGianLapPhieu { get; set; }
+        public double TongTienThanhToan { get; set; }
+        public double TongTienConNo { get; set; }
         public bool TrangThai { get; set; }
+        public DaiLyViewModel DaiLy { get; set; }
+        public CtBaoCaoDLViewModel ctBaoCao { get; set; }
     }
 }

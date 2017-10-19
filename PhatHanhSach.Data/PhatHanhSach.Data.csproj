@@ -111,7 +111,13 @@
     <Compile Include="Models\Sach.cs">
       <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ThanhToan.cs">
+      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TinhTrang.cs">
       <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TonKho.cs">
@@ -160,5 +166,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">
+      <Project>{397EE5F6-7E63-43FF-ACF7-903208A37C78}</Project>
+      <Name>PhatHanhSach.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

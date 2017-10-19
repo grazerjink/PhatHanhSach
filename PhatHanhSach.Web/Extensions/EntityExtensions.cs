@@ -86,7 +86,13 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdateCtBaoCaoDL(this CtBaoCaoDL ctBaoCaoDL, CtBaoCaoDLViewModel ctBaoCaoDLVm)
         {
-            //// TODO:
+            ctBaoCaoDL.MaBaoCao = ctBaoCaoDLVm.MaBaoCao;
+            ctBaoCaoDL.MaSach = ctBaoCaoDLVm.MaSach;
+            ctBaoCaoDL.DonGiaXuat = ctBaoCaoDLVm.DonGiaXuat;
+            ctBaoCaoDL.SoLuongBan = ctBaoCaoDLVm.SoLuongBan;
+            ctBaoCaoDL.SoLuongCon = ctBaoCaoDLVm.SoLuongCon;
+            ctBaoCaoDL.TienNo = ctBaoCaoDLVm.TienNo;
+            ctBaoCaoDL.ThanhTien = ctBaoCaoDLVm.ThanhTien;
         }
 
         public static void UpdateCtDoanhThu(this CtDoanhThu ctDoanhThu, CtDoanhThuViewModel ctDoanhThuVm)
@@ -101,7 +107,14 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdateBaoCaoDL(this BaoCaoDL baoCaoDL, BaoCaoDLViewModel baoCaoDLVm)
         {
-            //// TODO:
+            baoCaoDL.MaBaoCao = baoCaoDLVm.MaBaoCao;
+            baoCaoDL.MaDaiLy = baoCaoDLVm.MaDaiLy;
+            baoCaoDL.ThoiGianBatDau = baoCaoDLVm.ThoiGianBatDau;
+            baoCaoDL.ThoiGianKetThuc = baoCaoDLVm.ThoiGianKetThuc;
+            baoCaoDL.ThoiGianLapPhieu = baoCaoDLVm.ThoiGianLapPhieu;
+            baoCaoDL.TongTienConNo = baoCaoDLVm.TongTienConNo;
+            baoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
+            baoCaoDL.TrangThai = true;
         }
 
         public static void UpdateCongNoDL(this CongNoDL congNoDL, CongNoDLViewModel congNoDLVm)

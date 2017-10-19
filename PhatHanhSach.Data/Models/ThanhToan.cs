@@ -25,8 +25,10 @@ namespace PhatHanhSach.Data.Models
         public string MaNXB { get; set; }
         public Nullable<System.DateTime> ThoiGianBatDau { get; set; }
         public Nullable<System.DateTime> ThoiGianKetThuc { get; set; }
-        public Nullable<System.DateTime> ThoiGianLap { get; set; }
-        public Nullable<double> TongTien { get; set; }
+        public Nullable<System.DateTime> ThoiGianLapPhieu { get; set; }
+        public Nullable<double> TongTienThanhToan { get; set; }
+        public Nullable<double> TongTienConNo { get; set; }
+        public Nullable<int> TinhTrang { get; set; }
         public Nullable<bool> TrangThai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -34,5 +36,6 @@ namespace PhatHanhSach.Data.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CtThanhToan> CtThanhToans { get; set; }
         public virtual NhaXuatBan NhaXuatBan { get; set; }
+        public virtual TinhTrang TinhTrang1 { get; set; }
     }
 }

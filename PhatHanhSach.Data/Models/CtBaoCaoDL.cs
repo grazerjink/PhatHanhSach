@@ -17,9 +17,11 @@ namespace PhatHanhSach.Data.Models
         public int Id { get; set; }
         public string MaBaoCao { get; set; }
         public string MaSach { get; set; }
-        public Nullable<int> SoLuongBan { get; set; }
         public Nullable<double> DonGiaXuat { get; set; }
+        public Nullable<int> SoLuongBan { get; set; }
         public Nullable<double> ThanhTien { get; set; }
+        public Nullable<int> SoLuongCon { get; set; }
+        public Nullable<double> TienNo { get; set; }
     
         public virtual BaoCaoDL BaoCaoDL { get; set; }
         public virtual Sach Sach { get; set; }

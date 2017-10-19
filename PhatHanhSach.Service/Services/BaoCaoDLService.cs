@@ -1,6 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
 using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
+using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace PhatHanhSach.Service
 
         BaoCaoDL Delete(BaoCaoDL baoCaoDL);
 
-        IEnumerable<BaoCaoDL> GetAll();
+        IEnumerable<BaoCaoDL> GetAll(string[] includes);
 
         BaoCaoDL GetByCode(string code);
+
+        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate);
 
         void Save();
     }
@@ -50,9 +53,16 @@ namespace PhatHanhSach.Service
             return baoCaoDLRepository.Delete(baoCaoDL);
         }
 
-        public IEnumerable<BaoCaoDL> GetAll()
+        public IEnumerable<BaoCaoDL> GetAll(string[] includes)
         {
-            return baoCaoDLRepository.GetAll();
+            if(includes != null)
+            {
+                return baoCaoDLRepository.GetAll(includes);
+            }
+            else
+            {
+                return baoCaoDLRepository.GetAll();
+            }
         }
 
         public BaoCaoDL GetByCode(string code)
@@ -65,5 +75,9 @@ namespace PhatHanhSach.Service
             unitOfWork.Commit();
         }
 
+        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate)
+        {
+            return baoCaoDLRepository.GetListAnalysisReport(code, fromDate, toDate);
+        }
     }
 }

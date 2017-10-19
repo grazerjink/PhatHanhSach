@@ -1,4 +1,4 @@
-﻿CREATE TRIGGER trgThemCapNhatCtPhieuXuat
+﻿ALTER TRIGGER trgThemCapNhatCtPhieuXuat
 ON CtPhieuXuat
 AFTER INSERT, UPDATE
 AS

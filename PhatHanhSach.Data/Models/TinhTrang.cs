@@ -12,27 +12,21 @@ namespace PhatHanhSach.Data.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DaiLy
+    public partial class TinhTrang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DaiLy()
+        public TinhTrang()
         {
             this.BaoCaoDLs = new HashSet<BaoCaoDL>();
-            this.CongNoDLs = new HashSet<CongNoDL>();
-            this.PhieuXuats = new HashSet<PhieuXuat>();
+            this.ThanhToans = new HashSet<ThanhToan>();
         }
     
-        public string MaDaiLy { get; set; }
-        public string TenDaiLy { get; set; }
-        public string SoDienThoai { get; set; }
-        public string DiaChi { get; set; }
-        public Nullable<bool> TrangThai { get; set; }
+        public int Id { get; set; }
+        public string MoTa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaoCaoDL> BaoCaoDLs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CongNoDL> CongNoDLs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuXuat> PhieuXuats { get; set; }
+        public virtual ICollection<ThanhToan> ThanhToans { get; set; }
     }
 }

@@ -71,6 +71,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">
+      <Project>{397EE5F6-7E63-43FF-ACF7-903208A37C78}</Project>
+      <Name>PhatHanhSach.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">
       <Project>{73d0dcb3-e59a-4ea9-a48e-eb81efcc49df}</Project>
       <Name>PhatHanhSach.Data</Name>

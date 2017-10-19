@@ -1,4 +1,4 @@
-CREATE TRIGGER trgThemCapNhatCtPhieuNhap
+ALTER TRIGGER trgThemCapNhatCtPhieuNhap
 ON CtPhieuNhap
 AFTER INSERT, UPDATE
 AS

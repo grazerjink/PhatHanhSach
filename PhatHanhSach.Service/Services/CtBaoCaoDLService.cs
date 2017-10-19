@@ -35,7 +35,7 @@ namespace PhatHanhSach.Service
             this.unitOfWork = unitOfWork;
         }
 
-        public CtBaoCaoDL  Add(CtBaoCaoDL ctBaoCaoDL)
+        public CtBaoCaoDL Add(CtBaoCaoDL ctBaoCaoDL)
         {
             return ctBaoCaoDLRepository.Add(ctBaoCaoDL);
         }
@@ -64,6 +64,5 @@ namespace PhatHanhSach.Service
         {
             unitOfWork.Commit();
         }
-
     }
 }

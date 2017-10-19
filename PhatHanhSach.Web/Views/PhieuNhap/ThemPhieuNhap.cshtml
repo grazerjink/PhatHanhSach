@@ -7,12 +7,48 @@
 }
 
 @section headerStyles {
+    <!-- bootstrap-datetimepicker -->
+    <link href="~/Assets/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="~/Assets/vendors/normalize-css/normalize.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+    <link href="~/Assets/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+
     <link href="~/Assets/css/myCustom.css" rel="stylesheet">
 }
 
 @section footerJS {
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/Assets/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Ion.RangeSlider -->
+    <script src="~/Assets/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <!-- Bootstrap Colorpicker -->
+    <script src="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/Assets/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- jQuery Knob -->
+    <script src="~/Assets/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+    <!-- Cropper -->
+    <script src="~/Assets/vendors/cropper/dist/cropper.min.js"></script>
     <!-- validator -->
     <script src="~/Assets/vendors/validator/validator.js"></script>
+
+    <!-- Initialize datetimepicker -->
+    <script>
+        $('#myDate').datetimepicker({
+            format: 'DD / MM / YYYY',
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+    </script>
+
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
+
     <!-- autocomplete jquery -->
     <script src="~/Assets/js/myCustomJS.js"></script>
 }
@@ -58,11 +94,13 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Thời gian nhập <span class="required">*</span>
                                 </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    <div class="xdisplay_inputx form-group has-feedback">
-                                        @Html.TextBoxFor(m => m.ThoiGianNhap, new { @id = "single_cal3", @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Nhập thông tin thời gian nhập sách...", @required = "", @aria_describedby = "inputSuccess2Status3" })
+                                <div class="control-group col-md-5 col-sm-6 col-xs-12">
+                                    <div class='input-group date' id="myDate">
+                                        @Html.TextBoxFor(m => m.ThoiGianNhap, new { @class = "form-control", placeholder = "Nhập thời gian tạo phiếu..." })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
-                                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
@@ -80,25 +118,7 @@
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     @Html.TextBoxFor(m => m.NguoiGiao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập họ tên người giao phiếu...", @required = "" })
                                 </div>
-                            </div>
-
-                            @*<div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tổng số lượng <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.TongSoLuong, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tổng số lượng sách...", type = "number", @required = "" })
-                                </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tổng số tiền <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.TongTien, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tổng số tiền sách...", type = "number", @required = "" })
-                                </div>
-                            </div>*@                     
-
+                            </div>       
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
                                     @Html.ValidationSummary(false, "", new { @class = "error" })

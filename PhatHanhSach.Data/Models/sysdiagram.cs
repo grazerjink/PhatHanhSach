@@ -12,14 +12,12 @@ namespace PhatHanhSach.Data.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CongNoDL
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public string MaDaiLy { get; set; }
-        public Nullable<double> TongTienThanhToan { get; set; }
-        public Nullable<double> TongTienConNo { get; set; }
-        public Nullable<System.DateTime> NgayCapNhat { get; set; }
-    
-        public virtual DaiLy DaiLy { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

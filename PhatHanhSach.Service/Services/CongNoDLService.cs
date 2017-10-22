@@ -1,12 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -56,7 +51,7 @@ namespace PhatHanhSach.Service
             return congNoDLRepository.GetAll();
         }
 
-        public CongNoDL GetByCode(int id)
+        public CongNoDL GetById(int id)
         {
             return congNoDLRepository.GetSingleById(id);
         }
@@ -65,6 +60,5 @@ namespace PhatHanhSach.Service
         {
             unitOfWork.Commit();
         }
-
     }
 }

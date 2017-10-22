@@ -1,12 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service.Services
 {
@@ -23,7 +18,7 @@ namespace PhatHanhSach.Service.Services
         void Save();
     }
 
-    class TinhTrangService : ITinhTrangService
+    internal class TinhTrangService : ITinhTrangService
     {
         private ITinhTrangRepository tinhTrangRepository;
         private IUnitOfWork unitOfWork;

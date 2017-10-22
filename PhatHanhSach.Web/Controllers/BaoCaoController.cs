@@ -8,11 +8,11 @@ using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 
 namespace PhatHanhSach.Web.Controllers
 {
+    [RoutePrefix("bao-cao")]
     public class BaoCaoController : Controller
     {
         private IBaoCaoDLService baoCaoDLService;
@@ -38,6 +38,7 @@ namespace PhatHanhSach.Web.Controllers
             this.congNoDLService = congNoDLService;
         }
 
+        [Route("")]
         [HttpGet]
         public ActionResult BaoCaoDaiLy()
         {
@@ -46,6 +47,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(dsBaoCaoDLViewModel);
         }
 
+        [Route("tao-bao-cao")]
         [HttpGet]
         public ActionResult TaoBaoCao()
         {
@@ -55,6 +57,7 @@ namespace PhatHanhSach.Web.Controllers
             return View();
         }
 
+        [Route("tao-bao-cao")]
         [HttpPost]
         public ActionResult TaoBaoCao(BaoCaoDLViewModel baoCaoDLVm)
         {
@@ -72,6 +75,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(baoCaoDLVm);
         }
 
+        [Route("them-chi-tiet")]
         [HttpGet]
         public ActionResult ThemChiTietBaoCao()
         {
@@ -80,6 +84,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(baoCaoDLVm);
         }
 
+        [Route("them-chi-tiet")]
         [HttpPost]
         public ActionResult ThemChiTietBaoCao(BaoCaoDLViewModel baoCaoDLVm)
         {
@@ -184,6 +189,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(baoCaoDLVm);
         }
 
+        [Route("chi-tiet-bc.{id}")]
         [HttpGet]
         public ActionResult ChiTietBaoCao(int id)
         {
@@ -242,6 +248,7 @@ namespace PhatHanhSach.Web.Controllers
             return View(baoCaoDLVM);
         }
 
+        [Route("cap-nhat-chi-tiet")]
         [HttpPost]
         public ActionResult CapNhatBaoCao(BaoCaoDLViewModel baoCaoDLVM)
         {
@@ -326,6 +333,7 @@ namespace PhatHanhSach.Web.Controllers
             return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVM.Id });
         }
 
+        [Route("cap-nhat-sach-ban")]
         [HttpPost]
         public ActionResult CapNhatSachBan(BaoCaoDLViewModel baoCaoDLVm)
         {
@@ -377,16 +385,6 @@ namespace PhatHanhSach.Web.Controllers
             TempData["Changed"] = false;
 
             return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
-        }
-
-        [HttpGet]
-        public JsonResult GetThongTinDaiLy(int id)
-        {
-            var daiLy = daiLyService.GetById(id);
-            var daiLyVM = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
-            Request.ContentEncoding = Encoding.UTF8;
-            Response.ContentEncoding = Encoding.UTF8;
-            return Json(daiLyVM, JsonRequestBehavior.AllowGet);
         }
     }
 }

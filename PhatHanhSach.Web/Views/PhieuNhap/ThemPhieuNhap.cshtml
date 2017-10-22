@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "ThemPhieuNhap";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var dsNXB = (IEnumerable<PhatHanhSach.Web.Models.NhaXuatBanViewModel>) ViewBag.DanhSachNXB;
 }
 
 @section headerStyles {
@@ -36,6 +35,8 @@
     <script src="~/Assets/vendors/cropper/dist/cropper.min.js"></script>
     <!-- validator -->
     <script src="~/Assets/vendors/validator/validator.js"></script>
+    <!-- autocomplete jquery -->
+    <script src="~/Assets/js/myCustomJS.js"></script>
 
     <!-- Initialize datetimepicker -->
     <script>
@@ -45,12 +46,6 @@
             allowInputToggle: true
         });
     </script>
-
-    <!-- validator -->
-    <script src="~/Assets/vendors/validator/validator.js"></script>
-
-    <!-- autocomplete jquery -->
-    <script src="~/Assets/js/myCustomJS.js"></script>
 }
 
 <!-- page content -->
@@ -82,12 +77,13 @@
                         {
                             @Html.AntiForgeryToken()
                             <span class="section">Thông tin phiếu nhập</span>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã phiếu nhập sách <span class="required">*</span>
+                            <div class="item form-group ui-widget">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listNXB">
+                                    Thông tin nhà xuất bản <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaPhieuNhap, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã của phiếu nhập...", @required = "" })
+                                    <input id="listNXB" class="form-control col-md-7 col-xs-12" placeholder="Nhập thông tin nhà xuất bản..." required />
+                                    @Html.HiddenFor(m => m.IdNXB)
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -96,21 +92,13 @@
                                 </label>
                                 <div class="control-group col-md-5 col-sm-6 col-xs-12">
                                     <div class='input-group date' id="myDate">
-                                        @Html.TextBoxFor(m => m.ThoiGianNhap, new { @class = "form-control", placeholder = "Nhập thời gian tạo phiếu..." })
+                                        @Html.TextBoxFor(m => m.ThoiGianNhap, new { @class = "form-control", placeholder = "Nhập thời gian tạo phiếu...", @required = "" })
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="item form-group ui-widget">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listNXB">
-                                    Mã nhà xuất bản <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaNXB, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã nhà xuất bản...", @required = "" })
-                                </div>
-                            </div>
+                            </div>                            
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Họ tên người giao phiếu <span class="required">*</span>
@@ -128,7 +116,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="pull-left">
-                                        <a href="/PhieuNhap/DanhSachPhieuNhap" class="btn btn-default">Quay về</a>
+                                        <a href="/phieu-nhap/" class="btn btn-default">Quay về</a>
                                     </div>
                                     <div class="pull-right">
                                         <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
@@ -140,15 +128,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div hidden="hidden">
-            <ul>
-                @foreach(var nxb in dsNXB)
-                {
-                    <li class="nxb">@nxb.MaNXB</li>
-                }
-            </ul>
         </div>
     </div>
 </div>

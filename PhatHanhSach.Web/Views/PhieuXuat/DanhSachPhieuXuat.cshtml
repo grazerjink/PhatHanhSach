@@ -65,15 +65,14 @@
                                 @foreach (var px in Model)
                                 {
                                     <tr>
-                                        <td>@px.MaPhieuXuat</td>
+                                        <td>PX<span>@px.Id.ToString("D0")</span></td>
                                         <td>@px.DaiLy.TenDaiLy</td>
                                         <td>@px.TongSoLuong</td>
                                         <td>@px.TongTien</td>
                                         <td>@px.ThoiGianXuat</td>
                                         <td>@px.NguoiNhan</td>
-                                        <td class="text-center"><a href="/PhieuXuat/ChiTietPhieuXuat/@px.MaPhieuXuat" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
-                                        <td class="text-center"><a href="/PhieuXuat/CapNhatPhieuXuat/@px.MaPhieuXuat" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
-                                        <td class="text-center"><a href="/PhieuXuat/XoaPhieuXuat/@px.MaPhieuXuat" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                        <td class="text-center"><a href="/phieu-xuat/chi-tiet-phieu-px.@px.Id" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
+                                        <td class="text-center"><a href="/phieu-xuat/xoa-phieu-px.@px.Id" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -81,7 +80,7 @@
                     </div>
 
                     <div class="pull-right">
-                        <a class="btn btn-success" href="/PhieuXuat/ThemPhieuXuat">Thêm phiếu xuất</a>
+                        <a class="btn btn-success" href="/phieu-xuat/them-phieu-xuat/">Thêm phiếu xuất</a>
                     </div>
                     <div class="pull-left">
                         <a class="btn btn-default" href="/">Về trang chính</a>

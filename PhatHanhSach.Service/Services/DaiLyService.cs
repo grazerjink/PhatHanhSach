@@ -1,11 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
-using System;
+using PhatHanhSach.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -21,7 +17,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<DaiLy> GetAllActive();
 
-        DaiLy GetByCode(string code);
+        DaiLy GetById(int code);
 
         void Save();
     }
@@ -62,9 +58,9 @@ namespace PhatHanhSach.Service
             return daiLyRepository.GetMulti(x => x.TrangThai == true);
         }
 
-        public DaiLy GetByCode(string code)
+        public DaiLy GetById(int id)
         {
-            return daiLyRepository.GetSingleByStringCodeId(code);
+            return daiLyRepository.GetSingleById(id);
         }
 
         public void Save()

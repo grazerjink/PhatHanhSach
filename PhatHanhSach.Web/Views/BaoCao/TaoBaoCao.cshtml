@@ -111,7 +111,7 @@
                                 </label>
                                 <div class="control-group col-md-5 col-sm-6 col-xs-12">
                                     <div class='input-group date' id="myCreateDate">
-                                        @Html.TextBoxFor(m => m.ThoiGianLapPhieu, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.ThoiGianLapPhieu, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian hiện tại..." })
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -134,7 +134,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class='input-group date' id="myStartDate">
-                                                @Html.TextBoxFor(m => m.ThoiGianBatDau, new { @class = "form-control" })
+                                                @Html.TextBoxFor(m => m.ThoiGianBatDau, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian bắt đầu..." })
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class='input-group date' id="myEndDate">
-                                                @Html.TextBoxFor(m => m.ThoiGianKetThuc, new { @class = "form-control" })
+                                                @Html.TextBoxFor(m => m.ThoiGianKetThuc, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian kết thúc..." })
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>

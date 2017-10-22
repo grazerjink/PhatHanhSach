@@ -1,4 +1,4 @@
-﻿using PhatHanhSach.Data.Models;
+﻿using PhatHanhSach.Model;
 using System;
 
 namespace PhatHanhSach.Data.Infrastructure

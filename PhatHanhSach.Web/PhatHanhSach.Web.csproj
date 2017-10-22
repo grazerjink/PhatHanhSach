@@ -10,7 +10,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C4172F68-76B0-449E-8D53-950CFDA6E131}</ProjectGuid>
+    <ProjectGuid>{8B9C5CDF-D375-4996-B71E-9D177856EE8C}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,8 +49,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
@@ -80,9 +81,11 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -172,7 +175,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BaoCaoController.cs" />
     <Compile Include="Controllers\DaiLyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,22 +189,21 @@
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\BaoCaoDLViewModel.cs" />
-    <Compile Include="Models\CongNoDLViewModel.cs" />
-    <Compile Include="Models\CongNoNXBViewModel.cs" />
     <Compile Include="Models\CtBaoCaoDLViewModel.cs" />
-    <Compile Include="Models\CtDoanhThuViewModel.cs" />
     <Compile Include="Models\CtPhieuNhapViewModel.cs" />
     <Compile Include="Models\CtPhieuXuatViewModel.cs" />
-    <Compile Include="Models\CtThanhToanViewModel.cs" />
     <Compile Include="Models\DaiLyViewModel.cs" />
-    <Compile Include="Models\DoanhThuViewModel.cs" />
     <Compile Include="Models\NhaXuatBanViewModel.cs" />
     <Compile Include="Models\PhieuNhapViewModel.cs" />
     <Compile Include="Models\PhieuXuatViewModel.cs" />
     <Compile Include="Models\SachViewModel.cs" />
-    <Compile Include="Models\ThanhToanViewModel.cs" />
-    <Compile Include="Models\TonKhoViewModel.cs" />
+    <Compile Include="Models\TinhTrangViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\build\css\custom.css" />
@@ -232,9 +234,9 @@
     <Content Include="Assets\images\prod-5.jpg" />
     <Content Include="Assets\images\user.png" />
     <Content Include="Assets\images\visa.png" />
-    <Content Include="Assets\js\myCustomJS.js" />
     <Content Include="Assets\js\datepicker\daterangepicker.js" />
     <Content Include="Assets\js\moment\moment.min.js" />
+    <Content Include="Assets\js\myCustomJS.js" />
     <Content Include="Assets\vendors\animate.css\animate.css" />
     <Content Include="Assets\vendors\animate.css\animate.min.css" />
     <Content Include="Assets\vendors\animate.css\gulpfile.js" />
@@ -3674,9 +3676,10 @@
     <Content Include="Assets\vendors\validator\index.html" />
     <Content Include="Assets\vendors\validator\multifield.js" />
     <Content Include="Assets\vendors\validator\validator.js" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -3687,8 +3690,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Ajax\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\StartUp.DI.cs" />
     <Content Include="Assets\vendors\animate.css\.bower.json" />
     <Content Include="Assets\vendors\animate.css\animate-config.json" />
     <Content Include="Assets\vendors\animate.css\bower.json" />
@@ -4125,6 +4130,7 @@
     <Content Include="Assets\vendors\jquery-sparkline\Makefile" />
     <Content Include="Assets\vendors\jquery-sparkline\README.md" />
     <Content Include="Assets\vendors\jquery-sparkline\sparkline.jquery.json" />
+    <Content Include="Assets\vendors\jquery-ui-1.12.1\package.json" />
     <Content Include="Assets\vendors\jquery.easy-pie-chart\.bower.json" />
     <Content Include="Assets\vendors\jquery.easy-pie-chart\.travis.yml" />
     <Content Include="Assets\vendors\jquery.easy-pie-chart\bower.json" />
@@ -4511,41 +4517,49 @@
     <Content Include="Assets\vendors\validator\README.md" />
     <Content Include="Assets\vendors\validator\validator.jquery.json" />
     <Content Include="ConnectionString.config" />
-    <Content Include="Assets\vendors\jquery-ui-1.12.1\package.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\Navigator.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\DaiLy\CapNhatDaiLy.cshtml" />
     <Content Include="Views\DaiLy\DanhSachDaiLy.cshtml" />
     <Content Include="Views\DaiLy\ThemDaiLy.cshtml" />
-    <Content Include="Views\DaiLy\CapNhatDaiLy.cshtml" />
-    <Content Include="Views\PhieuNhap\ThemPhieuNhap.cshtml" />
     <Content Include="Views\PhieuNhap\DanhSachPhieuNhap.cshtml" />
     <Content Include="Views\PhieuNhap\ThemChiTietPhieuNhap.cshtml" />
+    <Content Include="Views\PhieuNhap\ThemPhieuNhap.cshtml" />
     <Content Include="Views\PhieuXuat\DanhSachPhieuXuat.cshtml" />
     <Content Include="Views\PhieuXuat\ThemChiTietPhieuXuat.cshtml" />
     <Content Include="Views\PhieuXuat\ThemPhieuXuat.cshtml" />
-    <Content Include="Views\BaoCao\TaoBaoCao.cshtml" />
-    <Content Include="Views\ThongKe\TonKho.cshtml" />
-    <Content Include="Views\ThongKe\DoanhThu.cshtml" />
     <Content Include="Views\ThongKe\CongNoDaiLy.cshtml" />
     <Content Include="Views\ThongKe\CongNoNXB.cshtml" />
-    <Content Include="Views\BaoCao\ThemChiTietBaoCao.cshtml" />
+    <Content Include="Views\ThongKe\DoanhThu.cshtml" />
+    <Content Include="Views\ThongKe\TonKho.cshtml" />
     <Content Include="Views\BaoCao\BaoCaoDaiLy.cshtml" />
+    <Content Include="Views\BaoCao\ChiTietBaoCao.cshtml" />
+    <Content Include="Views\BaoCao\TaoBaoCao.cshtml" />
+    <Content Include="Views\BaoCao\ThemChiTietBaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">
-      <Project>{397EE5F6-7E63-43FF-ACF7-903208A37C78}</Project>
+      <Project>{D1D527BA-3B59-4BDD-BB2C-776AB0433812}</Project>
       <Name>PhatHanhSach.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">
-      <Project>{73d0dcb3-e59a-4ea9-a48e-eb81efcc49df}</Project>
+      <Project>{C1327C31-5EA4-47C1-BA04-68BF013E9B5A}</Project>
       <Name>PhatHanhSach.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhatHanhSach.Model\PhatHanhSach.Model.csproj">
+      <Project>{A43C0AAE-1593-40C6-ACB9-C2B2509904AD}</Project>
+      <Name>PhatHanhSach.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhatHanhSach.Service\PhatHanhSach.Service.csproj">
-      <Project>{63e6a122-ebfd-418d-b6f7-4e4b8389428f}</Project>
+      <Project>{6DE1D58A-1986-4982-9920-FE3C2E0504F9}</Project>
       <Name>PhatHanhSach.Service</Name>
     </ProjectReference>
   </ItemGroup>
@@ -4573,9 +4587,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50307</DevelopmentServerPort>
+          <DevelopmentServerPort>57059</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50307/</IISUrl>
+          <IISUrl>http://localhost:57059/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

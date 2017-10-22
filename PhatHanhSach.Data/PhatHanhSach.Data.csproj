@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73D0DCB3-E59A-4EA9-A48E-EB81EFCC49DF}</ProjectGuid>
+    <ProjectGuid>{C1327C31-5EA4-47C1-BA04-68BF013E9B5A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PhatHanhSach.Data</RootNamespace>
@@ -39,8 +39,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,75 +52,6 @@
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Models\BaoCaoDL.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CongNoDL.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CongNoNXB.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CtBaoCaoDL.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CtDoanhThu.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CtPhieuNhap.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CtPhieuXuat.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CtThanhToan.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DaiLy.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DoanhThu.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NhaXuatBan.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PhatHanhSachModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PhatHanhSachModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PhatHanhSachModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PhatHanhSachModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PhieuNhap.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PhieuXuat.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Sach.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ThanhToan.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TinhTrang.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TonKho.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaoCaoDLRepository.cs" />
     <Compile Include="Repositories\CongNoDLRepository.cs" />
@@ -139,39 +68,23 @@
     <Compile Include="Repositories\PhieuXuatRepository.cs" />
     <Compile Include="Repositories\SachRepository.cs" />
     <Compile Include="Repositories\ThanhToanRepository.cs" />
+    <Compile Include="Repositories\TinhTrangRepository.cs" />
     <Compile Include="Repositories\TonKhoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\PhatHanhSachModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
-      <LastGenOutput>PhatHanhSachModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\PhatHanhSachModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
-      <LastGenOutput>PhatHanhSachModel.cs</LastGenOutput>
-    </Content>
-    <None Include="App.Config" />
-    <Content Include="ConnectionString.config" />
-    <EntityDeploy Include="Models\PhatHanhSachModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PhatHanhSachModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\PhatHanhSachModel.edmx.diagram">
-      <DependentUpon>PhatHanhSachModel.edmx</DependentUpon>
-    </None>
+    <None Include="App.config" />
+    <None Include="ConnectionString.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">
-      <Project>{397EE5F6-7E63-43FF-ACF7-903208A37C78}</Project>
+      <Project>{D1D527BA-3B59-4BDD-BB2C-776AB0433812}</Project>
       <Name>PhatHanhSach.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhatHanhSach.Model\PhatHanhSach.Model.csproj">
+      <Project>{A43C0AAE-1593-40C6-ACB9-C2B2509904AD}</Project>
+      <Name>PhatHanhSach.Model</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

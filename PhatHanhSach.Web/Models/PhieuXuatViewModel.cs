@@ -7,8 +7,8 @@ namespace PhatHanhSach.Web.Models
 {
     public class PhieuXuatViewModel
     {
-        public string MaPhieuXuat { get; set; }
-        public string MaDaiLy { get; set; }
+        public int Id { get; set; }
+        public int IdDaiLy { get; set; }
         public string NguoiNhan { get; set; }
         public int TongSoLuong { get; set; }
         public double TongTien { get; set; }

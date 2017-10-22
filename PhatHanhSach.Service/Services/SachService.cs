@@ -1,11 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
-using System;
+using PhatHanhSach.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -19,7 +15,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<Sach> GetAll();
 
-        Sach GetByCode(string code);
+        Sach GetById(int id);
 
         void Save();
     }
@@ -55,15 +51,14 @@ namespace PhatHanhSach.Service
             return sachRepository.GetAll();
         }
 
-        public Sach GetByCode(string code)
+        public Sach GetById(int id)
         {
-            return sachRepository.GetSingleByStringCodeId(code);
+            return sachRepository.GetSingleById(id);
         }
 
         public void Save()
         {
             unitOfWork.Commit();
         }
-
     }
 }

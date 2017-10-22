@@ -1,11 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
-using System;
+using PhatHanhSach.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -17,9 +13,9 @@ namespace PhatHanhSach.Service
 
         PhieuNhap Delete(PhieuNhap phieuNhap);
 
-        IEnumerable<PhieuNhap> GetAll(string[] includes = null);
+        IEnumerable<PhieuNhap> GetAll(string[] includes = null, bool trangThai = true);
 
-        PhieuNhap GetByCode(string code);
+        PhieuNhap GetById(int id);
 
         void Save();
     }
@@ -50,23 +46,22 @@ namespace PhatHanhSach.Service
             return phieuNhapRepository.Delete(phieuNhap);
         }
 
-        public IEnumerable<PhieuNhap> GetAll(string[] includes = null)
+        public IEnumerable<PhieuNhap> GetAll(string[] includes = null, bool trangThai = true)
         {
             if (includes != null)
-                return phieuNhapRepository.GetAll(includes);
+                return phieuNhapRepository.GetMulti(x => x.TrangThai == trangThai, includes);
             else
-                return phieuNhapRepository.GetAll();
+                return phieuNhapRepository.GetMulti(x => x.TrangThai == trangThai);
         }
 
-        public PhieuNhap GetByCode(string code)
+        public PhieuNhap GetById(int id)
         {
-            return phieuNhapRepository.GetSingleByStringCodeId(code);
+            return phieuNhapRepository.GetSingleById(id);
         }
 
         public void Save()
         {
             unitOfWork.Commit();
         }
-
     }
 }

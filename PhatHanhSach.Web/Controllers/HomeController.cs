@@ -1,18 +1,15 @@
-﻿using AutoMapper;
-using PhatHanhSach.Data.Models;
-using PhatHanhSach.Service;
-using PhatHanhSach.Web.Models;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using PhatHanhSach.Web.Extensions;
+﻿using System.Web.Mvc;
 
 namespace PhatHanhSach.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [Route("")]
+        [Route("index")]
+        [Route("trang-chu")]
         public ActionResult Index()
         {
             return View();
-        }        
+        }
     }
 }

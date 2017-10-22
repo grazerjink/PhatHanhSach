@@ -1,6 +1,6 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
+using PhatHanhSach.Model;
 using System.Collections.Generic;
 
 namespace PhatHanhSach.Service
@@ -15,7 +15,9 @@ namespace PhatHanhSach.Service
 
         IEnumerable<CtPhieuXuat> GetAll();
 
-        CtPhieuXuat GetByCode(string code);
+        IEnumerable<CtPhieuXuat> GetMultiByIdPhieuXuat(int idPhieuXuat);
+
+        CtPhieuXuat GetById(int id);
 
         void Save();
     }
@@ -51,15 +53,19 @@ namespace PhatHanhSach.Service
             return ctPhieuXuatRepository.GetAll();
         }
 
-        public CtPhieuXuat GetByCode(string code)
+        public IEnumerable<CtPhieuXuat> GetMultiByIdPhieuXuat(int idPhieuXuat)
         {
-            return ctPhieuXuatRepository.GetSingleByStringCodeId(code);
+            return ctPhieuXuatRepository.GetMulti(x => x.IdPhieuXuat == idPhieuXuat);
+        }
+
+        public CtPhieuXuat GetById(int id)
+        {
+            return ctPhieuXuatRepository.GetSingleById(id);
         }
 
         public void Save()
         {
             unitOfWork.Commit();
         }
-
     }
 }

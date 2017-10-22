@@ -1,5 +1,5 @@
 ﻿
-using PhatHanhSach.Data.Models;
+using PhatHanhSach.Model;
 
 namespace PhatHanhSach.Data.Infrastructure
 {

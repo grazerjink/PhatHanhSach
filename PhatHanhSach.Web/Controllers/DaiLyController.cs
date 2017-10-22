@@ -1,46 +1,52 @@
 ﻿using AutoMapper;
-using PhatHanhSach.Data.Models;
+using PhatHanhSach.Model;
 using PhatHanhSach.Service;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhatHanhSach.Web.Controllers
 {
+    [RoutePrefix("dai-ly")]
     public class DaiLyController : Controller
     {
-        IDaiLyService daiLyService;
+        private IDaiLyService daiLyService;
 
         public DaiLyController(IDaiLyService daiLyService)
         {
             this.daiLyService = daiLyService;
         }
 
-        // GET: DaiLy
+        [Route("")]
+        [HttpGet]
         public ActionResult DanhSachDaiLy()
         {
             var dsDaiLy = daiLyService.GetAllActive();
-            var dsDLViewModel = Mapper.Map<IEnumerable<DaiLy>, IEnumerable<DaiLyViewModel>>(dsDaiLy);
-            return View(dsDLViewModel);
+            var dsDaiLyVm = Mapper.Map<IEnumerable<DaiLy>, IEnumerable<DaiLyViewModel>>(dsDaiLy);
+            return View(dsDaiLyVm);
         }
 
+        [Route("them")]
         [HttpGet]
         public ActionResult ThemDaiLy()
         {
             return View();
         }
 
+        [Route("them")]
         [HttpPost]
         public ActionResult ThemDaiLy(DaiLyViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var newDaiLy = new DaiLy();
                 newDaiLy.UpdateDaiLy(model);
+                // Insert into database
                 daiLyService.Add(newDaiLy);
+                // Commit
                 daiLyService.Save();
+
                 return RedirectToAction("ThemDaiLy", "DaiLy");
             }
             else
@@ -49,14 +55,17 @@ namespace PhatHanhSach.Web.Controllers
             }
         }
 
+        [Route("cap-nhat/dl.{id}")]
         [HttpGet]
-        public ActionResult CapNhatDaiLy(string id)
+        public ActionResult CapNhatDaiLy(int id)
         {
-            var daiLy = daiLyService.GetByCode(id);
-            var daiLyViewModel = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
-            return View(daiLyViewModel);
+            var daiLy = daiLyService.GetById(id);
+            var daiLyVm = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
+
+            return View(daiLyVm);
         }
 
+        [Route("cap-nhat")]
         [HttpPost]
         public ActionResult CapNhatDaiLy(DaiLyViewModel model)
         {
@@ -70,14 +79,15 @@ namespace PhatHanhSach.Web.Controllers
 
             return View(model);
         }
-        
-        public ActionResult XoaDaiLy(string id)
+
+        [Route("xoa/dl.{id}")]
+        public ActionResult XoaDaiLy(int id)
         {
-            var daiLy = daiLyService.GetByCode(id);
+            var daiLy = daiLyService.GetById(id);
             daiLy.TrangThai = false;
             daiLyService.Update(daiLy);
             daiLyService.Save();
-            return RedirectToAction("DanhSachDaiLy");
+            return RedirectToRoute("dai-ly");
         }
     }
 }

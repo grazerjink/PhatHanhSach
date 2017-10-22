@@ -1,11 +1,9 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
+using PhatHanhSach.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -18,8 +16,10 @@ namespace PhatHanhSach.Service
         TonKho Delete(TonKho tonKho);
 
         IEnumerable<TonKho> GetAll();
-        
-        TonKho GetByCode(string code, DateTime date);
+
+        IEnumerable<TonKho> GetMultiByDateAndId(DateTime date, int idSach);
+
+        TonKho GetSingleByIdAndDate(int idSach, DateTime date);
 
         void Save();
     }
@@ -55,14 +55,19 @@ namespace PhatHanhSach.Service
             return tonKhoRepository.GetAll();
         }
 
+        public IEnumerable<TonKho> GetMultiByDateAndId(DateTime date, int idSach)
+        {
+            return tonKhoRepository.GetMulti(x => x.ThoiGian >= date && x.IdSach == idSach);
+        }
+
+        public TonKho GetSingleByIdAndDate(int idSach, DateTime date)
+        {
+            return tonKhoRepository.GetMulti(x => x.ThoiGian <= date && x.IdSach == idSach).OrderByDescending(x => x.ThoiGian).OrderByDescending(x => x.Id).FirstOrDefault();
+        }
+
         public void Save()
         {
             unitOfWork.Commit();
-        }
-
-        public TonKho GetByCode(string code, DateTime date)
-        {
-            return tonKhoRepository.GetMulti(x => x.ThoiGian <= date && x.MaSach == code).OrderByDescending(x => x.ThoiGian).OrderByDescending(x => x.Id).FirstOrDefault();
         }
     }
 }

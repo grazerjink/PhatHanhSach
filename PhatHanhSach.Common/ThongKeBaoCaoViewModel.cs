@@ -7,7 +7,7 @@ namespace PhatHanhSach.Web.Models
 {
     public class ThongKeBaoCaoViewModel
     {
-        public string MaSach { get; set; }
+        public int IdSach { get; set; }
         public int SoLuongMua { get; set; }
         public double ThanhTien { get; set; }
     }

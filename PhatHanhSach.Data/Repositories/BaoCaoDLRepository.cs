@@ -1,5 +1,5 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
+using PhatHanhSach.Model;
 using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace PhatHanhSach.Data.Repositories
 {
     public interface IBaoCaoDLRepository : IRepository<BaoCaoDL>
     {
-        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
     }
 
     public class BaoCaoDLRepository : RepositoryBase<BaoCaoDL>, IBaoCaoDLRepository
@@ -18,10 +18,10 @@ namespace PhatHanhSach.Data.Repositories
         {
         }
 
-        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
             var parameters = new SqlParameter[]{
-                new SqlParameter("@maDaiLy",code),
+                new SqlParameter("@maDaiLy",id),
                 new SqlParameter("@batDau",fromDate),
                 new SqlParameter("@ketThuc",toDate)
             };

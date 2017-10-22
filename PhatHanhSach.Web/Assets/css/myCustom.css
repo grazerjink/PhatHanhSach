@@ -6,3 +6,14 @@
     font-weight: bolder;
     color: red;
 }
+
+.ui-autocomplete {
+    max-height: 150px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
+* html .ui-autocomplete {
+    height: 150px;
+}

@@ -1,4 +1,4 @@
-﻿using PhatHanhSach.Data.Models;
+﻿using PhatHanhSach.Model;
 using PhatHanhSach.Web.Models;
 
 namespace PhatHanhSach.Web.Extensions
@@ -7,7 +7,7 @@ namespace PhatHanhSach.Web.Extensions
     {
         public static void UpdateDaiLy(this DaiLy daiLy, DaiLyViewModel daiLyVm)
         {
-            daiLy.MaDaiLy = daiLyVm.MaDaiLy;
+            daiLy.Id = daiLyVm.Id;
             daiLy.TenDaiLy = daiLyVm.TenDaiLy;
             daiLy.SoDienThoai = daiLyVm.SoDienThoai;
             daiLy.DiaChi = daiLyVm.DiaChi;
@@ -16,8 +16,8 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdatePhieuNhap(this PhieuNhap pn, PhieuNhapViewModel pnVm)
         {
-            pn.MaPhieuNhap = pnVm.MaPhieuNhap;
-            pn.MaNXB = pnVm.MaNXB;
+            pn.Id = pnVm.Id;
+            pn.IdNXB = pnVm.IdNXB;
             pn.NguoiGiao = pnVm.NguoiGiao;
             pn.ThoiGianNhap = pnVm.ThoiGianNhap;
             pn.TongSoLuong = pnVm.TongSoLuong;
@@ -25,20 +25,9 @@ namespace PhatHanhSach.Web.Extensions
             pn.TrangThai = true;
         }
 
-        public static void UpdatePhieuXuat(this PhieuXuat px, PhieuXuatViewModel pxVm)
-        {
-            px.MaPhieuXuat = pxVm.MaPhieuXuat;
-            px.MaDaiLy = pxVm.MaDaiLy;
-            px.NguoiNhan = pxVm.NguoiNhan;
-            px.ThoiGianXuat = pxVm.ThoiGianXuat;
-            px.TongSoLuong = pxVm.TongSoLuong;
-            px.TongTien = pxVm.TongTien;
-            px.TrangThai = true;
-        }
-
         public static void UpdateNhaXuatBan(this NhaXuatBan nxb, NhaXuatBanViewModel nxbVm)
         {
-            nxb.MaNXB = nxbVm.MaNXB;
+            nxb.Id = nxbVm.Id;
             nxb.TenNXB = nxbVm.TenNXB;
             nxb.SoDienThoai = nxbVm.SoDienThoai;
             nxb.DiaChi = nxbVm.DiaChi;
@@ -48,7 +37,7 @@ namespace PhatHanhSach.Web.Extensions
 
         public static void UpdateSach(this Sach sach, SachViewModel sachVm)
         {
-            sach.MaSach = sachVm.MaSach;
+            sach.Id = sachVm.Id;
             sach.TenSach = sachVm.TenSach;
             sach.TacGia = sachVm.TacGia;
             sach.LinhVuc = sachVm.LinhVuc;
@@ -56,44 +45,71 @@ namespace PhatHanhSach.Web.Extensions
             sach.TrangThai = true;
         }
 
-        public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
-        {
-            tonKho.Id = tonKhoVm.Id;
-            tonKho.MaSach = tonKhoVm.MaSach;
-            tonKho.SoLuong = tonKhoVm.SoLuong;
-            tonKho.ThoiGian = tonKhoVm.ThoiGian;
-        }
-
         public static void UpdateCtPhieuNhap(this CtPhieuNhap ctPhieuNhap, CtPhieuNhapViewModel ctPhieuNhapVm)
         {
-            ctPhieuNhap.MaPhieuNhap = ctPhieuNhapVm.MaPhieuNhap;
             ctPhieuNhap.Id = ctPhieuNhapVm.Id;
-            ctPhieuNhap.MaSach = ctPhieuNhapVm.MaSach;
+            ctPhieuNhap.IdPhieuNhap = ctPhieuNhapVm.IdPhieuNhap;
+            ctPhieuNhap.IdSach = ctPhieuNhapVm.IdSach;
             ctPhieuNhap.SoLuongNhap = ctPhieuNhapVm.SoLuongNhap;
             ctPhieuNhap.ThanhTien = ctPhieuNhapVm.ThanhTien;
-            ctPhieuNhap.GiaNhap = ctPhieuNhapVm.GiaNhap;
+            ctPhieuNhap.DonGiaNhap = ctPhieuNhapVm.DonGiaNhap;
+        }
+
+        public static void UpdatePhieuXuat(this PhieuXuat px, PhieuXuatViewModel pxVm)
+        {
+            px.Id = pxVm.Id;
+            px.IdDaiLy = pxVm.IdDaiLy;
+            px.NguoiNhan = pxVm.NguoiNhan;
+            px.ThoiGianXuat = pxVm.ThoiGianXuat;
+            px.TongSoLuong = pxVm.TongSoLuong;
+            px.TongTien = pxVm.TongTien;
+            px.TrangThai = true;
         }
 
         public static void UpdateCtPhieuXuat(this CtPhieuXuat ctPhieuXuat, CtPhieuXuatViewModel ctPhieuXuatVm)
         {
-            ctPhieuXuat.MaPhieuXuat = ctPhieuXuatVm.MaPhieuXuat;
             ctPhieuXuat.Id = ctPhieuXuatVm.Id;
-            ctPhieuXuat.MaSach = ctPhieuXuatVm.MaSach;
+            ctPhieuXuat.IdPhieuXuat = ctPhieuXuatVm.IdPhieuXuat;
+            ctPhieuXuat.IdSach = ctPhieuXuatVm.IdSach;
             ctPhieuXuat.SoLuongXuat = ctPhieuXuatVm.SoLuongXuat;
             ctPhieuXuat.ThanhTien = ctPhieuXuatVm.ThanhTien;
-            ctPhieuXuat.GiaXuat = ctPhieuXuatVm.GiaXuat;
+            ctPhieuXuat.DonGiaXuat = ctPhieuXuatVm.DonGiaXuat;
+        }
+
+        public static void UpdateBaoCaoDL(this BaoCaoDL baoCaoDL, BaoCaoDLViewModel baoCaoDLVm)
+        {
+            baoCaoDL.Id = baoCaoDLVm.Id;
+            baoCaoDL.IdDaiLy = baoCaoDLVm.IdDaiLy;
+            baoCaoDL.NgayBatDau = baoCaoDLVm.NgayBatDau;
+            baoCaoDL.NgayKetThuc = baoCaoDLVm.NgayKetThuc;
+            baoCaoDL.ThoiGianLapPhieu = baoCaoDLVm.ThoiGianLapPhieu;
+            baoCaoDL.NgayXacNhan = baoCaoDLVm.NgayXacNhan;
+            baoCaoDL.TongTienConNo = baoCaoDLVm.TongTienConNo;
+            baoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
+            baoCaoDL.IdTinhTrang = baoCaoDLVm.IdTinhTrang;
+            baoCaoDL.TrangThai = true;
         }
 
         public static void UpdateCtBaoCaoDL(this CtBaoCaoDL ctBaoCaoDL, CtBaoCaoDLViewModel ctBaoCaoDLVm)
         {
-            ctBaoCaoDL.MaBaoCao = ctBaoCaoDLVm.MaBaoCao;
-            ctBaoCaoDL.MaSach = ctBaoCaoDLVm.MaSach;
+            ctBaoCaoDL.Id = ctBaoCaoDLVm.Id;
+            ctBaoCaoDL.IdBaoCao = ctBaoCaoDLVm.IdBaoCao;
+            ctBaoCaoDL.IdSach = ctBaoCaoDLVm.IdSach;
             ctBaoCaoDL.DonGiaXuat = ctBaoCaoDLVm.DonGiaXuat;
             ctBaoCaoDL.SoLuongBan = ctBaoCaoDLVm.SoLuongBan;
             ctBaoCaoDL.SoLuongCon = ctBaoCaoDLVm.SoLuongCon;
             ctBaoCaoDL.TienNo = ctBaoCaoDLVm.TienNo;
             ctBaoCaoDL.ThanhTien = ctBaoCaoDLVm.ThanhTien;
         }
+
+        /*       
+        public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
+        {
+            tonKho.Id = tonKhoVm.Id;
+            tonKho.MaSach = tonKhoVm.MaSach;
+            tonKho.SoLuong = tonKhoVm.SoLuong;
+            tonKho.ThoiGian = tonKhoVm.ThoiGian;
+        }     
 
         public static void UpdateCtDoanhThu(this CtDoanhThu ctDoanhThu, CtDoanhThuViewModel ctDoanhThuVm)
         {
@@ -103,18 +119,6 @@ namespace PhatHanhSach.Web.Extensions
         public static void UpdateCtThanhToan(this CtThanhToan ctThanhToan, CtThanhToanViewModel ctThanhToanVm)
         {
             //// TODO:
-        }
-
-        public static void UpdateBaoCaoDL(this BaoCaoDL baoCaoDL, BaoCaoDLViewModel baoCaoDLVm)
-        {
-            baoCaoDL.MaBaoCao = baoCaoDLVm.MaBaoCao;
-            baoCaoDL.MaDaiLy = baoCaoDLVm.MaDaiLy;
-            baoCaoDL.ThoiGianBatDau = baoCaoDLVm.ThoiGianBatDau;
-            baoCaoDL.ThoiGianKetThuc = baoCaoDLVm.ThoiGianKetThuc;
-            baoCaoDL.ThoiGianLapPhieu = baoCaoDLVm.ThoiGianLapPhieu;
-            baoCaoDL.TongTienConNo = baoCaoDLVm.TongTienConNo;
-            baoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
-            baoCaoDL.TrangThai = true;
         }
 
         public static void UpdateCongNoDL(this CongNoDL congNoDL, CongNoDLViewModel congNoDLVm)
@@ -136,5 +140,6 @@ namespace PhatHanhSach.Web.Extensions
         {
             //// TODO:
         }
+        */
     }
 }

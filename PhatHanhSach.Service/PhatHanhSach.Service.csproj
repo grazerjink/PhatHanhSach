@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{63E6A122-EBFD-418D-B6F7-4E4B8389428F}</ProjectGuid>
+    <ProjectGuid>{6DE1D58A-1986-4982-9920-FE3C2E0504F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PhatHanhSach.Service</RootNamespace>
@@ -49,36 +49,37 @@
   <ItemGroup>
     <Compile Include="Services\BaoCaoDLService.cs" />
     <Compile Include="Services\CongNoDLService.cs" />
-    <Compile Include="Services\CongNoNXBService.cs" />
     <Compile Include="Services\CtBaoCaoDLService.cs" />
-    <Compile Include="Services\CtDoanhThuService.cs" />
     <Compile Include="Services\CtPhieuNhapService.cs" />
     <Compile Include="Services\CtPhieuXuatService.cs" />
-    <Compile Include="Services\CtThanhToanService.cs" />
-    <Compile Include="Services\DaiLyService.cs" />
-    <Compile Include="Services\DoanhThuService.cs" />
-    <Compile Include="Services\NhaXuatBanService.cs" />
     <Compile Include="Services\PhieuNhapService.cs" />
     <Compile Include="Services\PhieuXuatService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DaiLyService.cs" />
+    <Compile Include="Services\NhaXuatBanService.cs" />
     <Compile Include="Services\SachService.cs" />
-    <Compile Include="Services\ThanhToanService.cs" />
+    <Compile Include="Services\TinhTrangService.cs" />
     <Compile Include="Services\TonKhoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="ConnectionString.config" />
+    <None Include="ConnectionString.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">
-      <Project>{397EE5F6-7E63-43FF-ACF7-903208A37C78}</Project>
+      <Project>{D1D527BA-3B59-4BDD-BB2C-776AB0433812}</Project>
       <Name>PhatHanhSach.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhatHanhSach.Data\PhatHanhSach.Data.csproj">
-      <Project>{73d0dcb3-e59a-4ea9-a48e-eb81efcc49df}</Project>
+      <Project>{C1327C31-5EA4-47C1-BA04-68BF013E9B5A}</Project>
       <Name>PhatHanhSach.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhatHanhSach.Model\PhatHanhSach.Model.csproj">
+      <Project>{A43C0AAE-1593-40C6-ACB9-C2B2509904AD}</Project>
+      <Name>PhatHanhSach.Model</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

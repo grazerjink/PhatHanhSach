@@ -65,15 +65,14 @@
                                 @foreach (var pn in Model)
                                 {
                                     <tr>
-                                        <td>@pn.MaPhieuNhap</td>
+                                        <td>PN<span>@pn.Id.ToString("D0")</span></td>
                                         <td>@pn.NhaXuatBan.TenNXB</td>
                                         <td>@pn.TongSoLuong</td>
                                         <td>@pn.TongTien</td>
                                         <td>@pn.ThoiGianNhap</td>
                                         <td>@pn.NguoiGiao</td>
-                                        <td class="text-center"><a href="/PhieuNhap/ChiTietPhieuNhap/@pn.MaPhieuNhap" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
-                                        <td class="text-center"><a href="/PhieuNhap/CapNhatPhieuNhap/@pn.MaPhieuNhap" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
-                                        <td class="text-center"><a href="/PhieuNhap/XoaPhieuNhap/@pn.MaPhieuNhap" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                        <td class="text-center"><a href="/phieu-nhap/chi-tiet-phieu-pn.@pn.Id/" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
+                                        <td class="text-center"><a href="/phieu-nhap/xoa-phieu-pn.@pn.Id/" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -81,7 +80,7 @@
                     </div>
 
                     <div class="pull-right">
-                        <a class="btn btn-success" href="/PhieuNhap/ThemPhieuNhap">Thêm phiếu nhập</a>
+                        <a class="btn btn-success" href="/phieu-nhap/them-phieu-nhap/">Thêm phiếu nhập</a>
                     </div>
                     <div class="pull-left">
                         <a class="btn btn-default" href="/">Về trang chính</a>

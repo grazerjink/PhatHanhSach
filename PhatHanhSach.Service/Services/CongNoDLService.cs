@@ -1,6 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
 using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
+using PhatHanhSach.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<CongNoDL> GetAll();
 
-        CongNoDL GetByCode(string code);
+        CongNoDL GetById(int id);
 
         void Save();
     }
@@ -55,9 +56,9 @@ namespace PhatHanhSach.Service
             return congNoDLRepository.GetAll();
         }
 
-        public CongNoDL GetByCode(string code)
+        public CongNoDL GetByCode(int id)
         {
-            return congNoDLRepository.GetSingleByStringCodeId(code);
+            return congNoDLRepository.GetSingleById(id);
         }
 
         public void Save()

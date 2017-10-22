@@ -1,12 +1,9 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
+using PhatHanhSach.Model;
 using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -20,9 +17,11 @@ namespace PhatHanhSach.Service
 
         IEnumerable<BaoCaoDL> GetAll(string[] includes);
 
-        BaoCaoDL GetByCode(string code);
+        BaoCaoDL GetById(int id);
 
-        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate);
+        BaoCaoDL GetByCodeHasIncluded(int id, string[] includes);
+
+        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
         void Save();
     }
@@ -55,7 +54,7 @@ namespace PhatHanhSach.Service
 
         public IEnumerable<BaoCaoDL> GetAll(string[] includes)
         {
-            if(includes != null)
+            if (includes != null)
             {
                 return baoCaoDLRepository.GetAll(includes);
             }
@@ -65,9 +64,14 @@ namespace PhatHanhSach.Service
             }
         }
 
-        public BaoCaoDL GetByCode(string code)
+        public BaoCaoDL GetById(int id)
         {
-            return baoCaoDLRepository.GetSingleByStringCodeId(code);
+            return baoCaoDLRepository.GetSingleById(id);
+        }
+
+        public BaoCaoDL GetByCodeHasIncluded(int id, string[] includes)
+        {
+            return baoCaoDLRepository.GetSingleByCondition(x => x.Id == id, includes);
         }
 
         public void Save()
@@ -75,9 +79,9 @@ namespace PhatHanhSach.Service
             unitOfWork.Commit();
         }
 
-        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(string code, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
-            return baoCaoDLRepository.GetListAnalysisReport(code, fromDate, toDate);
+            return baoCaoDLRepository.GetListAnalysisReport(id, fromDate, toDate);
         }
     }
 }

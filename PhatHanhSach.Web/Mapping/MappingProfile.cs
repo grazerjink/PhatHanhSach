@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PhatHanhSach.Data.Models;
+using PhatHanhSach.Model;
 using PhatHanhSach.Web.Models;
 
 namespace PhatHanhSach.Web.Mapping
@@ -8,13 +8,15 @@ namespace PhatHanhSach.Web.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<DaiLy,DaiLyViewModel>();
+            CreateMap<DaiLy, DaiLyViewModel>();
             CreateMap<NhaXuatBan, NhaXuatBanViewModel>();
             CreateMap<PhieuNhap, PhieuNhapViewModel>();
             CreateMap<PhieuXuat, PhieuXuatViewModel>();
             CreateMap<CtPhieuNhap, CtPhieuNhapViewModel>();
             CreateMap<CtPhieuXuat, CtPhieuXuatViewModel>();
-            CreateMap<CtDoanhThu, CtDoanhThuViewModel>();
+            CreateMap<Sach, SachViewModel>();
+            CreateMap<TinhTrang, TinhTrangViewModel>();
+            /*CreateMap<CtDoanhThu, CtDoanhThuViewModel>();
             CreateMap<CtThanhToan, CtThanhToanViewModel>();
             CreateMap<CtBaoCaoDL, CtBaoCaoDLViewModel>();
             CreateMap<BaoCaoDL, BaoCaoDLViewModel>();
@@ -24,6 +26,7 @@ namespace PhatHanhSach.Web.Mapping
             CreateMap<TonKho, TonKhoViewModel>();
             CreateMap<ThanhToan, ThanhToanViewModel>();
             CreateMap<Sach, SachViewModel>();
+            CreateMap<TinhTrang, TinhTrangViewModel>();*/
         }
     }
 }

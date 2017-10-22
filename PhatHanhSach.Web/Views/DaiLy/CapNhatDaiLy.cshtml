@@ -47,7 +47,8 @@
                                     Mã đại lý <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaDaiLy, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã của đại lý...", @required = "" })
+                                    @Html.TextBoxFor(m => m.Id, new { @class = "form-control col-md-7 col-xs-12", @readonly="readonly", @required = "" })
+                                    @Html.HiddenFor(m => m.Id)
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -83,7 +84,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="pull-left">
-                                        <a href="/DaiLy/DanhSachDaiLy" class="btn btn-default">Quay về</a>
+                                        <a href="/dai-ly/" class="btn btn-default">Quay về</a>
                                     </div>
                                     <div class="pull-right">
                                         <button id="send" type="submit" class="btn btn-success">Cập nhật</button>

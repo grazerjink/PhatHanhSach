@@ -62,12 +62,12 @@
                                 @foreach (var dl in Model)
                                 {
                                     <tr>
-                                        <td>@dl.MaDaiLy</td>
+                                        <td>DL<span>@dl.Id.ToString("D4")</span></td>
                                         <td>@dl.TenDaiLy</td>
                                         <td>@dl.SoDienThoai</td>
                                         <td>@dl.DiaChi</td>
-                                        <td class="text-center"><a href="/DaiLy/CapNhatDaiLy/@dl.MaDaiLy" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
-                                        <td class="text-center"><a href="/DaiLy/XoaDaiLy/@dl.MaDaiLy" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                        <td class="text-center"><a href="/dai-ly/cap-nhat/dl.@dl.Id" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
+                                        <td class="text-center"><a href="/dai-ly/xoa/dl.@dl.Id" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="pull-right">
-                        <a class="btn btn-success" href="/DaiLy/ThemDaiLy">Thêm đại lý</a>
+                        <a class="btn btn-success" href="/dai-ly/them">Thêm đại lý</a>
                     </div>
                     <div class="pull-left">
                         <a class="btn btn-default" href="/">Về trang chính</a>

@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "ThemChiTietPhieuNhap";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var dsSach = (IEnumerable<PhatHanhSach.Web.Models.SachViewModel>) ViewBag.dsSach;
     var dsCtPn = (List<PhatHanhSach.Web.Models.CtPhieuNhapViewModel>) Session["dsCtPhieuNhap"];
+    var pn = (PhatHanhSach.Web.Models.PhieuNhapViewModel)Session["PhieuNhap"];
 }
 
 @section headerStyles {
@@ -41,7 +41,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Danh sách chi tiết - phiếu nhập <b>@Model.MaPhieuNhap</b></h3>
+                <h3>Danh sách chi tiết </h3>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -54,8 +54,9 @@
                         <table id="datatable" class="table table-striped table-bordered bulk_action">
                             <thead>
                                 <tr>
-                                    <th>Mã phiếu </th>
-                                    <th>Mã sách </th>
+                                    <th>STT</th>
+                                    <th>Tên sách </th>
+                                    <th>Tác giả </th>
                                     <th>Số lượng nhập </th>
                                     <th>Đơn giá nhập </th>
                                     <th>Thành tiền </th>
@@ -65,19 +66,48 @@
                             <tbody>
                                 @if (dsCtPn != null)
                                 {
-                                    foreach (var ct in dsCtPn)
+                                    int i = 1;
+                                    foreach(var ct in dsCtPn)
                                     {
                                         <tr>
-                                            <td>@ct.MaPhieuNhap</td>
-                                            <td>@ct.MaSach</td>
+                                            <td>@i</td>
+                                            <td>@ct.Sach.TenSach</td>
+                                            <td>@ct.Sach.TacGia</td>
                                             <td>@ct.SoLuongNhap</td>
-                                            <td>@ct.GiaNhap</td>
-                                            <td>@ct.ThanhTien</td>
-                                            <td class="text-center"><a href="/PhieuNhap/XoaPhieuNhap/@ct.MaPhieuNhap" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                            <td>@ct.DonGiaNhap.ToString("N0")</td>
+                                            <td>@ct.ThanhTien.ToString("N0")</td>
+                                            <td class="text-center">
+                                                <a href="/phieu-nhap/xoa-chi-tiet-pn.@i" class="btn btn-xs btn-danger">
+                                                    <i><span class="fa fa-close"></span></i>
+                                                </a>
+                                            </td>
                                         </tr>
+                                        i++;
                                     }
                                 }                                
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        <label class="pull-left">
+                                            NXB: @pn.NhaXuatBan.TenNXB - SĐT: @pn.NhaXuatBan.SoDienThoai
+                                        </label>
+                                        <label class="pull-right">
+                                            Tổng SL: @pn.TongSoLuong - Tổng số tiền: @pn.TongTien.ToString("N0")
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <label class="pull-left">
+                                            Địa chỉ: @pn.NhaXuatBan.DiaChi
+                                        </label>
+                                        <label class="pull-right">
+                                            Thời gian nhập: @pn.ThoiGianNhap.ToString("dd / MM / yyyy")
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
 
@@ -91,10 +121,11 @@
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listSach">
-                                    Mã sách <span class="required">*</span>
+                                    Thông tin sách <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.MaSach, new { @id = "listSach", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin mã sách...", @required = "" })
+                                    <input id="listSach" class="form-control col-md-7 col-xs-12" placeholder = "Nhập thông tin sách..." required />
+                                    @Html.HiddenFor(m => m.ctPhieuNhap.IdSach)                                    
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
@@ -102,7 +133,7 @@
                                     Số lượng <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.SoLuongNhap, new { @id = "listNXB", @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách nhập", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuNhap.SoLuongNhap, new { @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách nhập", @required = "" })
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -110,18 +141,9 @@
                                     Đơn giá nhập <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.GiaNhap, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập đơn giá nhập của sách...", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuNhap.DonGiaNhap, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập đơn giá nhập của sách...", @required = "" })
                                 </div>
                             </div>
-                            @*<div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Thành tiền <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.ThanhTien, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled", placeholder = "0.00", type = "number", @required = "" })
-                                </div>
-                            </div>*@
-
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
                                     @Html.ValidationSummary(false, "", new { @class = "error" })
@@ -145,7 +167,7 @@
                                 <button class="btn btn-success" name="create">Tạo phiếu nhập</button>
                             </div>
                             <div class="pull-left">
-                                <a class="btn btn-default" href="/">Về trang chính</a>
+                                <a class="btn btn-default" href="/phieu-nhap/them-phieu-nhap/">Trở lại</a>
                             </div>
                         }
                     </div>                    
@@ -155,14 +177,6 @@
     </div>
 </div>
 <!-- /page content -->
-<div hidden="hidden">
-    <ul>
-        @foreach (var s in dsSach)
-        {
-            <li class="sach">@s.MaSach</li>
-        }
-    </ul>
-</div>
 
 
 

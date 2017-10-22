@@ -55,7 +55,7 @@
                                     <th>Tổng tiền thanh toán </th>
                                     <th>Tổng tiền còn nợ </th>
                                     <th>Ngày lập phiếu </th>
-                                    <th>Chi tiết </th>
+                                    <th>Tình trạng</th>
                                     <th>*</th>
                                     <th>*</th>
                                 </tr>
@@ -66,13 +66,13 @@
                                     <tr>
                                         <td>@bc.MaBaoCao</td>
                                         <td>@bc.DaiLy.MaDaiLy - @bc.DaiLy.TenDaiLy</td>
-                                        <td>@bc.ThoiGianBatDau - @bc.ThoiGianKetThuc</td>
+                                        <td>@bc.ThoiGianBatDau.ToString("dd/MM/yyyy") - @bc.ThoiGianKetThuc.ToString("dd/MM/yyyy")</td>
                                         <td>@bc.TongTienThanhToan</td>
                                         <td>@bc.TongTienConNo</td>
-                                        <td>@bc.ThoiGianLapPhieu</td>
-                                        <td class="text-center"><a href="/PhieuXuat/ChiTietPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
-                                        <td class="text-center"><a href="/PhieuXuat/CapNhatPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-info">Chỉnh sửa</a></td>
-                                        <td class="text-center"><a href="/PhieuXuat/XoaPhieuXuat/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                        <td>@bc.ThoiGianLapPhieu.ToString("dd/MM/yyyy")</td>
+                                        <td>@bc.TinhTrang.MoTa</td>
+                                        <td class="text-center"><a href="/BaoCao/ChiTietBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-primary">Chi tiết</a></td>
+                                        <td class="text-center"><a href="/BaoCao/XoaBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                     </tr>
                                 }
                             </tbody>

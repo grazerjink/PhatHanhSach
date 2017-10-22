@@ -8,9 +8,8 @@ namespace PhatHanhSach.Web.Models
 {
     public class DaiLyViewModel
     {
-        [Required(ErrorMessage="Mã đại lý không thể để trống.")]
-        [MinLength(5,ErrorMessage="Mã đại lý bao gồm 2 ký tự và 3 chữ số.")]
-        public string MaDaiLy { get; set; }
+        [Required]
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Tên đại lý không thể để trống.")]
         [MaxLength(250)]

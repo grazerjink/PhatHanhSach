@@ -1,4 +1,4 @@
-﻿using PhatHanhSach.Data.Models;
+﻿using PhatHanhSach.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -64,11 +64,6 @@ namespace PhatHanhSach.Data.Infrastructure
         public virtual T GetSingleById(int id)
         {
             return dbSet.Find(id);
-        }
-        
-        public T GetSingleByStringCodeId(string code)
-        {
-            return dbSet.Find(code);
         }
 
         public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where, string includes)

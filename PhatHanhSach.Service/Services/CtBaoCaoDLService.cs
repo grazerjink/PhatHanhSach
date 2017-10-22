@@ -1,11 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
-using PhatHanhSach.Data.Models;
 using PhatHanhSach.Data.Repositories;
-using System;
+using PhatHanhSach.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Service
 {
@@ -19,7 +15,9 @@ namespace PhatHanhSach.Service
 
         IEnumerable<CtBaoCaoDL> GetAll();
 
-        CtBaoCaoDL GetByCode(string code);
+        IEnumerable<CtBaoCaoDL> GetMultiById(int idBaoCao, string[] includes = null);
+
+        CtBaoCaoDL GetById(int id);
 
         void Save();
     }
@@ -45,7 +43,7 @@ namespace PhatHanhSach.Service
             ctBaoCaoDLRepository.Update(ctBaoCaoDL);
         }
 
-        public CtBaoCaoDL  Delete(CtBaoCaoDL ctBaoCaoDL)
+        public CtBaoCaoDL Delete(CtBaoCaoDL ctBaoCaoDL)
         {
             return ctBaoCaoDLRepository.Delete(ctBaoCaoDL);
         }
@@ -55,9 +53,17 @@ namespace PhatHanhSach.Service
             return ctBaoCaoDLRepository.GetAll();
         }
 
-        public CtBaoCaoDL GetByCode(string code)
+        public IEnumerable<CtBaoCaoDL> GetMultiById(int idBaoCao, string[] includes = null)
         {
-            return ctBaoCaoDLRepository.GetSingleByStringCodeId(code);
+            if (includes != null)
+                return ctBaoCaoDLRepository.GetMulti(x => x.IdBaoCao == idBaoCao, includes);
+            else
+                return ctBaoCaoDLRepository.GetMulti(x => x.IdBaoCao == idBaoCao);
+        }
+
+        public CtBaoCaoDL GetById(int id)
+        {
+            return ctBaoCaoDLRepository.GetSingleById(id);
         }
 
         public void Save()

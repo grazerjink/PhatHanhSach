@@ -7,7 +7,7 @@ namespace PhatHanhSach.Web.Models
 {
     public class NhaXuatBanViewModel
     {
-        public string MaNXB { get; set; }
+        public int Id { get; set; }
         public string TenNXB { get; set; }
         public string SoDienThoai { get; set; }
         public string SoTaiKhoan { get; set; }

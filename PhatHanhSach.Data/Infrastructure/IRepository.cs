@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhatHanhSach.Data.Infrastructure
 {
@@ -25,7 +22,6 @@ namespace PhatHanhSach.Data.Infrastructure
 
         // Get an entity by int id
         T GetSingleById(int id);
-        T GetSingleByStringCodeId(string code);
 
         T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null);
 

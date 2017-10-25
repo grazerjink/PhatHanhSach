@@ -15,7 +15,8 @@ namespace PhatHanhSach.Web.Models
         public bool TrangThai { get; set; }
 
         public NhaXuatBanViewModel NhaXuatBan { get; set; }
-
         public CtPhieuNhapViewModel ctPhieuNhap { get; set; }
+
+        public IEnumerable<CtPhieuNhapViewModel> ctPhieuNhaps { get; set; }
     }
 }

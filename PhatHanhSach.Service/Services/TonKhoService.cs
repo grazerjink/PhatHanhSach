@@ -15,11 +15,15 @@ namespace PhatHanhSach.Service
 
         TonKho Delete(TonKho tonKho);
 
-        IEnumerable<TonKho> GetAll();
+        IEnumerable<TonKho> GetAll(string[] includes);
 
         IEnumerable<TonKho> GetMultiByDateAndId(DateTime date, int idSach);
 
         TonKho GetSingleByIdAndDate(int idSach, DateTime date);
+
+        IEnumerable<TonKho> GetMultiByBookId(int idSach);
+
+        bool CheckCreatePermission(int idSach);
 
         void Save();
     }
@@ -50,9 +54,9 @@ namespace PhatHanhSach.Service
             return tonKhoRepository.Delete(tonKho);
         }
 
-        public IEnumerable<TonKho> GetAll()
+        public IEnumerable<TonKho> GetAll(string[] includes)
         {
-            return tonKhoRepository.GetAll();
+            return tonKhoRepository.GetAll(includes);
         }
 
         public IEnumerable<TonKho> GetMultiByDateAndId(DateTime date, int idSach)
@@ -63,6 +67,23 @@ namespace PhatHanhSach.Service
         public TonKho GetSingleByIdAndDate(int idSach, DateTime date)
         {
             return tonKhoRepository.GetMulti(x => x.ThoiGian <= date && x.IdSach == idSach).OrderByDescending(x => x.ThoiGian).OrderByDescending(x => x.Id).FirstOrDefault();
+        }
+
+        public bool CheckCreatePermission(int idSach)
+        {
+            var deltas = GetMultiByBookId(idSach);
+            int s = 0;
+            foreach(var tk in deltas)
+            {
+                s += (int)tk.TangGiam;
+            }
+            if (s >= 0) return true;
+            return false;
+        }
+
+        public IEnumerable<TonKho> GetMultiByBookId(int idSach)
+        {
+            return tonKhoRepository.GetMulti(x => x.IdSach == idSach);
         }
 
         public void Save()

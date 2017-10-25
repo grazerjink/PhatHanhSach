@@ -15,7 +15,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<CtPhieuNhap> GetAll();
 
-        IEnumerable<CtPhieuNhap> GetMultiByIdPhieuNhap(int idPhieuNhap);
+        IEnumerable<CtPhieuNhap> GetMultiByIdPhieuNhap(int idPhieuNhap, string[] includes = null);
 
         CtPhieuNhap GetById(int id);
 
@@ -53,9 +53,9 @@ namespace PhatHanhSach.Service
             return ctPhieuNhapRepository.GetAll();
         }
 
-        public IEnumerable<CtPhieuNhap> GetMultiByIdPhieuNhap(int idPhieuNhap)
+        public IEnumerable<CtPhieuNhap> GetMultiByIdPhieuNhap(int idPhieuNhap, string[] includes = null)
         {
-            return ctPhieuNhapRepository.GetMulti(x => x.IdPhieuNhap == idPhieuNhap);
+            return ctPhieuNhapRepository.GetMulti(x => x.IdPhieuNhap == idPhieuNhap, includes);
         }
 
         public CtPhieuNhap GetById(int id)

@@ -4544,6 +4544,8 @@
     <Content Include="Views\BaoCao\ChiTietBaoCao.cshtml" />
     <Content Include="Views\BaoCao\TaoBaoCao.cshtml" />
     <Content Include="Views\BaoCao\ThemChiTietBaoCao.cshtml" />
+    <Content Include="Views\PhieuNhap\ChiTietPhieuNhap.cshtml" />
+    <Content Include="Views\PhieuXuat\ChiTietPhieuXuat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">

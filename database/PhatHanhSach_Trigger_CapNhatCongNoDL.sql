@@ -1,6 +1,6 @@
 ﻿ALTER TRIGGER trgTaoPhieuXuatCapNhatCongNoDL
 ON PhieuXuat
-AFTER UPDATE
+AFTER INSERT,UPDATE
 AS
 BEGIN
 	DECLARE @maDaiLy int = (SELECT IdDaiLy FROM inserted)

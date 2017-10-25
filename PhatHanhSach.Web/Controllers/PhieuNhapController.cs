@@ -97,8 +97,10 @@ namespace PhatHanhSach.Web.Controllers
                 var pn = (PhieuNhapViewModel) Session["PhieuNhap"];
                 PhieuNhap newPhieuNhap = new PhieuNhap();
                 newPhieuNhap.UpdatePhieuNhap(pn);
+
                 phieuNhapService.Add(newPhieuNhap);
                 phieuNhapService.Save();
+
                 var newId = newPhieuNhap.Id;
                 foreach (var ctpn in (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"])
                 {
@@ -117,7 +119,6 @@ namespace PhatHanhSach.Web.Controllers
                 phieuNhapService.Save();
 
                 Session["dsCtPhieuNhap"] = null;
-                Session["MaSach"] = null;
                 Session["PhieuNhap"] = null;
                 Session.RemoveAll();
                 return Redirect("/phieu-nhap/");
@@ -158,6 +159,42 @@ namespace PhatHanhSach.Web.Controllers
             return View(pnViewModel);
         }
 
+        [HttpGet]
+        [Route("chi-tiet-pn.{id}")]
+        public ActionResult ChiTietPhieuNhap(int id)
+        {
+            var pn = phieuNhapService.GetById(id);
+            var ctpn = ctPhieuNhapService.GetMultiByIdPhieuNhap(pn.Id, new string[] { "Sach" });
+            var nxb = nhaXuatBanService.GetById((int)pn.IdNXB);
+
+            var pnVm = Mapper.Map<PhieuNhap, PhieuNhapViewModel>(pn);
+            pnVm.ctPhieuNhaps = Mapper.Map<IEnumerable<CtPhieuNhap>, IEnumerable<CtPhieuNhapViewModel>>(ctpn);
+            pnVm.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
+            return View(pnVm);
+        }
+
+        [Route("xoa-chi-tiet-pn.{id}")]
+        [HttpGet]
+        public ActionResult XoaMotChiTietPhieuNhap(int id)
+        {
+            int index = id - 1;
+            var listCtPn = (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"];
+            var ctpn = listCtPn[index];
+
+            var updatedPn = (PhieuNhapViewModel)Session["PhieuNhap"];
+            updatedPn.TongTien -= ctpn.ThanhTien;
+            updatedPn.TongSoLuong -= ctpn.SoLuongNhap;
+            listCtPn.RemoveAt(index);
+
+            Session["PhieuNhap"] = updatedPn;
+            Session["dsCtPhieuNhap"] = listCtPn;
+
+            return Redirect("them-chi-tiet/");
+        }
+
+
+
+        /*
         [Route("xoa-phieu-pn.{id}")]
         [HttpGet]
         public ActionResult XoaPhieuNhap(int id)
@@ -179,24 +216,6 @@ namespace PhatHanhSach.Web.Controllers
             phieuNhapService.Save();
             return Redirect("/phieu-nhap/");
         }
-
-        [Route("xoa-chi-tiet-pn.{id}")]
-        [HttpGet]
-        public ActionResult XoaMotChiTietPhieuNhap(int id)
-        {
-            int index = id - 1;
-            var listCtPn = (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"];
-            var ctpn = listCtPn[index];
-
-            var updatedPn = (PhieuNhapViewModel)Session["PhieuNhap"];
-            updatedPn.TongTien -= ctpn.ThanhTien;
-            updatedPn.TongSoLuong -= ctpn.SoLuongNhap;
-            listCtPn.RemoveAt(index);
-
-            Session["PhieuNhap"] = updatedPn;
-            Session["dsCtPhieuNhap"] = listCtPn;
-
-            return Redirect("them-chi-tiet/");
-        }
+        */
     }
 }

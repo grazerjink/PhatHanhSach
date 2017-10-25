@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "TaoBaoCao";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var dsDaiLy = (IEnumerable<PhatHanhSach.Web.Models.DaiLyViewModel>)ViewBag.DanhSachDaiLy;
 }
 
 @section headerStyles {
@@ -99,19 +98,11 @@
                             <span class="section">Thông tin phiếu báo cáo</span>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã báo cáo <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaBaoCao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã báo cáo...", @required = "" })
-                                </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Ngày lập phiếu <span class="required">*</span>
                                 </label>
                                 <div class="control-group col-md-5 col-sm-6 col-xs-12">
                                     <div class='input-group date' id="myCreateDate">
-                                        @Html.TextBoxFor(m => m.ThoiGianLapPhieu, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian hiện tại..." })
+                                        @Html.TextBoxFor(m => m.ThoiGianLapPhieu, new { @class = "form-control", placeholder = "Nhấp chọn thời gian hiện tại..." })
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -119,13 +110,14 @@
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã đại lý <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listDaiLy">
+                                    Thông tin đại lý <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.MaDaiLy, new { @id = "listDaiLy", @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập mã nhà đại lý...", @required = "" })
+                                    <input id="listDaiLy" class="form-control col-md-7 col-xs-12" placeholder="Nhập thông tin đại lý..." required />
+                                    @Html.HiddenFor(m => m.IdDaiLy)
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Thời gian bắt đầu - kết thúc <span class="required">*</span>
@@ -134,7 +126,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class='input-group date' id="myStartDate">
-                                                @Html.TextBoxFor(m => m.ThoiGianBatDau, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian bắt đầu..." })
+                                                @Html.TextBoxFor(m => m.NgayBatDau, new { @class = "form-control", placeholder = "Nhấp chọn thời gian bắt đầu..." })
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -142,7 +134,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class='input-group date' id="myEndDate">
-                                                @Html.TextBoxFor(m => m.ThoiGianKetThuc, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Nhấp chọn thời gian kết thúc..." })
+                                                @Html.TextBoxFor(m => m.NgayKetThuc, new { @class = "form-control", placeholder = "Nhấp chọn thời gian kết thúc..." })
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -160,7 +152,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="pull-left">
-                                        <a href="/BaoCao/BaoCaoDaiLy" class="btn btn-default">Quay về</a>
+                                        <a href="/bao-cao/" class="btn btn-default">Quay về</a>
                                     </div>
                                     <div class="pull-right">
                                         <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
@@ -172,14 +164,6 @@
                     </div>
                 </div>
             </div>
-        </div>        
-        <div hidden="hidden">
-            <ul>
-                @foreach (var dl in dsDaiLy)
-                {
-                    <li class="daiLy">@dl.MaDaiLy</li>
-                }
-            </ul>
         </div>
     </div>
 </div>

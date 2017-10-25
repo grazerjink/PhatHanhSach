@@ -57,22 +57,22 @@
                                     <th>Ngày lập phiếu </th>
                                     <th>Tình trạng</th>
                                     <th>*</th>
-                                    <th>*</th>
+                                    @*<th>*</th>*@
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var bc in Model)
                                 {
                                     <tr>
-                                        <td>@bc.MaBaoCao</td>
-                                        <td>@bc.DaiLy.MaDaiLy - @bc.DaiLy.TenDaiLy</td>
-                                        <td>@bc.ThoiGianBatDau.ToString("dd/MM/yyyy") - @bc.ThoiGianKetThuc.ToString("dd/MM/yyyy")</td>
+                                        <td>@bc.Id</td>
+                                        <td>@bc.DaiLy.TenDaiLy</td>
+                                        <td>@bc.NgayBatDau.ToString("dd/MM/yyyy") - @bc.NgayKetThuc.ToString("dd/MM/yyyy")</td>
                                         <td>@bc.TongTienThanhToan</td>
                                         <td>@bc.TongTienConNo</td>
                                         <td>@bc.ThoiGianLapPhieu.ToString("dd/MM/yyyy")</td>
                                         <td>@bc.TinhTrang.MoTa</td>
-                                        <td class="text-center"><a href="/BaoCao/ChiTietBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-primary">Chi tiết</a></td>
-                                        <td class="text-center"><a href="/BaoCao/XoaBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
+                                        <td class="text-center"><a href="/bao-cao/chi-tiet-bc.@bc.Id/" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
+                                        @*<td class="text-center"><a href="/BaoCao/XoaBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>*@
                                     </tr>
                                 }
                             </tbody>
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="pull-right">
-                        <a class="btn btn-success" href="/BaoCao/TaoBaoCao">Tạo báo cáo</a>
+                        <a class="btn btn-success" href="/bao-cao/tao-bao-cao/">Tạo báo cáo</a>
                     </div>
                     <div class="pull-left">
                         <a class="btn btn-default" href="/">Về trang chính</a>

@@ -101,10 +101,9 @@ namespace PhatHanhSach.Web.Controllers
                 phieuXuatService.Add(newPhieuXuat);
                 phieuXuatService.Save();
 
-                int newId = newPhieuXuat.Id;
                 foreach (var ctpx in (List<CtPhieuXuatViewModel>)Session["dsCtPhieuXuat"])
                 {
-                    ctpx.IdPhieuXuat = newId;
+                    ctpx.IdPhieuXuat = newPhieuXuat.Id;
                     CtPhieuXuat ctPhieuXuat = new CtPhieuXuat();
                     ctPhieuXuat.UpdateCtPhieuXuat(ctpx);
                     ctPhieuXuatService.Add(ctPhieuXuat);
@@ -114,6 +113,7 @@ namespace PhatHanhSach.Web.Controllers
                 Session["dsCtPhieuXuat"] = null;
                 Session["PhieuXuat"] = null;
                 Session.RemoveAll();
+
                 return Redirect("/phieu-xuat/");
             }
             else if (Request.Form["save"] != null)
@@ -140,13 +140,13 @@ namespace PhatHanhSach.Web.Controllers
                             var tonKho = tonKhoService.GetSingleByIdAndDate(sach.Id, pxViewModel.ThoiGianXuat);
                             var soLuongTon = tonKho != null ? tonKho.SoLuong : 0;
 
-                            if (soLuongTon < pxViewModel.ctPhieuXuat.SoLuongXuat)
+                            if (soLuongTon < newCtPhieuXuatVm.SoLuongXuat)
                             {
                                 ModelState.AddModelError("", "Số lượng tồn là " + soLuongTon + " không đủ đáp ứng yêu cầu.");
                             }
                             else
                             {
-                                if (!tonKhoService.CheckCreatePermission(sach.Id))
+                                if (!tonKhoService.CheckCreatePermission(sach.Id, newCtPhieuXuatVm.SoLuongXuat))
                                 {
                                     ModelState.AddModelError("", "Thời gian xuất không cho phép tạo phiếu xuất này.");
                                 }

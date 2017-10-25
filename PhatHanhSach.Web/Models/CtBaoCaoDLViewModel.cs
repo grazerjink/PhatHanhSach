@@ -10,5 +10,7 @@
         public double ThanhTien { get; set; }
         public int SoLuongCon { get; set; }
         public double TienNo { get; set; }
+
+        public SachViewModel Sach { get; set; }
     }
 }

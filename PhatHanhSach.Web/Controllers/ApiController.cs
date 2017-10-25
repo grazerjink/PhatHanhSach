@@ -1,4 +1,5 @@
 ﻿using PhatHanhSach.Service;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
@@ -11,15 +12,18 @@ namespace PhatHanhSach.Web.Controllers
         IDaiLyService daiLyService;
         INhaXuatBanService nxbService;
         ISachService sachService;
+        IBaoCaoDLService baoCaoService;
 
         public ApiController(
                IDaiLyService daiLyService,
                INhaXuatBanService nxbService,
-               ISachService sachService)
+               ISachService sachService,
+               IBaoCaoDLService baoCaoService)
         {
             this.daiLyService = daiLyService;
             this.nxbService = nxbService;
             this.sachService = sachService;
+            this.baoCaoService = baoCaoService;
         }        
 
         [Route("danh-sach-nxb")]
@@ -87,8 +91,6 @@ namespace PhatHanhSach.Web.Controllers
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
             var daiLy = daiLyService.GetById(id);
-            Request.ContentEncoding = Encoding.UTF8;
-            Response.ContentEncoding = Encoding.UTF8;
             return Json(daiLy, JsonRequestBehavior.AllowGet);
         }
 
@@ -99,8 +101,6 @@ namespace PhatHanhSach.Web.Controllers
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
             var nxb = nxbService.GetById(id);
-            Request.ContentEncoding = Encoding.UTF8;
-            Response.ContentEncoding = Encoding.UTF8;
             return Json(nxb, JsonRequestBehavior.AllowGet);
         }
 
@@ -111,9 +111,27 @@ namespace PhatHanhSach.Web.Controllers
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
             var sach = sachService.GetById(id);
+            return Json(sach, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("danh-sach-da-xuat/{id}")]
+        [HttpGet]
+        public JsonResult GetDanhSachSachDaXuatChoDaiLy(int id, DateTime fromDate, DateTime toDate)
+        {
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
-            return Json(sach, JsonRequestBehavior.AllowGet);
+            var dsSachDaXuat = baoCaoService.GetListAnalysisReport(id, fromDate, toDate);
+
+            var listSachDaBan = new List<object>();
+            foreach (var s in dsSachDaXuat)
+            {
+                listSachDaBan.Add(new
+                {
+                    label = s.TenSach,
+                    value = s.Id
+                });
+            }
+            return Json(listSachDaBan, JsonRequestBehavior.AllowGet);
         }
     }
 }

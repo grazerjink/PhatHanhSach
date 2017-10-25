@@ -58,3 +58,32 @@ $("#listSach").autocomplete({
         $("#listSach").val(ui.item.label);
     }
 });
+
+var maDaiLy = $('#IdDaiLy').val();
+var ngayBatDau = $('#NgayBatDau').val();
+var ngayKetThuc = $('#NgayKetThuc').val();
+
+$("#listSachDaXuat").autocomplete({
+    source: function (req, res) {
+        $.ajax({
+            url: "/api/danh-sach-da-xuat/"+maDaiLy,
+            data: {
+                fromDate: ngayBatDau,
+                toDate: ngayKetThuc
+            },
+            dataType: "json",
+            success: function (data) {
+                res(data);
+            }
+        });
+    },
+    select: function (event, ui) {
+        event.preventDefault();
+        $('#ctBaoCao_IdSach').val(ui.item.value);
+        $('#ctBaoCao_IdSach').val(ui.item.value);
+    },
+    focus: function (event, ui) {
+        event.preventDefault();
+        $("#listSachDaXuat").val(ui.item.label);
+    }
+});

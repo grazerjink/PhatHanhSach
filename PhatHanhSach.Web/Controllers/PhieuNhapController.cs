@@ -3,9 +3,7 @@ using PhatHanhSach.Model;
 using PhatHanhSach.Service;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
-using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Mvc;
 
 namespace PhatHanhSach.Web.Controllers
@@ -13,11 +11,11 @@ namespace PhatHanhSach.Web.Controllers
     [RoutePrefix("phieu-nhap")]
     public class PhieuNhapController : Controller
     {
-        IPhieuNhapService phieuNhapService;
-        ISachService sachService;
-        INhaXuatBanService nhaXuatBanService;
-        ICtPhieuNhapService ctPhieuNhapService;
-        ITonKhoService tonKhoService;
+        private IPhieuNhapService phieuNhapService;
+        private ISachService sachService;
+        private INhaXuatBanService nhaXuatBanService;
+        private ICtPhieuNhapService ctPhieuNhapService;
+        private ITonKhoService tonKhoService;
 
         public PhieuNhapController(
             IPhieuNhapService phieuNhapService,
@@ -64,7 +62,7 @@ namespace PhatHanhSach.Web.Controllers
                 }
                 else
                 {
-                    pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan,NhaXuatBanViewModel>(nxb);
+                    pnViewModel.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
                     pnViewModel.TongTien = 0;
                     pnViewModel.TongSoLuong = 0;
                     Session["PhieuNhap"] = pnViewModel;
@@ -94,17 +92,16 @@ namespace PhatHanhSach.Web.Controllers
         {
             if (Request.Form["create"] != null)
             {
-                var pn = (PhieuNhapViewModel) Session["PhieuNhap"];
+                var pn = (PhieuNhapViewModel)Session["PhieuNhap"];
                 PhieuNhap newPhieuNhap = new PhieuNhap();
                 newPhieuNhap.UpdatePhieuNhap(pn);
 
                 phieuNhapService.Add(newPhieuNhap);
                 phieuNhapService.Save();
 
-                var newId = newPhieuNhap.Id;
                 foreach (var ctpn in (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"])
                 {
-                    ctpn.IdPhieuNhap = newId;
+                    ctpn.IdPhieuNhap = newPhieuNhap.Id;
                     CtPhieuNhap ctPhieuNhap = new CtPhieuNhap();
                     ctPhieuNhap.UpdateCtPhieuNhap(ctpn);
                     ctPhieuNhapService.Add(ctPhieuNhap);
@@ -121,12 +118,13 @@ namespace PhatHanhSach.Web.Controllers
                 Session["dsCtPhieuNhap"] = null;
                 Session["PhieuNhap"] = null;
                 Session.RemoveAll();
+
                 return Redirect("/phieu-nhap/");
             }
             else if (Request.Form["save"] != null)
             {
                 if (ModelState.IsValid)
-                {                   
+                {
                     var sach = sachService.GetById(pnViewModel.ctPhieuNhap.IdSach);
                     if (sach == null)
                     {
@@ -141,12 +139,11 @@ namespace PhatHanhSach.Web.Controllers
                         var sachDaNhap = ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Find(x => x.IdSach == newCtPhieuNhapVm.IdSach);
                         if (sachDaNhap == null)
                         {
-
                             pnViewModel.ctPhieuNhap = null;
                             ((PhieuNhapViewModel)Session["PhieuNhap"]).TongTien += newCtPhieuNhapVm.ThanhTien;
-                            ((PhieuNhapViewModel)Session["PhieuNhap"]).TongSoLuong += newCtPhieuNhapVm.SoLuongNhap;                            
+                            ((PhieuNhapViewModel)Session["PhieuNhap"]).TongSoLuong += newCtPhieuNhapVm.SoLuongNhap;
                             ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapVm);
-                            
+
                             return Redirect("them-chi-tiet/");
                         }
                         else
@@ -191,8 +188,6 @@ namespace PhatHanhSach.Web.Controllers
 
             return Redirect("them-chi-tiet/");
         }
-
-
 
         /*
         [Route("xoa-phieu-pn.{id}")]

@@ -23,7 +23,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<TonKho> GetMultiByBookId(int idSach);
 
-        bool CheckCreatePermission(int idSach);
+        bool CheckCreatePermission(int idSach, int creQuantity);
 
         void Save();
     }
@@ -69,15 +69,18 @@ namespace PhatHanhSach.Service
             return tonKhoRepository.GetMulti(x => x.ThoiGian <= date && x.IdSach == idSach).OrderByDescending(x => x.ThoiGian).OrderByDescending(x => x.Id).FirstOrDefault();
         }
 
-        public bool CheckCreatePermission(int idSach)
+        public bool CheckCreatePermission(int idSach, int creQuantity)
         {
             var deltas = GetMultiByBookId(idSach);
-            int s = 0;
+            int s = creQuantity;
             foreach(var tk in deltas)
             {
                 s += (int)tk.TangGiam;
             }
-            if (s >= 0) return true;
+
+            if (s >= 0)
+                return true;
+
             return false;
         }
 

@@ -61,20 +61,26 @@ namespace PhatHanhSach.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                if(dsSachDaMua==null || dsSachDaMua.Count==0)
+                if(dsSachDaMua == null || !dsSachDaMua.Any())
                 {
                     ModelState.AddModelError("","Đại lý chưa có nhập sách vào khoảng thời gian này.");
-                    return View(baoCaoDLVm);
                 }
+                else if(baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
+                {
+                    ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                }
+                else
+                {
+                    var daiLy = daiLyService.GetById(baoCaoDLVm.IdDaiLy);
+                    baoCaoDLVm.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
 
-                var daiLy = daiLyService.GetById(baoCaoDLVm.IdDaiLy);
-                baoCaoDLVm.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
+                    Session["BaoCao"] = baoCaoDLVm;
+                    Session["dsCtBaoCao"] = new List<CtBaoCaoDLViewModel>();
 
-                Session["BaoCao"] = baoCaoDLVm;
-                Session["dsCtBaoCao"] = new List<CtBaoCaoDLViewModel>();
-
-                return Redirect("them-chi-tiet/");
+                    return Redirect("them-chi-tiet/");
+                }
             }
 
             return View(baoCaoDLVm);

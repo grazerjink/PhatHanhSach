@@ -4,6 +4,7 @@ using PhatHanhSach.Model;
 using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PhatHanhSach.Service
 {
@@ -22,6 +23,8 @@ namespace PhatHanhSach.Service
         BaoCaoDL GetByCodeHasIncluded(int id, string[] includes);
 
         List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+
+        bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate);
 
         void Save();
     }
@@ -77,6 +80,13 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate)
+        {
+            var dsBaoCaoDaTao = baoCaoDLRepository.GetMulti(x => x.NgayKetThuc >= currentCreateDate && x.IdDaiLy == idDaiLy).ToList();
+            if (dsBaoCaoDaTao.Count != 0) return true; // Report has created before.
+            return false;
         }
 
         public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)

@@ -84,7 +84,7 @@ namespace PhatHanhSach.Service
 
         public bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate)
         {
-            var dsBaoCaoDaTao = baoCaoDLRepository.GetMulti(x => x.NgayKetThuc >= currentCreateDate && x.IdDaiLy == idDaiLy).ToList();
+            var dsBaoCaoDaTao = baoCaoDLRepository.GetMulti(x => x.NgayKetThuc >= currentCreateDate && x.IdDaiLy == idDaiLy && (x.IdTinhTrang == 1 || x.IdTinhTrang == 2)).ToList();
             if (dsBaoCaoDaTao.Count != 0) return true; // Report has created before.
             return false;
         }

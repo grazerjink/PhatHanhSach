@@ -4,7 +4,7 @@
     ViewBag.Title = "ChiTietBaoCao";
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtBaoCao = (IEnumerable<PhatHanhSach.Web.Models.CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
-    var listTinhTrang = (SelectList)ViewBag.ListSelectTinhTrang;
+    var dsTinhTrang = ViewBag.dsTinhTrang;
     var errors = ViewBag.Errors as List<String>;
 }
 
@@ -65,11 +65,10 @@
     <!-- Initialize datetimepicker -->
     <script>
         var $form = $('form');
-
-        var $tinhTrang = $form.find("#tinhTrang");
+        var $tinhTrang = $form.find("#IdTinhTrang");
         var status = $tinhTrang.val();
-
         if (status !== "1") {
+            $('#TinhTrang').attr("disabled", "disabled");
             $tinhTrang.attr("disabled", "disabled");
         }
         else {
@@ -79,11 +78,9 @@
             }
             else {
                 $('#btnUpdate').removeAttr("disabled");
-            }   
+            }
         }
-
         var initialState = $form.serialize();
-
         $('form .txt-input').on('change input', function (e) {
             if (initialState === $(this).serialize()) {
                 $('#btnUpdate').attr("disabled", "disabled");
@@ -91,15 +88,18 @@
                 $('#btnUpdate').removeAttr("disabled");
             }
             e.preventDefault();
-        });
+        });     
 
-        $('#tinhTrang').on('change', function () {
-            if ($(this).val() === "2" || $(this).val() === "3") {                
+        $('#TinhTrang').on('change', function () {
+            var newIdTinhTrang = $(this).val();
+            $('#IdTinhTrang').val(newIdTinhTrang);
+            if (newIdTinhTrang === "2" || newIdTinhTrang === "3") {
                 $("#ngayXacNhan").removeClass("hidden");
             }
             else {
                 $("#ngayXacNhan").addClass("hidden");
             }
+
         });
 
         $('#myCreateDate').datetimepicker({
@@ -226,7 +226,8 @@
                                             Tình trạng xử lí <span class="required">*</span>
                                         </label>
                                         <div class="col-md-5 col-sm-6 col-xs-12">
-                                            @Html.DropDownListFor(m => m.IdTinhTrang, listTinhTrang, new { @id = "tinhTrang", @class = "form-control col-md-7 col-xs-12 txt-input" })
+                                            @Html.DropDownListFor(m => m.IdTinhTrang, new SelectList(dsTinhTrang, "Id", "MoTa"), new { @id="TinhTrang", @name="TinhTrang", @class = "form-control col-md-7 col-xs-12 txt-input" })                                           
+                                            @Html.HiddenFor(m => m.IdTinhTrang)
                                         </div>
                                     </div>
                                     <div class="item form-group hidden" id="ngayXacNhan">

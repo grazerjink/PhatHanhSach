@@ -63,7 +63,7 @@ namespace PhatHanhSach.Web.Controllers
             {
 
                 var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                if(dsSachDaMua == null || !dsSachDaMua.Any())
+                if(dsSachDaMua == null || dsSachDaMua.Count == 0)
                 {
                     ModelState.AddModelError("","Đại lý chưa có nhập sách vào khoảng thời gian này.");
                 }
@@ -101,10 +101,11 @@ namespace PhatHanhSach.Web.Controllers
             if (Request.Form["create"] != null)
             {
                 var baoCao = (BaoCaoDLViewModel)Session["BaoCao"];
+                baoCao.NgayXacNhan = baoCao.ThoiGianLapPhieu;
                 var dsSachDaKhaiSL = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
 
                 BaoCaoDL newBaoCao = new BaoCaoDL();
-                newBaoCao.UpdateBaoCaoDL(baoCaoDLVm);
+                newBaoCao.UpdateBaoCaoDL(baoCao);
                 newBaoCao.IdTinhTrang = CommonConstant.DA_BAO_CAO;
                 baoCaoDLService.Add(newBaoCao);
                 baoCaoDLService.Save();
@@ -218,48 +219,15 @@ namespace PhatHanhSach.Web.Controllers
         [HttpGet]
         public ActionResult ChiTietBaoCao(int id)
         {
-            Session["dsCtBaoCao"] = new List<CtBaoCaoDLViewModel>();
-
-            var dsDaiLy = daiLyService.GetAll();
-            var dsDaiLyViewModel = Mapper.Map<IEnumerable<DaiLy>, IEnumerable<DaiLyViewModel>>(dsDaiLy);
-            ViewBag.DanhSachDaiLy = dsDaiLyViewModel;
-
             var baoCaoDL = baoCaoDLService.GetByCodeHasIncluded(id, new string[] { "DaiLy", "TinhTrang" });
             var baoCaoDLVM = Mapper.Map<BaoCaoDL, BaoCaoDLViewModel>(baoCaoDL);
             baoCaoDLVM.NgayXacNhan = DateTime.Now;
 
-            var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVM.IdDaiLy, baoCaoDLVM.NgayBatDau, baoCaoDLVM.NgayKetThuc);
-            ViewBag.dsSachDaMua = dsThongKeBaoCao;
-
             var dsCtBaoCaoDL = ctBaoCaoDLService.GetMultiById(baoCaoDL.Id, new string[] { "Sach" });
-            baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);
-
-            var dsTinhTrang = tinhTrangService.GetAll();
-            SelectList selectList = new SelectList(dsTinhTrang, "Id", "MoTa");
-            ViewBag.ListSelectTinhTrang = selectList;
+            baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);            
 
             Session["TinhTrangBanDau"] = baoCaoDLVM.IdTinhTrang;
-
-            if (Session["dsCtBaoCaoEdited"] == null)
-            {
-                Session["dsCtBaoCao"] = baoCaoDLVM.CtBaoCaoDLs;
-                Session["dsCtBaoCaoEdited"] = new List<CtBaoCaoDLViewModel>();
-            }
-            else
-            {
-                var dsEdited = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCaoEdited"];
-                if (dsEdited.Count == 0)
-                    Session["dsCtBaoCao"] = baoCaoDLVM.CtBaoCaoDLs;
-                else
-                    Session["dsCtBaoCao"] = dsEdited;
-            }
-
-            var errors = TempData["errors"] as List<String>;
-            if (errors != null && errors.Count() != 0)
-            {
-                ViewBag.Errors = new List<String>();
-                ViewBag.Errors = errors;
-            }
+            Session["dsCtBaoCao"] = baoCaoDLVM.CtBaoCaoDLs;
 
             if (TempData["Changed"] != null)
             {
@@ -270,15 +238,16 @@ namespace PhatHanhSach.Web.Controllers
                 ViewBag.Changed = false;
             }
 
+            var dsTinhTrang = tinhTrangService.GetAll();
+            ViewBag.dsTinhTrang = dsTinhTrang;
             return View(baoCaoDLVM);
         }
 
         
         [Route("cap-nhat-chi-tiet")]
         [HttpPost]
-        public ActionResult CapNhatBaoCao(BaoCaoDLViewModel baoCaoDLVM)
+        public ActionResult CapNhatBaoCao(BaoCaoDLViewModel baoCaoDLVm)
         {
-            List<string> listErrors = new List<string>();
             if (ModelState.IsValid)
             {
                 int tinhTrangBanDau = (int)Session["TinhTrangBanDau"];
@@ -288,75 +257,14 @@ namespace PhatHanhSach.Web.Controllers
                 }
                 else
                 {
-                    var editedBaoCaoDL = new BaoCaoDL();
-                    editedBaoCaoDL.UpdateBaoCaoDL(baoCaoDLVM);
-                    baoCaoDLService.Update(editedBaoCaoDL);
+                    var updateBaoCaoDL = new BaoCaoDL();
+                    updateBaoCaoDL.UpdateBaoCaoDL(baoCaoDLVm);
+                    baoCaoDLService.Update(updateBaoCaoDL);
                     baoCaoDLService.Save();
-
-                    /// Update CtBaoCao
-                    double tongTienThanhToan = 0;
-                    double tongTienConNo = 0;
-                    var dsSachDaKhaiSL = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
-                    var dsSachChuaKhaiSL = baoCaoDLService.GetListAnalysisReport(baoCaoDLVM.IdDaiLy, baoCaoDLVM.NgayBatDau, baoCaoDLVM.NgayKetThuc);
-
-                    foreach (var ctbc in dsSachDaKhaiSL)
-                    {
-                        tongTienThanhToan += ctbc.ThanhTien;
-                        tongTienConNo += ctbc.TienNo;
-
-                        dsSachChuaKhaiSL.RemoveAll(t => t.Id == ctbc.IdSach);
-
-                        CtBaoCaoDL ctBaoCao = new CtBaoCaoDL();
-                        ctBaoCao.UpdateCtBaoCaoDL(ctbc);
-                        ctBaoCaoDLService.Add(ctBaoCao);
-                    }
-
-                    foreach (var s in dsSachChuaKhaiSL)
-                    {
-                        var giaBan = sachService.GetById(s.Id).GiaBan;
-
-                        CtBaoCaoDL ctBaoCao = new CtBaoCaoDL();
-                        ctBaoCao.DonGiaXuat = (double)giaBan;
-                        ctBaoCao.ThanhTien = 0;
-                        ctBaoCao.SoLuongCon = s.SoLuongMua;
-                        ctBaoCao.TienNo = ctBaoCao.DonGiaXuat * ctBaoCao.SoLuongCon;
-                        ctBaoCao.SoLuongBan = 0;
-                        ctBaoCao.IdBaoCao = baoCaoDLVM.Id;
-                        ctBaoCao.IdSach = s.Id;
-
-                        tongTienThanhToan += (double)ctBaoCao.ThanhTien;
-                        tongTienConNo += (double)ctBaoCao.TienNo;
-
-                        ctBaoCaoDLService.Add(ctBaoCao);
-                    }
-
-                    editedBaoCaoDL.TongTienThanhToan = tongTienThanhToan;
-                    editedBaoCaoDL.TongTienConNo = tongTienConNo;
-                    baoCaoDLService.Update(editedBaoCaoDL);
-                    baoCaoDLService.Save();
-
-                    Session["dsCtBaoCao"] = null;
-
-                    var newCongNoDL = new CongNoDL();
-                    newCongNoDL.IdDaiLy = editedBaoCaoDL.IdDaiLy;
-                    newCongNoDL.NgayCapNhat = editedBaoCaoDL.NgayXacNhan;
-                    newCongNoDL.TongTienConNo = editedBaoCaoDL.TongTienConNo;
-                    newCongNoDL.TongTienThanhToan = editedBaoCaoDL.TongTienThanhToan;
-                    congNoDLService.Add(newCongNoDL);
-                    congNoDLService.Save();
-                }
-            }
-            else
-            {
-                foreach (var e in ModelState.Values)
-                {
-                    listErrors.Add(e.Value.ToString());
                 }
             }
 
-            TempData["errors"] = listErrors;
-
-            return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVM.Id });
+            return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
         }
 
         /*

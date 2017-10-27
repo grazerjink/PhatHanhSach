@@ -7,12 +7,11 @@ using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace PhatHanhSach.Web.Controllers
 {
-    [RoutePrefix("bao-cao")]
+    [RoutePrefix("bao-cao/dai-ly")]
     public class BaoCaoController : Controller
     {
         private IBaoCaoDLService baoCaoDLService;
@@ -61,13 +60,12 @@ namespace PhatHanhSach.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                if(dsSachDaMua == null || dsSachDaMua.Count == 0)
+                if (dsSachDaMua == null || dsSachDaMua.Count == 0)
                 {
-                    ModelState.AddModelError("","Đại lý chưa có nhập sách vào khoảng thời gian này.");
+                    ModelState.AddModelError("", "Đại lý chưa có nhập sách vào khoảng thời gian này.");
                 }
-                else if(baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
+                else if (baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
                 {
                     ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
                 }
@@ -106,6 +104,7 @@ namespace PhatHanhSach.Web.Controllers
 
                 BaoCaoDL newBaoCao = new BaoCaoDL();
                 newBaoCao.UpdateBaoCaoDL(baoCao);
+                newBaoCao.NgayXacNhan = newBaoCao.ThoiGianLapPhieu;
                 newBaoCao.IdTinhTrang = CommonConstant.DA_BAO_CAO;
                 baoCaoDLService.Add(newBaoCao);
                 baoCaoDLService.Save();
@@ -145,7 +144,7 @@ namespace PhatHanhSach.Web.Controllers
                 Session["dsCtBaoCao"] = null;
                 Session.RemoveAll();
 
-                return Redirect("/bao-cao/");
+                return Redirect("/bao-cao/dai-ly/");
             }
             else if (Request.Form["save"] != null)
             {
@@ -188,13 +187,13 @@ namespace PhatHanhSach.Web.Controllers
                             else
                             {
                                 ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
-                            }                                
+                            }
                         }
                     }
                 }
             }
             return View(baoCaoDLVm);
-        }        
+        }
 
         [Route("xoa-chi-tiet-bc.{id}")]
         [HttpGet]
@@ -224,7 +223,7 @@ namespace PhatHanhSach.Web.Controllers
             baoCaoDLVM.NgayXacNhan = DateTime.Now;
 
             var dsCtBaoCaoDL = ctBaoCaoDLService.GetMultiById(baoCaoDL.Id, new string[] { "Sach" });
-            baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);            
+            baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);
 
             Session["TinhTrangBanDau"] = baoCaoDLVM.IdTinhTrang;
             Session["dsCtBaoCao"] = baoCaoDLVM.CtBaoCaoDLs;
@@ -243,7 +242,6 @@ namespace PhatHanhSach.Web.Controllers
             return View(baoCaoDLVM);
         }
 
-        
         [Route("cap-nhat-chi-tiet")]
         [HttpPost]
         public ActionResult CapNhatBaoCao(BaoCaoDLViewModel baoCaoDLVm)

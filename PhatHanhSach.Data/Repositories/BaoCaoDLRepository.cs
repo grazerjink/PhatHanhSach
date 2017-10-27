@@ -9,7 +9,7 @@ namespace PhatHanhSach.Data.Repositories
 {
     public interface IBaoCaoDLRepository : IRepository<BaoCaoDL>
     {
-        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
     }
 
     public class BaoCaoDLRepository : RepositoryBase<BaoCaoDL>, IBaoCaoDLRepository
@@ -18,7 +18,7 @@ namespace PhatHanhSach.Data.Repositories
         {
         }
 
-        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
             var parameters = new SqlParameter[]{
                 new SqlParameter("@maDaiLy",id),
@@ -26,7 +26,7 @@ namespace PhatHanhSach.Data.Repositories
                 new SqlParameter("@ketThuc",toDate)
             };
 
-            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc",parameters).ToListAsync().Result;
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoDLViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc",parameters).ToListAsync().Result;
         }
     }
 }

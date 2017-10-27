@@ -22,7 +22,7 @@ namespace PhatHanhSach.Service
 
         BaoCaoDL GetByCodeHasIncluded(int id, string[] includes);
 
-        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
         bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate);
 
@@ -89,7 +89,7 @@ namespace PhatHanhSach.Service
             return false;
         }
 
-        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
             return baoCaoDLRepository.GetListAnalysisReport(id, fromDate, toDate);
         }

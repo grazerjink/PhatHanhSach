@@ -18,14 +18,15 @@ namespace PhatHanhSach.Web.Mapping
             CreateMap<TinhTrang, TinhTrangViewModel>();
             CreateMap<CtBaoCaoDL, CtBaoCaoDLViewModel>();
             CreateMap<BaoCaoDL, BaoCaoDLViewModel>();
-
-            /*CreateMap<CtDoanhThu, CtDoanhThuViewModel>();
+            CreateMap<ThanhToan, ThanhToanViewModel>();
             CreateMap<CtThanhToan, CtThanhToanViewModel>();
+
+            /*CreateMap<CtDoanhThu, CtDoanhThuViewModel>();            
             CreateMap<CongNoDL, CongNoDLViewModel>();            
             CreateMap<TonKho, TonKhoViewModel>();
             CreateMap<CongNoNXB, CongNoNXBViewModel>();
             CreateMap<DoanhThu, DoanhThuViewModel>();
-            CreateMap<ThanhToan, ThanhToanViewModel>();*/
+            */
         }
     }
 }

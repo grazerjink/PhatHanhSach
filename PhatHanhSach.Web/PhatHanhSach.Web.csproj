@@ -181,6 +181,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhieuNhapController.cs" />
     <Compile Include="Controllers\PhieuXuatController.cs" />
+    <Compile Include="Controllers\ThanhToanController.cs" />
     <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -192,11 +193,13 @@
     <Compile Include="Models\CtBaoCaoDLViewModel.cs" />
     <Compile Include="Models\CtPhieuNhapViewModel.cs" />
     <Compile Include="Models\CtPhieuXuatViewModel.cs" />
+    <Compile Include="Models\CtThanhToanViewModel.cs" />
     <Compile Include="Models\DaiLyViewModel.cs" />
     <Compile Include="Models\NhaXuatBanViewModel.cs" />
     <Compile Include="Models\PhieuNhapViewModel.cs" />
     <Compile Include="Models\PhieuXuatViewModel.cs" />
     <Compile Include="Models\SachViewModel.cs" />
+    <Compile Include="Models\ThanhToanViewModel.cs" />
     <Compile Include="Models\TinhTrangViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -4546,6 +4549,8 @@
     <Content Include="Views\BaoCao\ThemChiTietBaoCao.cshtml" />
     <Content Include="Views\PhieuNhap\ChiTietPhieuNhap.cshtml" />
     <Content Include="Views\PhieuXuat\ChiTietPhieuXuat.cshtml" />
+    <Content Include="Views\ThanhToan\DanhSachBaoCao.cshtml" />
+    <Content Include="Views\ThanhToan\TaoBaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">

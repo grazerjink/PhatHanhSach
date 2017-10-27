@@ -49,15 +49,18 @@
   <ItemGroup>
     <Compile Include="Services\BaoCaoDLService.cs" />
     <Compile Include="Services\CongNoDLService.cs" />
+    <Compile Include="Services\CongNoNXBService.cs" />
     <Compile Include="Services\CtBaoCaoDLService.cs" />
     <Compile Include="Services\CtPhieuNhapService.cs" />
     <Compile Include="Services\CtPhieuXuatService.cs" />
+    <Compile Include="Services\CtThanhToanService.cs" />
     <Compile Include="Services\PhieuNhapService.cs" />
     <Compile Include="Services\PhieuXuatService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DaiLyService.cs" />
     <Compile Include="Services\NhaXuatBanService.cs" />
     <Compile Include="Services\SachService.cs" />
+    <Compile Include="Services\ThanhToanService.cs" />
     <Compile Include="Services\TinhTrangService.cs" />
     <Compile Include="Services\TonKhoService.cs" />
   </ItemGroup>

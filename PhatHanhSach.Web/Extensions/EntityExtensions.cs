@@ -102,6 +102,32 @@ namespace PhatHanhSach.Web.Extensions
             ctBaoCaoDL.ThanhTien = ctBaoCaoDLVm.ThanhTien;
         }
 
+        public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)
+        {
+            thanhToan.Id = thanhToanVm.Id;
+            thanhToan.IdNXB = thanhToanVm.IdNXB;
+            thanhToan.NgayBatDau = thanhToanVm.NgayBatDau;
+            thanhToan.NgayKetThuc = thanhToanVm.NgayKetThuc;
+            thanhToan.NgayXacNhan = thanhToanVm.NgayXacNhan;
+            thanhToan.ThoiGianLapPhieu = thanhToanVm.ThoiGianLapPhieu;
+            thanhToan.TongTienConNo = thanhToanVm.TongTienConNo;
+            thanhToan.TongTienThanhToan = thanhToanVm.TongTienThanhToan;
+            thanhToan.IdTinhTrang = thanhToanVm.IdTinhTrang;
+            thanhToan.TrangThai = true;
+        }
+
+        public static void UpdateCtThanhToan(this CtThanhToan ctThanhToan, CtThanhToanViewModel ctThanhToanVm)
+        {
+            ctThanhToan.Id = ctThanhToanVm.Id;
+            ctThanhToan.IdSach = ctThanhToanVm.IdSach;
+            ctThanhToan.IdThanhToan = ctThanhToanVm.IdThanhToan;
+            ctThanhToan.SoLuongCon = ctThanhToanVm.SoLuongCon;
+            ctThanhToan.SoLuongXuat = ctThanhToanVm.SoLuongXuat;
+            ctThanhToan.ThanhTien = ctThanhToanVm.ThanhTien;
+            ctThanhToan.DonGiaNhap = ctThanhToanVm.DonGiaNhap;
+            ctThanhToan.TienNo = ctThanhToanVm.TienNo;
+        }
+
         /*       
         public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
         {
@@ -116,10 +142,7 @@ namespace PhatHanhSach.Web.Extensions
             //// TODO:
         }
 
-        public static void UpdateCtThanhToan(this CtThanhToan ctThanhToan, CtThanhToanViewModel ctThanhToanVm)
-        {
-            //// TODO:
-        }
+        
 
         public static void UpdateCongNoDL(this CongNoDL congNoDL, CongNoDLViewModel congNoDLVm)
         {
@@ -131,10 +154,7 @@ namespace PhatHanhSach.Web.Extensions
             //// TODO:
         }
 
-        public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)
-        {
-            thanhToan.TrangThai = true;
-        }
+        
 
         public static void UpdateDoanhThu(this DoanhThu doanhThu, DoanhThuViewModel doanhThuVm)
         {

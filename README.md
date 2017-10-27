@@ -12,6 +12,7 @@
 + Chức năng xem, thêm **phiếu nhập sách từ NXB** và trigger cập nhật bảng Tồn Kho trong CSDL.
 + Chức năng xem, thêm **phiếu xuất sách cho đại lý** và trigger cập nhật bảng Tồn Kho trong CSDL.
 + Chức năng tạo, xác nhận thanh toán các **báo cáo cho Đại lý** và trigger cập nhật Tồn nợ cho đại lý trong CSDL
++ Chức năng tạo, xác nhận thanh toán các **báo cáo cho NXB** và trigger cập nhật Tồn nợ cho NXB trong CSDL
 + Phần còn lại đang tiếp tục xây dựng.
 
 ___

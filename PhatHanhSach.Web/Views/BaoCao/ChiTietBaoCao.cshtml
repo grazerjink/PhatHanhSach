@@ -93,10 +93,10 @@
             var newIdTinhTrang = $(this).val();
             $('#IdTinhTrang').val(newIdTinhTrang);
             if (newIdTinhTrang === "2" || newIdTinhTrang === "3") {
-                $("#ngayXacNhan").removeClass("hidden");
+                $(".update").removeClass("hidden");
             }
             else {
-                $("#ngayXacNhan").addClass("hidden");
+                $(".update").addClass("hidden");
             }
 
         });
@@ -206,15 +206,15 @@
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tổng tiền thanh toán <span class="required">*</span>
+                                            Tổng tiền sách bán <span class="required">*</span>
                                         </label>
                                         <div class="col-md-5 col-sm-6 col-xs-12">
-                                            <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienThanhToan.ToString("N0")" />
+                                            <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienSachBan.ToString("N0")" />
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tổng tiền còn nở <span class="required">*</span>
+                                            Tổng tiền nợ <span class="required">*</span>
                                         </label>
                                         <div class="col-md-5 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienConNo.ToString("N0")" />
@@ -229,7 +229,15 @@
                                             @Html.HiddenFor(m => m.IdTinhTrang)
                                         </div>
                                     </div>
-                                    <div class="item form-group hidden" id="ngayXacNhan">
+                                    <div class="item form-group hidden update">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Tổng tiền thanh toán <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.TongTienThanhToan, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số tiền thanh toán", @required = "" })
+                                        </div>
+                                    </div>
+                                    <div class="item form-group hidden update">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Ngày xác nhận <span class="required">*</span>
                                         </label>

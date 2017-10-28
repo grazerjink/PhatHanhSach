@@ -11,6 +11,7 @@ namespace PhatHanhSach.Web.Models
         public DateTime NgayKetThuc { get; set; }
         public DateTime ThoiGianLapPhieu { get; set; }
         public double TongTienThanhToan { get; set; }
+        public double TongTienSachBan { get; set; }
         public double TongTienConNo { get; set; }
         public int IdTinhTrang { get; set; }
         public DateTime NgayXacNhan { get; set; }
@@ -20,5 +21,8 @@ namespace PhatHanhSach.Web.Models
         public CtBaoCaoDLViewModel ctBaoCao { get; set; }
         public IEnumerable<CtBaoCaoDLViewModel> CtBaoCaoDLs { get; set; }
         public TinhTrangViewModel TinhTrang { get; set; }
+        
+
+        public double TienNoThangTruoc { get; set; }
     }
 }

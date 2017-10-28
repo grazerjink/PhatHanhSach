@@ -52,8 +52,9 @@
                                     <th>Mã báo cáo </th>
                                     <th>Thông tin đại lý </th>
                                     <th>Khoảng thời gian </th>
-                                    <th>Tổng tiền thanh toán </th>
-                                    <th>Tổng tiền còn nợ </th>
+                                    <th>Tổng tiền sách bán </th>
+                                    <th>Tổng tiền nợ </th>
+                                    <th>Tiền đã thanh toán </th>
                                     <th>Ngày lập phiếu </th>
                                     <th>Tình trạng</th>
                                     <th>*</th>
@@ -67,8 +68,9 @@
                                         <td>@bc.Id</td>
                                         <td>@bc.DaiLy.TenDaiLy</td>
                                         <td>@bc.NgayBatDau.ToString("dd/MM/yyyy") - @bc.NgayKetThuc.ToString("dd/MM/yyyy")</td>
-                                        <td>@bc.TongTienThanhToan</td>
+                                        <td>@bc.TongTienSachBan</td>
                                         <td>@bc.TongTienConNo</td>
+                                        <td>@bc.TongTienThanhToan</td>
                                         <td>@bc.ThoiGianLapPhieu.ToString("dd/MM/yyyy")</td>
                                         <td>@bc.TinhTrang.MoTa</td>
                                         <td class="text-center"><a href="/bao-cao/dai-ly/chi-tiet-bc.@bc.Id/" class="btn btn-xs btn-primary">Xem chi tiết</a></td>

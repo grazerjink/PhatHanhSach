@@ -89,6 +89,7 @@ namespace PhatHanhSach.Web.Controllers
         public ActionResult ThemChiTietBaoCao()
         {
             var baoCaoDLVm = (BaoCaoDLViewModel)Session["BaoCao"];
+            baoCaoDLVm.TienNoThangTruoc = congNoDLService.GetDeptInLastMonth(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau);
             return View(baoCaoDLVm);
         }
 
@@ -100,6 +101,7 @@ namespace PhatHanhSach.Web.Controllers
             {
                 var baoCao = (BaoCaoDLViewModel)Session["BaoCao"];
                 baoCao.NgayXacNhan = baoCao.ThoiGianLapPhieu;
+                baoCao.TongTienConNo += baoCao.TienNoThangTruoc;
                 var dsSachDaKhaiSL = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
 
                 BaoCaoDL newBaoCao = new BaoCaoDL();
@@ -132,7 +134,7 @@ namespace PhatHanhSach.Web.Controllers
                     ctBaoCao.SoLuongBan = 0;
                     ctBaoCao.ThanhTien = 0;
 
-                    newBaoCao.TongTienThanhToan += (double)ctBaoCao.ThanhTien;
+                    newBaoCao.TongTienSachBan += (double)ctBaoCao.ThanhTien;
                     newBaoCao.TongTienConNo += (double)ctBaoCao.TienNo;
 
                     ctBaoCaoDLService.Add(ctBaoCao);
@@ -179,7 +181,7 @@ namespace PhatHanhSach.Web.Controllers
                             if (sachDaNhap == null)
                             {
                                 baoCaoDLVm.ctBaoCao = null;
-                                ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienThanhToan += newCtBaoCaoDL.ThanhTien;
+                                ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienSachBan += newCtBaoCaoDL.ThanhTien;
                                 ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienConNo += newCtBaoCaoDL.TienNo;
                                 ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Add(newCtBaoCaoDL);
                                 return Redirect("them-chi-tiet/");
@@ -204,7 +206,7 @@ namespace PhatHanhSach.Web.Controllers
             var ctbc = listCtBc[index];
 
             var updatedBc = (BaoCaoDLViewModel)Session["BaoCao"];
-            updatedBc.TongTienThanhToan -= ctbc.ThanhTien;
+            updatedBc.TongTienSachBan -= ctbc.ThanhTien;
             updatedBc.TongTienConNo -= ctbc.TienNo;
             listCtBc.RemoveAt(index);
 
@@ -263,61 +265,6 @@ namespace PhatHanhSach.Web.Controllers
             }
 
             return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
-        }
-
-        /*
-        [Route("cap-nhat-sach-ban")]
-        [HttpPost]
-        public ActionResult CapNhatSachBan(BaoCaoDLViewModel baoCaoDLVm)
-        {
-            List<string> listErrors = new List<string>();
-            var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-            if (ModelState.IsValid)
-            {
-                var sach = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach);
-                if (sach == null)
-                {
-                    listErrors.Add("Thông tin sách không tồn tại.");
-                }
-                else
-                {
-                    int soLuongDaMua = dsThongKeBaoCao.Find(x => x.IdSach == baoCaoDLVm.ctBaoCao.IdSach).SoLuongMua;
-                    if (baoCaoDLVm.ctBaoCao.SoLuongBan > soLuongDaMua)
-                    {
-                        listErrors.Add("Số lượng bán không được lớn hơn số lượng đã mua là " + soLuongDaMua);
-                    }
-                    else
-                    {
-                        var listSachKhaiBao = Session["dsCtBaoCao"] as List<CtBaoCaoDLViewModel>;
-                        var sachBanDau = dsThongKeBaoCao.Find(x => x.IdSach == sach.Id);
-                        var newEditSach = listSachKhaiBao.Find(x => x.IdSach == sach.Id);
-
-                        listSachKhaiBao.RemoveAll(x => x.IdSach == sach.Id);
-
-                        newEditSach.SoLuongBan = baoCaoDLVm.ctBaoCao.SoLuongBan;
-                        newEditSach.ThanhTien = (double)(newEditSach.SoLuongBan * sach.GiaBan);
-                        newEditSach.SoLuongCon = sachBanDau.SoLuongMua - newEditSach.SoLuongBan;
-                        newEditSach.TienNo = (double)(sachBanDau.SoLuongMua * sach.GiaBan) - newEditSach.ThanhTien;
-
-                        listSachKhaiBao.Add(newEditSach);
-                        Session["dsCtBaoCaoEdited"] = listSachKhaiBao;
-                        TempData["Changed"] = true;
-                        return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
-                    }
-                }
-            }
-            else
-            {
-                foreach (var e in ModelState.Values)
-                {
-                    listErrors.Add(e.Value.ToString());
-                }
-            }
-
-            TempData["errors"] = listErrors;
-            TempData["Changed"] = false;
-
-            return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
-        }*/
+        }        
     }
 }

@@ -87,6 +87,7 @@ namespace PhatHanhSach.Web.Extensions
             baoCaoDL.TongTienConNo = baoCaoDLVm.TongTienConNo;
             baoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
             baoCaoDL.IdTinhTrang = baoCaoDLVm.IdTinhTrang;
+            baoCaoDL.TongTienSachBan = baoCaoDLVm.TongTienSachBan;
             baoCaoDL.TrangThai = true;
         }
 
@@ -113,6 +114,7 @@ namespace PhatHanhSach.Web.Extensions
             thanhToan.TongTienConNo = thanhToanVm.TongTienConNo;
             thanhToan.TongTienThanhToan = thanhToanVm.TongTienThanhToan;
             thanhToan.IdTinhTrang = thanhToanVm.IdTinhTrang;
+            thanhToan.TongTienSachBan = thanhToanVm.TongTienSachBan;
             thanhToan.TrangThai = true;
         }
 

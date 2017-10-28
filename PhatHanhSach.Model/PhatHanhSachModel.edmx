@@ -14,8 +14,9 @@
           <Property Name="NgayBatDau" Type="date" />
           <Property Name="NgayKetThuc" Type="date" />
           <Property Name="ThoiGianLapPhieu" Type="datetime" />
-          <Property Name="TongTienThanhToan" Type="float" />
+          <Property Name="TongTienSachBan" Type="float" />
           <Property Name="TongTienConNo" Type="float" />
+          <Property Name="TongTienThanhToan" Type="float" />
           <Property Name="IdTinhTrang" Type="int" />
           <Property Name="NgayXacNhan" Type="date" />
           <Property Name="TrangThai" Type="bit" />
@@ -188,8 +189,9 @@
           <Property Name="NgayBatDau" Type="date" />
           <Property Name="NgayKetThuc" Type="date" />
           <Property Name="ThoiGianLapPhieu" Type="datetime" />
-          <Property Name="TongTienThanhToan" Type="float" />
+          <Property Name="TongTienSachBan" Type="float" />
           <Property Name="TongTienConNo" Type="float" />
+          <Property Name="TongTienThanhToan" Type="float" />
           <Property Name="IdTinhTrang" Type="int" />
           <Property Name="NgayXacNhan" Type="date" />
           <Property Name="TrangThai" Type="bit" />
@@ -199,7 +201,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MoTa" Type="nchar" MaxLength="10" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="TonKho">
           <Key>
@@ -549,8 +551,9 @@
           <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
           <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
           <Property Name="ThoiGianLapPhieu" Type="DateTime" Precision="3" />
-          <Property Name="TongTienThanhToan" Type="Double" />
+          <Property Name="TongTienSachBan" Type="Double" />
           <Property Name="TongTienConNo" Type="Double" />
+          <Property Name="TongTienThanhToan" Type="Double" />
           <Property Name="IdTinhTrang" Type="Int32" />
           <Property Name="NgayXacNhan" Type="DateTime" Precision="0" />
           <Property Name="TrangThai" Type="Boolean" />
@@ -755,8 +758,9 @@
           <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
           <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
           <Property Name="ThoiGianLapPhieu" Type="DateTime" Precision="3" />
-          <Property Name="TongTienThanhToan" Type="Double" />
+          <Property Name="TongTienSachBan" Type="Double" />
           <Property Name="TongTienConNo" Type="Double" />
+          <Property Name="TongTienThanhToan" Type="Double" />
           <Property Name="IdTinhTrang" Type="Int32" />
           <Property Name="NgayXacNhan" Type="DateTime" Precision="0" />
           <Property Name="TrangThai" Type="Boolean" />
@@ -769,7 +773,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MoTa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BaoCaoDLs" Relationship="Self.FK_BaoCaoDL_TinhTrang" FromRole="TinhTrang" ToRole="BaoCaoDL" />
           <NavigationProperty Name="ThanhToans" Relationship="Self.FK_ThanhToan_TinhTrang" FromRole="TinhTrang" ToRole="ThanhToan" />
         </EntityType>
@@ -1122,8 +1126,9 @@
                 <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
                 <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
                 <ScalarProperty Name="ThoiGianLapPhieu" ColumnName="ThoiGianLapPhieu" />
-                <ScalarProperty Name="TongTienThanhToan" ColumnName="TongTienThanhToan" />
+                <ScalarProperty Name="TongTienSachBan" ColumnName="TongTienSachBan" />
                 <ScalarProperty Name="TongTienConNo" ColumnName="TongTienConNo" />
+                <ScalarProperty Name="TongTienThanhToan" ColumnName="TongTienThanhToan" />
                 <ScalarProperty Name="IdTinhTrang" ColumnName="IdTinhTrang" />
                 <ScalarProperty Name="NgayXacNhan" ColumnName="NgayXacNhan" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
@@ -1311,8 +1316,9 @@
                 <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
                 <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
                 <ScalarProperty Name="ThoiGianLapPhieu" ColumnName="ThoiGianLapPhieu" />
-                <ScalarProperty Name="TongTienThanhToan" ColumnName="TongTienThanhToan" />
+                <ScalarProperty Name="TongTienSachBan" ColumnName="TongTienSachBan" />
                 <ScalarProperty Name="TongTienConNo" ColumnName="TongTienConNo" />
+                <ScalarProperty Name="TongTienThanhToan" ColumnName="TongTienThanhToan" />
                 <ScalarProperty Name="IdTinhTrang" ColumnName="IdTinhTrang" />
                 <ScalarProperty Name="NgayXacNhan" ColumnName="NgayXacNhan" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />

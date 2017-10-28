@@ -178,7 +178,7 @@
                                                     <th>Số lượng nhập </th>
                                                     <th>Tổng tiền nhập </th>
                                                     <th>Số lượng xuất </th>
-                                                    <th>Tổng tiền thanh toán </th>
+                                                    <th>Tổng tiền sách bán </th>
                                                     <th>Tổng tiền nợ </th>
                                                 </tr>
                                             </thead>
@@ -198,6 +198,28 @@
                                                     i++;
                                                 }
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="8">
+                                                        <label class="pull-left">
+                                                            Đại lý: @Model.NhaXuatBan.TenNXB - SĐT: @Model.NhaXuatBan.SoDienThoai
+                                                        </label>
+                                                        <label class="pull-right">
+                                                            Tổng tiền sách bán: @Model.TongTienSachBan.ToString("N0") - Còn nợ: @Model.TongTienConNo.ToString("N0") - Nợ đợt trước: @Model.TienNoThangTruoc.ToString("N0")
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8">
+                                                        <label class="pull-left">
+                                                            Địa chỉ: @Model.NhaXuatBan.DiaChi
+                                                        </label>
+                                                        <label class="pull-right">
+                                                            Khoảng thời gian: @Model.NgayBatDau.ToString("dd / MM / yyyy") - @Model.NgayKetThuc.ToString("dd / MM / yyyy")
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

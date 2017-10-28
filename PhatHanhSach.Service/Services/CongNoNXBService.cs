@@ -1,7 +1,9 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
 using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PhatHanhSach.Service
 {
@@ -16,6 +18,8 @@ namespace PhatHanhSach.Service
         IEnumerable<CongNoNXB> GetAll();
 
         CongNoNXB GetById(int id);
+
+        double GetDeptInLastMonth(int id, DateTime startDate);
 
         void Save();
     }
@@ -54,6 +58,12 @@ namespace PhatHanhSach.Service
         public CongNoNXB GetById(int id)
         {
             return congNoNXBRepository.GetSingleById(id);
+        }
+
+        public double GetDeptInLastMonth(int id, DateTime startDate)
+        {
+            var dept = congNoNXBRepository.GetMulti(x => x.IdNXB == id && x.NgayCapNhat < startDate).OrderByDescending(x => x.NgayCapNhat).Take(1).FirstOrDefault();
+            return dept == null ? 0 : (double)dept.TongTienConNo;
         }
 
         public void Save()

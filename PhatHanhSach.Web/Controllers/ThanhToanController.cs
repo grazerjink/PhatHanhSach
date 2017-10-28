@@ -69,7 +69,15 @@ namespace PhatHanhSach.Web.Controllers
                         Session["ThanhToan"] = null;
 
                         // Add new value for session
+                        var nxb = nxbService.GetById(thanhToanVm.IdNXB);
+                        thanhToanVm.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
+                        thanhToanVm.TienNoThangTruoc = congNoNXBService.GetDeptInLastMonth(nxb.Id, thanhToanVm.NgayBatDau);
                         thanhToanVm.dsThongKeNXB = listThongKe;
+                        foreach (var ct in listThongKe)
+                        {
+                            thanhToanVm.TongTienConNo += ct.TongTienNo;
+                            thanhToanVm.TongTienSachBan += ct.TongTienThanhToan;
+                        }
                         Session["ThanhToan"] = thanhToanVm;
                     }
                     else
@@ -80,9 +88,10 @@ namespace PhatHanhSach.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var tt = (ThanhToanViewModel)Session["ThanhToan"];
+                    var tt = (ThanhToanViewModel)Session["ThanhToan"];                    
                     var newThanhToan = new ThanhToan();
                     newThanhToan.UpdateThanhToan(tt);
+                    newThanhToan.TongTienConNo += tt.TienNoThangTruoc;
                     newThanhToan.IdTinhTrang = CommonConstant.DA_BAO_CAO;
                     newThanhToan.NgayXacNhan = newThanhToan.ThoiGianLapPhieu;
                     thanhToanService.Add(newThanhToan);
@@ -100,11 +109,8 @@ namespace PhatHanhSach.Web.Controllers
                             TienNo = ct.TongTienNo,
                             DonGiaNhap = ct.DonGiaNhap
                         };
-                        newThanhToan.TongTienConNo += ct.TongTienNo;
-                        newThanhToan.TongTienThanhToan += ct.TongTienThanhToan;
                         ctThanhToanService.Add(ctThanhToan);
                     }
-                    thanhToanService.Update(newThanhToan);
                     thanhToanService.Save();
                     Session["ThanhToan"] = null;
                     Session.RemoveAll();

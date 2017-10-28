@@ -25,8 +25,9 @@ namespace PhatHanhSach.Model
         public Nullable<System.DateTime> NgayBatDau { get; set; }
         public Nullable<System.DateTime> NgayKetThuc { get; set; }
         public Nullable<System.DateTime> ThoiGianLapPhieu { get; set; }
-        public Nullable<double> TongTienThanhToan { get; set; }
+        public Nullable<double> TongTienSachBan { get; set; }
         public Nullable<double> TongTienConNo { get; set; }
+        public Nullable<double> TongTienThanhToan { get; set; }
         public Nullable<int> IdTinhTrang { get; set; }
         public Nullable<System.DateTime> NgayXacNhan { get; set; }
         public Nullable<bool> TrangThai { get; set; }

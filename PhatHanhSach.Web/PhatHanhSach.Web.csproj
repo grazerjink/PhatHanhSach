@@ -4551,6 +4551,7 @@
     <Content Include="Views\PhieuXuat\ChiTietPhieuXuat.cshtml" />
     <Content Include="Views\ThanhToan\DanhSachBaoCao.cshtml" />
     <Content Include="Views\ThanhToan\TaoBaoCao.cshtml" />
+    <Content Include="Views\ThanhToan\ChiTietBaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhatHanhSach.Common\PhatHanhSach.Common.csproj">

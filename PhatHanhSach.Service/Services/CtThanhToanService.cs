@@ -17,6 +17,8 @@ namespace PhatHanhSach.Service
 
         CtThanhToan GetById(int id);
 
+        IEnumerable<CtThanhToan> GetMultiById(int idThanhToan, string[] includes = null);
+
         void Save();
     }
 
@@ -59,6 +61,11 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public IEnumerable<CtThanhToan> GetMultiById(int idThanhToan, string[] includes = null)
+        {
+            return ctThanhToanRepository.GetMulti(x => x.IdThanhToan == idThanhToan, includes);
         }
     }
 }

@@ -55,10 +55,7 @@ namespace PhatHanhSach.Service
 
         public IEnumerable<CtBaoCaoDL> GetMultiById(int idBaoCao, string[] includes = null)
         {
-            if (includes != null)
-                return ctBaoCaoDLRepository.GetMulti(x => x.IdBaoCao == idBaoCao, includes);
-            else
-                return ctBaoCaoDLRepository.GetMulti(x => x.IdBaoCao == idBaoCao);
+            return ctBaoCaoDLRepository.GetMulti(x => x.IdBaoCao == idBaoCao, includes);
         }
 
         public CtBaoCaoDL GetById(int id)

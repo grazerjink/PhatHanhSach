@@ -94,10 +94,9 @@ namespace PhatHanhSach.Web.Controllers
         {
             if (Request.Form["create"] != null)
             {
-                var pn = (PhieuXuatViewModel)Session["PhieuXuat"];
+                var px = (PhieuXuatViewModel)Session["PhieuXuat"];
                 PhieuXuat newPhieuXuat = new PhieuXuat();
-                newPhieuXuat.UpdatePhieuXuat(pn);
-
+                newPhieuXuat.UpdatePhieuXuat(px);
                 phieuXuatService.Add(newPhieuXuat);
                 phieuXuatService.Save();
 

@@ -5,6 +5,7 @@ using PhatHanhSach.Service;
 using PhatHanhSach.Service.Services;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -13,12 +14,12 @@ namespace PhatHanhSach.Web.Controllers
     [RoutePrefix("bao-cao/nxb")]
     public class ThanhToanController : Controller
     {
-        IThanhToanService thanhToanService;
-        ISachService sachService;
-        INhaXuatBanService nxbService;
-        ICtThanhToanService ctThanhToanService;
-        ITinhTrangService tinhTrangService;
-        ICongNoNXBService congNoNXBService;
+        private IThanhToanService thanhToanService;
+        private ISachService sachService;
+        private INhaXuatBanService nxbService;
+        private ICtThanhToanService ctThanhToanService;
+        private ITinhTrangService tinhTrangService;
+        private ICongNoNXBService congNoNXBService;
 
         public ThanhToanController(
                IThanhToanService thanhToanService,
@@ -51,7 +52,7 @@ namespace PhatHanhSach.Web.Controllers
         public ActionResult TaoBaoCao()
         {
             return View(new ThanhToanViewModel());
-        }       
+        }
 
         [Route("tao-bao-cao")]
         [HttpPost]
@@ -73,7 +74,6 @@ namespace PhatHanhSach.Web.Controllers
                     }
                     else
                         ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
-
                 }
             }
             else if (Request.Form["create"] != null)
@@ -88,9 +88,10 @@ namespace PhatHanhSach.Web.Controllers
                     thanhToanService.Add(newThanhToan);
                     thanhToanService.Save();
 
-                    foreach(var ct in tt.dsThongKeNXB)
+                    foreach (var ct in tt.dsThongKeNXB)
                     {
-                        var ctThanhToan = new CtThanhToan {
+                        var ctThanhToan = new CtThanhToan
+                        {
                             IdSach = ct.Id,
                             IdThanhToan = newThanhToan.Id,
                             SoLuongCon = ct.SoLuongNhap - ct.SoLuongXuat,
@@ -109,8 +110,60 @@ namespace PhatHanhSach.Web.Controllers
                     Session.RemoveAll();
                     return Redirect("/bao-cao/nxb/");
                 }
-            }           
+            }
             return View(thanhToanVm);
+        }
+
+        [Route("chi-tiet-bc.{id}")]
+        [HttpGet]
+        public ActionResult ChiTietBaoCao(int id)
+        {
+            var thanhToan = thanhToanService.GetById(id, new string[] { "NhaXuatBan", "TinhTrang" });
+            var thanhToanVm = Mapper.Map<ThanhToan, ThanhToanViewModel>(thanhToan);
+            thanhToanVm.NgayXacNhan = DateTime.Now;
+
+            var ctThanhToan = ctThanhToanService.GetMultiById(thanhToanVm.Id, new string[] { "Sach" });
+            thanhToanVm.CtThanhToans = Mapper.Map<IEnumerable<CtThanhToan>, IEnumerable<CtThanhToanViewModel>>(ctThanhToan);
+
+            Session["TinhTrangBanDau"] = thanhToanVm.IdTinhTrang;
+            Session["dsCtBaoCao"] = thanhToanVm.CtThanhToans;
+
+            if (TempData["Changed"] != null)
+            {
+                ViewBag.Changed = TempData["Changed"];
+            }
+            else
+            {
+                ViewBag.Changed = false;
+            }
+
+            var dsTinhTrang = tinhTrangService.GetAll();
+            ViewBag.dsTinhTrang = dsTinhTrang;
+
+            return View(thanhToanVm);
+        }
+
+        [Route("cap-nhat-chi-tiet")]
+        [HttpPost]
+        public ActionResult CapNhatBaoCao(ThanhToanViewModel thanhToanVm)
+        {
+            if (ModelState.IsValid)
+            {
+                int tinhTrangBanDau = (int)Session["TinhTrangBanDau"];
+                if (tinhTrangBanDau == CommonConstant.DA_THANH_TOAN || tinhTrangBanDau == CommonConstant.DA_HUY)
+                {
+                    ModelState.AddModelError("", "Báo cáo đã thanh toán hoặc đã bị hủy không thể cập nhật.");
+                }
+                else
+                {
+                    var updateThanhToan = new ThanhToan();
+                    updateThanhToan.UpdateThanhToan(thanhToanVm);
+                    thanhToanService.Update(updateThanhToan);
+                    thanhToanService.Save();
+                }
+            }
+
+            return RedirectToAction("ChiTietBaoCao", new { id = thanhToanVm.Id });
         }
     }
 }

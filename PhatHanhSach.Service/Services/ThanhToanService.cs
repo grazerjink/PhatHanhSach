@@ -17,7 +17,7 @@ namespace PhatHanhSach.Service
 
         IEnumerable<ThanhToan> GetAll(string[] includes = null);
 
-        ThanhToan GetById(int id);
+        ThanhToan GetById(int id, string[] includes=null);
 
         List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
@@ -55,9 +55,9 @@ namespace PhatHanhSach.Service
             return thanhToanRepository.GetAll(includes);
         }
 
-        public ThanhToan GetById(int id)
+        public ThanhToan GetById(int id, string[] includes = null)
         {
-            return thanhToanRepository.GetSingleById(id);
+            return thanhToanRepository.GetSingleByCondition(x => x.Id == id, includes);
         }
 
         public void Save()

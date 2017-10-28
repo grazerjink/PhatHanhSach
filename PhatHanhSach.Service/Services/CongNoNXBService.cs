@@ -62,7 +62,7 @@ namespace PhatHanhSach.Service
 
         public double GetDeptInLastMonth(int id, DateTime startDate)
         {
-            var dept = congNoNXBRepository.GetMulti(x => x.IdNXB == id && x.NgayCapNhat < startDate).OrderByDescending(x => x.NgayCapNhat).Take(1).FirstOrDefault();
+            var dept = congNoNXBRepository.GetMulti(x => x.IdNXB == id && x.NgayCapNhat < startDate && x.TongTienThanhToan != 0).OrderByDescending(x => x.NgayCapNhat).Take(1).FirstOrDefault();
             return dept == null ? 0 : (double)dept.TongTienConNo;
         }
 

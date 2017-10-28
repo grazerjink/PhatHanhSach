@@ -9,7 +9,8 @@ namespace PhatHanhSach.Data.Repositories
 {
     public interface IBaoCaoDLRepository : IRepository<BaoCaoDL>
     {
-        List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate);
     }
 
     public class BaoCaoDLRepository : RepositoryBase<BaoCaoDL>, IBaoCaoDLRepository
@@ -18,7 +19,7 @@ namespace PhatHanhSach.Data.Repositories
         {
         }
 
-        public List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
             var parameters = new SqlParameter[]{
                 new SqlParameter("@maDaiLy",id),
@@ -26,7 +27,18 @@ namespace PhatHanhSach.Data.Repositories
                 new SqlParameter("@ketThuc",toDate)
             };
 
-            return DbContext.Database.SqlQuery<ThongKeBaoCaoDLViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc",parameters).ToListAsync().Result;
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc",parameters).ToListAsync().Result;
         }
+
+        public List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate)
+        {
+            var parameters = new SqlParameter[]{
+                new SqlParameter("@maDaiLy",id),
+                new SqlParameter("@ngayTaoMoi",newCreateDate)
+            };
+
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("proThongKeSLConThangTruoc @maDaiLy, @ngayTaoMoi", parameters).ToListAsync().Result;
+        }
+        
     }
 }

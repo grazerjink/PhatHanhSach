@@ -11,6 +11,7 @@ namespace PhatHanhSach.Data.Repositories
     public interface IThanhToanRepository : IRepository<ThanhToan>
     {
         List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate);
     }
 
     public class ThanhToanRepository : RepositoryBase<ThanhToan>, IThanhToanRepository
@@ -27,6 +28,15 @@ namespace PhatHanhSach.Data.Repositories
                 new SqlParameter("@ketThuc",toDate)
             };
             return DbContext.Database.SqlQuery<ThongKeBaoCaoNXBViewModel>("proThongKeBaoCaoNXB @maNXB, @batDau, @ketThuc", parameters).ToListAsync().Result;
+        }
+
+        public List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate)
+        {
+            var parameters = new SqlParameter[]{
+                new SqlParameter("@maNXB",id),
+                new SqlParameter("@ngayTaoMoi",newCreateDate)
+            };
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("proThongKeSLTonThangTruoc @maNXB, @ngayTaoMoi", parameters).ToListAsync().Result;
         }
     }
 }

@@ -67,7 +67,18 @@ namespace PhatHanhSach.Service
 
         public List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
-            return thanhToanRepository.GetListAnalysisReport(id, fromDate, toDate);
+            var newMonthList = thanhToanRepository.GetListAnalysisReport(id, fromDate, toDate);
+            var oldMonthExistList = thanhToanRepository.GetListExistAtLastMonth(id, fromDate);
+            if (oldMonthExistList.Count > 0)
+            {
+                newMonthList.ForEach(x =>
+                {
+                    var existItem = oldMonthExistList.Find(y => y.Id == x.Id);
+                    if (existItem != null)
+                        x.SoLuongNhap += existItem.SoLuongMua;
+                });
+            }
+            return newMonthList;
         }
     }
 }

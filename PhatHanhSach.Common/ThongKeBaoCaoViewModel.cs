@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PhatHanhSach.Web.Models
 {
-    public class ThongKeBaoCaoDLViewModel
+    public class ThongKeBaoCaoViewModel
     {
         public int Id { get; set; }
         public string TenSach { get; set; }

@@ -20,8 +20,7 @@ namespace PhatHanhSach.Web.Models
         public DaiLyViewModel DaiLy { get; set; }
         public CtBaoCaoDLViewModel ctBaoCao { get; set; }
         public IEnumerable<CtBaoCaoDLViewModel> CtBaoCaoDLs { get; set; }
-        public TinhTrangViewModel TinhTrang { get; set; }
-        
+        public TinhTrangViewModel TinhTrang { get; set; }        
 
         public double TienNoThangTruoc { get; set; }
     }

@@ -22,7 +22,7 @@ namespace PhatHanhSach.Service
 
         BaoCaoDL GetByCodeHasIncluded(int id, string[] includes);
 
-        List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
         bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate);
 
@@ -89,9 +89,21 @@ namespace PhatHanhSach.Service
             return false;
         }
 
-        public List<ThongKeBaoCaoDLViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
-            return baoCaoDLRepository.GetListAnalysisReport(id, fromDate, toDate);
+            var newMonthList = baoCaoDLRepository.GetListAnalysisReport(id, fromDate, toDate);
+            var oldMonthExistList = baoCaoDLRepository.GetListExistAtLastMonth(id, fromDate);
+            if (oldMonthExistList.Count > 0)
+            {
+                newMonthList.ForEach(x =>
+                {
+                    var existItem = oldMonthExistList.Find(y => y.Id == x.Id);
+                    if (existItem != null)
+                        x.SoLuongMua += existItem.SoLuongMua;
+                });
+            }
+
+            return newMonthList;
         }
     }
 }

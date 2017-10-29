@@ -9,13 +9,9 @@ BEGIN
 	DECLARE @soLuongTon int = (SELECT TOP(1) SoLuong FROM TonKho WHERE ThoiGian <= @ngayNhap AND IdSach = @maSach ORDER BY ThoiGian DESC, Id DESC)
 	DECLARE @giaNhap float = (SELECT DonGiaNhap FROM inserted)
 
-	IF @soLuongTon IS NULL
-	BEGIN		
+	IF @soLuongTon IS NULL	
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongNhap,@ngayNhap, @soLuongNhap)
-	END
-	ELSE
-	BEGIN		
+	ELSE		
 		UPDATE TonKho SET SoLuong = @soLuongTon + @soLuongNhap WHERE ThoiGian > @ngayNhap
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongTon+@soLuongNhap,@ngayNhap, @soLuongNhap)
-	END
 END

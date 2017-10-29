@@ -63,7 +63,16 @@ namespace PhatHanhSach.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     var listThongKe = thanhToanService.GetListAnalysisReport(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau, thanhToanVm.NgayKetThuc);
-                    if (listThongKe.Count > 0)
+                    
+                    if(listThongKe.Count == 0)
+                    {
+                        ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
+                    }
+                    else if (thanhToanService.CheckReportIsCreated(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau))
+                    {
+                        ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                    }
+                    else
                     {
                         // Clear at the second click
                         Session["ThanhToan"] = null;
@@ -80,15 +89,14 @@ namespace PhatHanhSach.Web.Controllers
                         }
                         Session["ThanhToan"] = thanhToanVm;
                     }
-                    else
-                        ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
+                        
                 }
             }
             else if (Request.Form["create"] != null)
             {
                 if (ModelState.IsValid)
                 {
-                    var tt = (ThanhToanViewModel)Session["ThanhToan"];                    
+                    var tt = (ThanhToanViewModel)Session["ThanhToan"];
                     var newThanhToan = new ThanhToan();
                     newThanhToan.UpdateThanhToan(tt);
                     newThanhToan.TongTienConNo += tt.TienNoThangTruoc;
@@ -126,7 +134,6 @@ namespace PhatHanhSach.Web.Controllers
         {
             var thanhToan = thanhToanService.GetById(id, new string[] { "NhaXuatBan", "TinhTrang" });
             var thanhToanVm = Mapper.Map<ThanhToan, ThanhToanViewModel>(thanhToan);
-            thanhToanVm.NgayXacNhan = DateTime.Now;
 
             var ctThanhToan = ctThanhToanService.GetMultiById(thanhToanVm.Id, new string[] { "Sach" });
             thanhToanVm.CtThanhToans = Mapper.Map<IEnumerable<CtThanhToan>, IEnumerable<CtThanhToanViewModel>>(ctThanhToan);
@@ -162,8 +169,10 @@ namespace PhatHanhSach.Web.Controllers
                 }
                 else
                 {
-                    var updateThanhToan = new ThanhToan();
-                    updateThanhToan.UpdateThanhToan(thanhToanVm);
+                    var updateThanhToan = thanhToanService.GetById(thanhToanVm.Id);
+                    updateThanhToan.IdTinhTrang = thanhToanVm.IdTinhTrang;
+                    updateThanhToan.NgayXacNhan = thanhToanVm.NgayXacNhan;
+                    updateThanhToan.TongTienThanhToan = thanhToanVm.TongTienThanhToan;
                     thanhToanService.Update(updateThanhToan);
                     thanhToanService.Save();
                 }

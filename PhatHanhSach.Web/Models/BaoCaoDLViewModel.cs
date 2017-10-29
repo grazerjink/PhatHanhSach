@@ -10,9 +10,9 @@ namespace PhatHanhSach.Web.Models
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
         public DateTime ThoiGianLapPhieu { get; set; }
-        public double TongTienThanhToan { get; set; }
         public double TongTienSachBan { get; set; }
         public double TongTienConNo { get; set; }
+        public double TongTienThanhToan { get; set; }
         public int IdTinhTrang { get; set; }
         public DateTime NgayXacNhan { get; set; }
         public bool TrangThai { get; set; }

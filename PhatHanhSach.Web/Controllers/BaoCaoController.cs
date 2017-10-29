@@ -222,7 +222,6 @@ namespace PhatHanhSach.Web.Controllers
         {
             var baoCaoDL = baoCaoDLService.GetByCodeHasIncluded(id, new string[] { "DaiLy", "TinhTrang" });
             var baoCaoDLVM = Mapper.Map<BaoCaoDL, BaoCaoDLViewModel>(baoCaoDL);
-            baoCaoDLVM.NgayXacNhan = DateTime.Now;
 
             var dsCtBaoCaoDL = ctBaoCaoDLService.GetMultiById(baoCaoDL.Id, new string[] { "Sach" });
             baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);
@@ -257,14 +256,16 @@ namespace PhatHanhSach.Web.Controllers
                 }
                 else
                 {
-                    var updateBaoCaoDL = new BaoCaoDL();
-                    updateBaoCaoDL.UpdateBaoCaoDL(baoCaoDLVm);
+                    var updateBaoCaoDL = baoCaoDLService.GetById(baoCaoDLVm.Id);
+                    updateBaoCaoDL.IdTinhTrang = baoCaoDLVm.IdTinhTrang;
+                    updateBaoCaoDL.NgayXacNhan = baoCaoDLVm.NgayXacNhan;
+                    updateBaoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
                     baoCaoDLService.Update(updateBaoCaoDL);
                     baoCaoDLService.Save();
                 }
             }
 
             return RedirectToAction("ChiTietBaoCao", new { id = baoCaoDLVm.Id });
-        }        
+        }
     }
 }

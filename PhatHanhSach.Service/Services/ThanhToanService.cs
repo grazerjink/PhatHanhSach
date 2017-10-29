@@ -4,6 +4,7 @@ using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PhatHanhSach.Service
 {
@@ -22,6 +23,8 @@ namespace PhatHanhSach.Service
         List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
         void Save();
+
+        bool CheckReportIsCreated(int idNXB, DateTime currentCreateDate);
     }
 
     public class ThanhToanService : IThanhToanService
@@ -79,6 +82,13 @@ namespace PhatHanhSach.Service
                 });
             }
             return newMonthList;
+        }
+
+        public bool CheckReportIsCreated(int idNXB, DateTime currentCreateDate)
+        {
+            var dsBaoCaoDaTao = thanhToanRepository.GetMulti(x => x.NgayKetThuc >= currentCreateDate && x.IdNXB == idNXB && (x.IdTinhTrang == 1 || x.IdTinhTrang == 2)).ToList();
+            if (dsBaoCaoDaTao.Count != 0) return true; // Report has created before.
+            return false;
         }
     }
 }

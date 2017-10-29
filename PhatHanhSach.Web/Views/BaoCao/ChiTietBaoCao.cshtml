@@ -64,11 +64,16 @@
     <!-- Initialize datetimepicker -->
     <script>
         var $form = $('form');
+        var initialState = $form.serialize();
+
         var $tinhTrang = $form.find("#IdTinhTrang");
         var status = $tinhTrang.val();
         if (status !== "1") {
             $('#TinhTrang').attr("disabled", "disabled");
             $tinhTrang.attr("disabled", "disabled");
+            $(".acceptDay").removeClass("hidden");
+            $(".amountPay").removeClass("hidden");
+            $(".editable").attr("readonly", "readonly");
         }
         else {
             var changed = $(".changed").html();
@@ -78,8 +83,11 @@
             else {
                 $('#btnUpdate').removeAttr("disabled");
             }
+            $(".acceptDay").addClass("hidden");
+            $(".amountPay").addClass("hidden");
+            $(".editable").removeAttr("readonly");
         }
-        var initialState = $form.serialize();
+
         $('form').on('change input', function (e) {
             if (initialState === $(this).serialize()) {
                 $('#btnUpdate').attr("disabled", "disabled");
@@ -92,11 +100,17 @@
         $('#TinhTrang').on('change', function () {
             var newIdTinhTrang = $(this).val();
             $('#IdTinhTrang').val(newIdTinhTrang);
-            if (newIdTinhTrang === "2" || newIdTinhTrang === "3") {
-                $(".update").removeClass("hidden");
+            if (newIdTinhTrang === "2") {
+                $(".acceptDay").removeClass("hidden");
+                $(".amountPay").removeClass("hidden");
+            }
+            else if (newIdTinhTrang === "3") {
+                $(".acceptDay").removeClass("hidden");
+                $(".amountPay").addClass("hidden");
             }
             else {
-                $(".update").addClass("hidden");
+                $(".acceptDay").addClass("hidden");
+                $(".amountPay").addClass("hidden");
             }
 
         });
@@ -154,107 +168,104 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                    @Html.AntiForgeryToken()
-                                    <div class="hidden">
-                                        @Html.EditorForModel()
+                                @Html.AntiForgeryToken()
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Mã báo cáo <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => m.Id, new { @class = "form-control col-md-7 col-xs-12", @readonly = "readonly", @required = "" })
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Mã báo cáo <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-5 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.Id, new { @class = "form-control col-md-7 col-xs-12", @readonly = "readonly", @required = "" })
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Ngày lập phiếu <span class="required">*</span>
+                                    </label>
+                                    <div class="control-group col-md-5 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id="myCreateDate">
+                                            @Html.TextBoxFor(m => m.ThoiGianLapPhieu, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Ngày lập phiếu <span class="required">*</span>
-                                        </label>
-                                        <div class="control-group col-md-5 col-sm-6 col-xs-12">
-                                            <div class='input-group date' id="myCreateDate">
-                                                @Html.TextBoxFor(m => m.ThoiGianLapPhieu, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Thời gian bắt đầu - kết thúc <span class="required">*</span>
-                                        </label>
-                                        <div class="control-group col-md-5 col-sm-6 col-xs-12">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class='input-group date' id="myStartDate">
-                                                        @Html.TextBoxFor(m => m.NgayBatDau, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Thời gian bắt đầu - kết thúc <span class="required">*</span>
+                                    </label>
+                                    <div class="control-group col-md-5 col-sm-6 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class='input-group date' id="myStartDate">
+                                                    @Html.TextBoxFor(m => m.NgayBatDau, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class='input-group date' id="myEndDate">
-                                                        @Html.TextBoxFor(m => m.NgayKetThuc, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class='input-group date' id="myEndDate">
+                                                    @Html.TextBoxFor(m => m.NgayKetThuc, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tổng tiền sách bán <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-5 col-sm-6 col-xs-12">
-                                            <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienSachBan.ToString("N0")" />
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tổng tiền sách bán <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienSachBan.ToString("N0")" />
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tổng tiền nợ <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienConNo.ToString("N0")" />
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tình trạng xử lí <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(m => m.IdTinhTrang, new SelectList(dsTinhTrang, "Id", "MoTa"), new { @id="TinhTrang", @name="TinhTrang", @class = "form-control col-md-7 col-xs-12" })                                           
+                                        @Html.HiddenFor(m => m.IdTinhTrang)
+                                    </div>
+                                </div>
+                                <div class="item form-group hidden amountPay">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tổng tiền thanh toán <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => m.TongTienThanhToan, new { @class = "editable form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số tiền thanh toán", @required = "" })
+                                    </div>
+                                </div>
+                                <div class="item form-group hidden acceptDay">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Ngày xác nhận <span class="required">*</span>
+                                    </label>
+                                    <div class="control-group col-md-5 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id="myConfirmDate">
+                                            @Html.TextBoxFor(m => m.NgayXacNhan, "{0:dd/MM/yyyy}", new { @class = "editable form-control" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tổng tiền nợ <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-5 col-sm-6 col-xs-12">
-                                            <input type="text" class="form-control col-md-7 col-xs-12" readonly value="@Model.TongTienConNo.ToString("N0")" />
-                                        </div>
+                                </div>
+                                <div class="item form-group">
+                                    <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
+                                        @Html.ValidationSummary(false, "", new { @class = "error" })
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tình trạng xử lí <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-5 col-sm-6 col-xs-12">
-                                            @Html.DropDownListFor(m => m.IdTinhTrang, new SelectList(dsTinhTrang, "Id", "MoTa"), new { @id="TinhTrang", @name="TinhTrang", @class = "form-control col-md-7 col-xs-12" })                                           
-                                            @Html.HiddenFor(m => m.IdTinhTrang)
-                                        </div>
-                                    </div>
-                                    <div class="item form-group hidden update">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Tổng tiền thanh toán <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-5 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(m => m.TongTienThanhToan, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số tiền thanh toán", @required = "" })
-                                        </div>
-                                    </div>
-                                    <div class="item form-group hidden update">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Ngày xác nhận <span class="required">*</span>
-                                        </label>
-                                        <div class="control-group col-md-5 col-sm-6 col-xs-12">
-                                            <div class='input-group date' id="myConfirmDate">
-                                                @Html.TextBoxFor(m => m.NgayXacNhan, "{0:dd/MM/yyyy}", new { @class = "form-control" })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
-                                            @Html.ValidationSummary(false, "", new { @class = "error" })
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

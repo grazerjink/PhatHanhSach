@@ -8,14 +8,15 @@
             }
         });
     },
+    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $("#IdNXB").val(ui.item.value);
-    },
-    focus: function (event, ui) {
+    }
+    /*focus: function (event, ui) {
         event.preventDefault();
         $("#listNXB").val(ui.item.label);
-    }
+    }*/
 });
 
 $("#listDaiLy").autocomplete({
@@ -28,13 +29,10 @@ $("#listDaiLy").autocomplete({
             }
         });
     },
+    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#IdDaiLy').val(ui.item.value);
-    },
-    focus: function (event, ui) {
-        event.preventDefault();
-        $("#listDaiLy").val(ui.item.label);
     }
 });
 
@@ -48,14 +46,11 @@ $("#listSach").autocomplete({
             }
         });
     },
+    minLength: 1,
     select: function (event, ui) {
         event.preventDefault(); 
         $('#ctPhieuNhap_IdSach').val(ui.item.value);
         $('#ctPhieuXuat_IdSach').val(ui.item.value);
-    },
-    focus: function (event, ui) {
-        event.preventDefault();
-        $("#listSach").val(ui.item.label);
     }
 });
 
@@ -77,13 +72,10 @@ $("#listSachDaXuat").autocomplete({
             }
         });
     },
+    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#ctBaoCao_IdSach').val(ui.item.value);
         $('#ctBaoCao_IdSach').val(ui.item.value);
-    },
-    focus: function (event, ui) {
-        event.preventDefault();
-        $("#listSachDaXuat").val(ui.item.label);
     }
 });

@@ -1,7 +1,72 @@
-﻿
+﻿@model IEnumerable<PhatHanhSach.Web.Models.SachViewModel>
 @{
     ViewBag.Title = "TonKho";
     Layout = "~/Views/Shared/Layout.cshtml";
+    int i = 1;
+}
+@section headerStyles {
+    <!-- Datatables -->
+    <link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="~/Assets/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="~/Assets/vendors/normalize-css/normalize.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+    <link href="~/Assets/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+}
+
+@section footerJS {
+    <!-- Datatables -->
+    <script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/Assets/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Ion.RangeSlider -->
+    <script src="~/Assets/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <!-- Bootstrap Colorpicker -->
+    <script src="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/Assets/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- jQuery Knob -->
+    <script src="~/Assets/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+    <!-- Cropper -->
+    <script src="~/Assets/vendors/cropper/dist/cropper.min.js"></script>
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
+    <!-- autocomplete jquery -->
+    <script src="~/Assets/js/myCustomJS.js"></script>
+    <!-- Initialize datetimepicker -->
+    <script>
+        $('#myCreateDate').datetimepicker({
+            format: 'DD / MM / YYYY',
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#datatable').DataTable();
+    </script>
 }
 
 <!-- page content -->
@@ -9,7 +74,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Thống kê tồn kho</h3>
+                <h3>Thống kê tồn kho theo thời điểm</h3>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -18,15 +83,61 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_content">
-                        <h2>Thống kê tồn kho theo một thời điểm</h2>
+                        <form method="post" action="/thong-ke/ton-kho/" class="form-horizontal form-label-left" novalidate style="margin-top:20px">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-4 col-xs-4">
+                                    Thời điểm cần thống kê <span class="required">*</span>
+                                </label>
+                                <div class="control-group col-md-4 col-sm-4 col-xs-4">
+                                    <div class='input-group date' id="myCreateDate">
+                                        <input class="form-control" placeholder="Nhấp chọn thời gian muốn xem..." name="NgayThongKe" required>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="control-group col-md-4 col-sm-4 col-xs-4">
+                                    <button class="btn btn-default pull-left" type="reset">Hủy</button>
+                                    <button class="btn btn-success pull-left" type="submit">Xem thống kê</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ln_solid"></div>
                     </div>
 
-                    <div class="pull-right">
-                        <a class="btn btn-success" href="/ThongKe/TonKho">Xem</a>
-                    </div>
-
-                    <div class="pull-left">
-                        <a class="btn btn-default" href="/">Về trang chính</a>
+                    <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered bulk_action">
+                            <thead>
+                                <tr>
+                                    <th>STT </th>
+                                    <th>Tên sách </th>
+                                    <th>Tác giả </th>
+                                    <th>Lĩnh vực </th>
+                                    <th>Giá bán </th>
+                                    <th>Giá nhập </th>
+                                    <th>Số lượng tồn </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@s.TenSach </td>
+                                        <td>@s.TacGia </td>
+                                        <td>@s.LinhVuc</td>
+                                        <td>@s.GiaBan</td>
+                                        <td>@s.GiaNhap</td>
+                                        <td>@s.TonKho.SoLuong</td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="ln_solid"></div>
+                        <div class="pull-left">
+                            <a class="btn btn-default" href="/">Về trang chính</a>
+                        </div>
                     </div>
                 </div>
             </div>

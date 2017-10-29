@@ -190,6 +190,8 @@
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\BaoCaoDLViewModel.cs" />
+    <Compile Include="Models\CongNoDLViewModel.cs" />
+    <Compile Include="Models\CongNoNXBViewModel.cs" />
     <Compile Include="Models\CtBaoCaoDLViewModel.cs" />
     <Compile Include="Models\CtPhieuNhapViewModel.cs" />
     <Compile Include="Models\CtPhieuXuatViewModel.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Models\SachViewModel.cs" />
     <Compile Include="Models\ThanhToanViewModel.cs" />
     <Compile Include="Models\TinhTrangViewModel.cs" />
+    <Compile Include="Models\TonKhoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

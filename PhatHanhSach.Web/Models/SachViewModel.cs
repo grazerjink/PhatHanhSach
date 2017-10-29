@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace PhatHanhSach.Web.Models
+﻿namespace PhatHanhSach.Web.Models
 {
     public class SachViewModel
     {
@@ -14,5 +9,7 @@ namespace PhatHanhSach.Web.Models
         public double GiaBan { get; set; }
         public double GiaNhap { get; set; }
         public bool TrangThai { get; set; }
+
+        public TonKhoViewModel TonKho { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace PhatHanhSach.Web.Models
         public string SoTaiKhoan { get; set; }
         public string DiaChi { get; set; }
         public bool TrangThai { get; set; }
+
+        public CongNoNXBViewModel CongNoNXB { get; set; }
     }
 }

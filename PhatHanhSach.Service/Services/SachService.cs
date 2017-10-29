@@ -13,7 +13,7 @@ namespace PhatHanhSach.Service
 
         Sach Delete(Sach sach);
 
-        IEnumerable<Sach> GetAll();
+        IEnumerable<Sach> GetAll(bool status = true);
 
         Sach GetById(int id);
 
@@ -46,9 +46,9 @@ namespace PhatHanhSach.Service
             return sachRepository.Delete(sach);
         }
 
-        public IEnumerable<Sach> GetAll()
+        public IEnumerable<Sach> GetAll(bool status = true)
         {
-            return sachRepository.GetAll();
+            return sachRepository.GetMulti(x => x.TrangThai == status);
         }
 
         public Sach GetById(int id)

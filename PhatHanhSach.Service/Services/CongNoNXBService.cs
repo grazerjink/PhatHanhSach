@@ -10,18 +10,13 @@ namespace PhatHanhSach.Service
     public interface ICongNoNXBService
     {
         CongNoNXB Add(CongNoNXB congNoNXB);
-
         void Update(CongNoNXB congNoNXB);
-
         CongNoNXB Delete(CongNoNXB congNoNXB);
-
         IEnumerable<CongNoNXB> GetAll();
-
         CongNoNXB GetById(int id);
-
         double GetDeptInLastMonth(int id, DateTime startDate);
-
         void Save();
+        CongNoNXB GetSingleByIdAndDate(int id, DateTime date);
     }
 
     public class CongNoNXBService : ICongNoNXBService
@@ -69,6 +64,11 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public CongNoNXB GetSingleByIdAndDate(int id, DateTime date)
+        {
+            return congNoNXBRepository.GetMulti(x => x.NgayCapNhat <= date && x.IdNXB == id).OrderByDescending(x => x.NgayCapNhat).OrderByDescending(x => x.Id).FirstOrDefault();
         }
     }
 }

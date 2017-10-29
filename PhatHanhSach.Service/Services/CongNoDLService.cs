@@ -10,18 +10,13 @@ namespace PhatHanhSach.Service
     public interface ICongNoDLService
     {
         CongNoDL Add(CongNoDL congNoDL);
-
         void Update(CongNoDL congNoDL);
-
         CongNoDL Delete(CongNoDL congNoDL);
-
         IEnumerable<CongNoDL> GetAll();
-
         CongNoDL GetById(int id);
-
         double GetDeptInLastMonth(int id, DateTime startDate);
-
         void Save();
+        CongNoDL GetSingleByIdAndDate(int id, DateTime date);
     }
 
     public class CongNoDLService : ICongNoDLService
@@ -69,6 +64,11 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public CongNoDL GetSingleByIdAndDate(int id, DateTime date)
+        {
+            return congNoDLRepository.GetMulti(x => x.NgayCapNhat <= date && x.IdDaiLy == id).OrderByDescending(x => x.NgayCapNhat).OrderByDescending(x => x.Id).FirstOrDefault();
         }
     }
 }

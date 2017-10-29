@@ -20,12 +20,13 @@ namespace PhatHanhSach.Web.Mapping
             CreateMap<BaoCaoDL, BaoCaoDLViewModel>();
             CreateMap<ThanhToan, ThanhToanViewModel>();
             CreateMap<CtThanhToan, CtThanhToanViewModel>();
-
-            /*CreateMap<CtDoanhThu, CtDoanhThuViewModel>();            
-            CreateMap<CongNoDL, CongNoDLViewModel>();            
             CreateMap<TonKho, TonKhoViewModel>();
+            CreateMap<CongNoDL, CongNoDLViewModel>();
             CreateMap<CongNoNXB, CongNoNXBViewModel>();
+
+            /*            
             CreateMap<DoanhThu, DoanhThuViewModel>();
+            CreateMap<CtDoanhThu, CtDoanhThuViewModel>();   
             */
         }
     }

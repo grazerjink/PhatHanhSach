@@ -25,5 +25,7 @@ namespace PhatHanhSach.Web.Models
         public string DiaChi { get; set; }
 
         public bool TrangThai { get; set; }
+
+        public CongNoDLViewModel CongNoDL { get; set; }
     }
 }

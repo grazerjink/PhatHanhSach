@@ -10,7 +10,8 @@ namespace PhatHanhSach.Data.Repositories
 {
     public interface IThanhToanRepository : IRepository<ThanhToan>
     {
-        List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeSachNhapViewModel> GetListImported(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeSachXuatViewModel> GetListExported(int id, DateTime fromDate, DateTime toDate);
         List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate);
     }
 
@@ -20,14 +21,24 @@ namespace PhatHanhSach.Data.Repositories
         {
         }
 
-        public List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeSachNhapViewModel> GetListImported(int id, DateTime fromDate, DateTime toDate)
         {
             var parameters = new SqlParameter[]{
                 new SqlParameter("@maNXB",id),
                 new SqlParameter("@batDau",fromDate),
                 new SqlParameter("@ketThuc",toDate)
             };
-            return DbContext.Database.SqlQuery<ThongKeBaoCaoNXBViewModel>("proThongKeBaoCaoNXB @maNXB, @batDau, @ketThuc", parameters).ToListAsync().Result;
+            return DbContext.Database.SqlQuery<ThongKeSachNhapViewModel>("proThongKeSachNhap @maNXB, @batDau, @ketThuc", parameters).ToListAsync().Result;
+        }
+
+        public List<ThongKeSachXuatViewModel> GetListExported(int id, DateTime fromDate, DateTime toDate)
+        {
+            var parameters = new SqlParameter[]{
+                new SqlParameter("@maNXB",id),
+                new SqlParameter("@batDau",fromDate),
+                new SqlParameter("@ketThuc",toDate)
+            };
+            return DbContext.Database.SqlQuery<ThongKeSachXuatViewModel>("proThongKeSachXuat @maNXB, @batDau, @ketThuc", parameters).ToListAsync().Result;
         }
 
         public List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate)

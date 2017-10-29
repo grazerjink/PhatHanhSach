@@ -70,7 +70,37 @@ namespace PhatHanhSach.Service
 
         public List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
-            var newMonthList = thanhToanRepository.GetListAnalysisReport(id, fromDate, toDate);
+            var listImported = thanhToanRepository.GetListImported(id, fromDate, toDate);
+            var listExported = thanhToanRepository.GetListExported(id, fromDate, toDate);
+
+            var newMonthList = new List<ThongKeBaoCaoNXBViewModel>();
+            if (listExported.Count > 0)
+            {
+                listImported.ForEach(x =>
+                {
+                    var baoCaoNXB = new ThongKeBaoCaoNXBViewModel();
+                    baoCaoNXB.Id = x.Id;
+                    baoCaoNXB.SoLuongNhap = x.SoLuongNhap;
+                    baoCaoNXB.DonGiaNhap = x.DonGiaNhap;
+                    baoCaoNXB.TongTienNhap = x.SoLuongNhap * x.DonGiaNhap;
+
+                    var existItem = listExported.Find(y => y.Id == x.Id);
+                    if(existItem != null)
+                    {
+                        baoCaoNXB.SoLuongXuat = existItem.SoLuongXuat;
+                        baoCaoNXB.TongTienThanhToan = existItem.DonGiaNhap * existItem.SoLuongXuat;
+                        baoCaoNXB.TongTienNo = x.TongTienNhap - existItem.TongTienXuat;
+                    }
+                    else
+                    {
+                        baoCaoNXB.SoLuongXuat = 0;
+                        baoCaoNXB.TongTienThanhToan = 0;
+                        baoCaoNXB.TongTienNo = x.TongTienNhap;
+                    }
+                    newMonthList.Add(baoCaoNXB);
+                });
+            }
+
             var oldMonthExistList = thanhToanRepository.GetListExistAtLastMonth(id, fromDate);
             if (oldMonthExistList.Count > 0)
             {

@@ -1,6 +1,7 @@
 ﻿using PhatHanhSach.Data.Infrastructure;
 using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
+using System;
 using System.Collections.Generic;
 
 namespace PhatHanhSach.Service
@@ -16,6 +17,8 @@ namespace PhatHanhSach.Service
         IEnumerable<PhieuNhap> GetAll(string[] includes = null, bool trangThai = true);
 
         PhieuNhap GetById(int id);
+
+        IEnumerable<PhieuNhap> GetAllByRangeDate(DateTime startDate, DateTime endDate);
 
         void Save();
     }
@@ -57,6 +60,11 @@ namespace PhatHanhSach.Service
         public PhieuNhap GetById(int id)
         {
             return phieuNhapRepository.GetSingleById(id);
+        }
+
+        public IEnumerable<PhieuNhap> GetAllByRangeDate(DateTime startDate, DateTime endDate)
+        {
+            return phieuNhapRepository.GetMulti(x => x.ThoiGianNhap >= startDate && x.ThoiGianNhap <= endDate);
         }
 
         public void Save()

@@ -18,6 +18,8 @@ namespace PhatHanhSach.Web.Controllers
         IDaiLyService daiLyService;
         INhaXuatBanService nxbService;
         ICongNoNXBService congNoNXBService;
+        IPhieuNhapService phieuNhapService;
+        IPhieuXuatService phieuXuatService;
 
         public ThongKeController(
             ITonKhoService tonKhoService, 
@@ -25,7 +27,9 @@ namespace PhatHanhSach.Web.Controllers
             ICongNoDLService congNoDLService,
             IDaiLyService daiLyService,
             INhaXuatBanService nxbService,
-            ICongNoNXBService congNoNXBService)
+            ICongNoNXBService congNoNXBService,
+            IPhieuNhapService phieuNhapService,
+            IPhieuXuatService phieuXuatService)
         {
             this.tonKhoService = tonKhoService;
             this.sachService = sachService;
@@ -33,6 +37,8 @@ namespace PhatHanhSach.Web.Controllers
             this.daiLyService = daiLyService;
             this.nxbService = nxbService;
             this.congNoNXBService = congNoNXBService;
+            this.phieuNhapService = phieuNhapService;
+            this.phieuXuatService = phieuXuatService;
         }
 
 
@@ -59,12 +65,6 @@ namespace PhatHanhSach.Web.Controllers
                     x.TonKho = new TonKhoViewModel();
             });
             return View(listSachVm);
-        }
-
-        [Route("doanh-thu")]
-        public ActionResult DoanhThu()
-        {
-            return View();
         }
 
         [Route("cong-no-dai-ly")]
@@ -117,6 +117,14 @@ namespace PhatHanhSach.Web.Controllers
             return View(listNXBVm);
         }
 
+
+
+        [Route("doanh-thu")]
+        [HttpGet]
+        public ActionResult DoanhThu()
+        {
+            return View();
+        }
 
     }
 }

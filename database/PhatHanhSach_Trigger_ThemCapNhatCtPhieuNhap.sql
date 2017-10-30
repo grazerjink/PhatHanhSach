@@ -11,7 +11,9 @@ BEGIN
 
 	IF @soLuongTon IS NULL	
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongNhap,@ngayNhap, @soLuongNhap)
-	ELSE		
-		UPDATE TonKho SET SoLuong = @soLuongTon + @soLuongNhap WHERE ThoiGian > @ngayNhap AND IdSach = @maSach
+	ELSE
+	BEGIN		
+		UPDATE TonKho SET SoLuong = SoLuong + @soLuongNhap WHERE ThoiGian > @ngayNhap AND IdSach = @maSach
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongTon+@soLuongNhap,@ngayNhap, @soLuongNhap)
+	END
 END

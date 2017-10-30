@@ -8,12 +8,12 @@
 }
 
 .ui-autocomplete {
-    max-height: 150px;
-    overflow-y: auto;
+    max-height: 250px;
+    max-width: 400px;
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
 }
 
 * html .ui-autocomplete {
-    height: 150px;
+    height: 200px;
 }

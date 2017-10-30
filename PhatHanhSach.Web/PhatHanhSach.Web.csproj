@@ -243,6 +243,8 @@
     <Content Include="Assets\js\datepicker\daterangepicker.js" />
     <Content Include="Assets\js\moment\moment.min.js" />
     <Content Include="Assets\js\myCustomJS.js" />
+    <Content Include="Assets\js\report.js" />
+    <Content Include="Assets\js\revenue.js" />
     <Content Include="Assets\vendors\animate.css\animate.css" />
     <Content Include="Assets\vendors\animate.css\animate.min.css" />
     <Content Include="Assets\vendors\animate.css\gulpfile.js" />

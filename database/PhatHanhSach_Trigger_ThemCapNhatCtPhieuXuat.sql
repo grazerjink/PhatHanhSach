@@ -12,6 +12,8 @@ BEGIN
 	IF @soLuongTon IS NULL OR @soLuongTon < @soLuongXuat
 		PRINT 'Lỗi do số lượng sách tồn đã hết hoặc không đáp ứng nên không thể lập phiếu được.'
 	ELSE
+	BEGIN
 		UPDATE TonKho SET SoLuong = SoLuong - @soLuongXuat WHERE ThoiGian > @ngayXuat AND IdSach = @IdSach
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian, TangGiam) VALUES (@IdSach,@soLuongTon-@soLuongXuat,@ngayXuat, -@soLuongXuat)
+	END
 END

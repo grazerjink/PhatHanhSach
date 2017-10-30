@@ -8,7 +8,6 @@
             }
         });
     },
-    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
@@ -30,7 +29,6 @@ $("#listDaiLy").autocomplete({
             }
         });
     },
-    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
@@ -52,10 +50,10 @@ $("#listSach").autocomplete({
             }
         });
     },
-    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault(); 
+        $('#ctPhieuXuat_IdSach').val(ui.item.value);
     },
     focus: function (event, ui) {
         event.preventDefault();
@@ -74,12 +72,10 @@ $("#listSachByIdNXB").autocomplete({
             }
         });
     },
-    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
-        $('#ctPhieuNhap_IdSach').val(ui.item.value);
-        $('#ctPhieuXuat_IdSach').val(ui.item.value);
+        $('#ctPhieuNhap_IdSach').val(ui.item.value);        
     },
     focus: function (event, ui) {
         event.preventDefault();
@@ -106,7 +102,6 @@ $("#listSachDaXuat").autocomplete({
             }
         });
     },
-    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();

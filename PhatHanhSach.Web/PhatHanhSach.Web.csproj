@@ -2324,6 +2324,13 @@
     <Content Include="Assets\vendors\jquery-sparkline\src\vcanvas-canvas.js" />
     <Content Include="Assets\vendors\jquery-sparkline\src\vcanvas-vml.js" />
     <Content Include="Assets\vendors\jquery-sparkline\version.txt" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\demos\css\jquery.toast.css" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\demos\index.html" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\demos\js\jquery.toast.js" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\dist\jquery.toast.min.css" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\dist\jquery.toast.min.js" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\src\jquery.toast.css" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\src\jquery.toast.js" />
     <Content Include="Assets\vendors\jquery-ui-1.12.1\AUTHORS.txt" />
     <Content Include="Assets\vendors\jquery-ui-1.12.1\external\jquery\jquery.js" />
     <Content Include="Assets\vendors\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
@@ -4524,6 +4531,9 @@
     <Content Include="Assets\vendors\validator\README.md" />
     <Content Include="Assets\vendors\validator\validator.jquery.json" />
     <Content Include="ConnectionString.config" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\bower.json" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\package.json" />
+    <Content Include="Assets\vendors\jquery-toast-plugin\README.md" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />

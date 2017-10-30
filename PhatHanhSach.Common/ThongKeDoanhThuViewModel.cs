@@ -1,12 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace PhatHanhSach.Common
 {
     public class ThongKeDoanhThuViewModel
     {
         public string ThoiGian { get; set; }
-        public double TongThu { get; set; }
-        public double TongChi { get; set; }
+        public Nullable<double> TongThu { get; set; }
+        public Nullable<double> TongChi { get; set; }
     }
 }

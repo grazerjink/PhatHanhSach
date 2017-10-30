@@ -1,7 +1,7 @@
 ALTER PROC proThongKeDoanhThu @batDau date, @ketThuc date
 AS
 BEGIN
-	SELECT DISTINCT CAST(date, C.ThoiGian), C.TongChi, T.TongThu
+	SELECT C.ThoiGian, C.TongChi, T.TongThu
 	FROM
 	(
 		SELECT TC.ThoiGian, SUM(TC.TongChi) TongChi
@@ -14,7 +14,8 @@ BEGIN
 			GROUP BY pn.ThoiGianNhap 
 		) TC
 		GROUP BY TC.ThoiGian
-	) C,
+	) C
+	FULL OUTER JOIN
 	(
 		SELECT TT.ThoiGian, SUM(TT.TongThu) TongThu
 		FROM 
@@ -27,6 +28,7 @@ BEGIN
 		) TT
 		GROUP BY TT.ThoiGian
 	) T
+	ON C.ThoiGian = T.ThoiGian
 END
 
-EXEC proThongKeDoanhThu '10/1/2017','10/31/2017'
+EXEC proThongKeDoanhThu '9/1/2017','12/30/2017'

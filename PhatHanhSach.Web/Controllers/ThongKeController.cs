@@ -143,12 +143,14 @@ namespace PhatHanhSach.Web.Controllers
             var DanhSachLoiNhuan = new List<double>();
             listRevenue.ForEach(x =>
             {
-                tt += x.TongThu;
-                tc += x.TongChi;
+                double tongThu =(double)(x.TongThu == null ? 0 : x.TongThu);
+                double tongChi = (double)(x.TongChi == null ? 0 : x.TongChi);
+                tt += tongThu;
+                tc += tongChi;
                 DanhSachTieuDe.Add(x.ThoiGian);
-                DanhSachThu.Add(x.TongThu);
-                DanhSachChi.Add(x.TongChi);
-                DanhSachLoiNhuan.Add(x.TongThu - x.TongChi);
+                DanhSachThu.Add(tongThu);
+                DanhSachChi.Add(tongChi);
+                DanhSachLoiNhuan.Add(tongThu - tongChi);
             });
 
             var TongThu = tt.ToString("N2");

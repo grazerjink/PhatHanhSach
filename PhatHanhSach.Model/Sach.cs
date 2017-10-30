@@ -26,6 +26,7 @@ namespace PhatHanhSach.Model
         }
     
         public int Id { get; set; }
+        public Nullable<int> IdNXB { get; set; }
         public string TenSach { get; set; }
         public string TacGia { get; set; }
         public string LinhVuc { get; set; }
@@ -43,6 +44,7 @@ namespace PhatHanhSach.Model
         public virtual ICollection<CtPhieuXuat> CtPhieuXuats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CtThanhToan> CtThanhToans { get; set; }
+        public virtual NhaXuatBan NhaXuatBan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TonKho> TonKhoes { get; set; }
     }

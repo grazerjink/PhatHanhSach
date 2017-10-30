@@ -3696,7 +3696,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Ajax\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\StartUp.DI.cs" />

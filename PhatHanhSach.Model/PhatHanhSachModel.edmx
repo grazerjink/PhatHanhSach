@@ -163,6 +163,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdNXB" Type="int" />
           <Property Name="TenSach" Type="nvarchar" MaxLength="250" />
           <Property Name="TacGia" Type="nvarchar" MaxLength="250" />
           <Property Name="LinhVuc" Type="nvarchar" MaxLength="250" />
@@ -405,6 +406,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sach_NhaXuatBan">
+          <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="0..1" />
+          <End Role="Sach" Type="Self.Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaXuatBan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sach">
+              <PropertyRef Name="IdNXB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ThanhToan_NhaXuatBan">
           <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
@@ -523,6 +536,10 @@
           <AssociationSet Name="FK_PhieuXuat_DaiLy" Association="Self.FK_PhieuXuat_DaiLy">
             <End Role="DaiLy" EntitySet="DaiLy" />
             <End Role="PhieuXuat" EntitySet="PhieuXuat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sach_NhaXuatBan" Association="Self.FK_Sach_NhaXuatBan">
+            <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
+            <End Role="Sach" EntitySet="Sach" />
           </AssociationSet>
           <AssociationSet Name="FK_ThanhToan_NhaXuatBan" Association="Self.FK_ThanhToan_NhaXuatBan">
             <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
@@ -691,6 +708,7 @@
           <Property Name="TrangThai" Type="Boolean" />
           <NavigationProperty Name="CongNoNXBs" Relationship="Self.FK_CongNoNXb_NhaXuatBan" FromRole="NhaXuatBan" ToRole="CongNoNXB" />
           <NavigationProperty Name="PhieuNhaps" Relationship="Self.FK_PhieuNhap_NhaXuatBan" FromRole="NhaXuatBan" ToRole="PhieuNhap" />
+          <NavigationProperty Name="Saches" Relationship="Self.FK_Sach_NhaXuatBan" FromRole="NhaXuatBan" ToRole="Sach" />
           <NavigationProperty Name="ThanhToans" Relationship="Self.FK_ThanhToan_NhaXuatBan" FromRole="NhaXuatBan" ToRole="ThanhToan" />
         </EntityType>
         <EntityType Name="PhieuNhap">
@@ -726,6 +744,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdNXB" Type="Int32" />
           <Property Name="TenSach" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TacGia" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LinhVuc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -737,6 +756,7 @@
           <NavigationProperty Name="CtPhieuNhaps" Relationship="Self.FK_CtPhieuNhap_Sach" FromRole="Sach" ToRole="CtPhieuNhap" />
           <NavigationProperty Name="CtPhieuXuats" Relationship="Self.FK_CtPhieuXuat_Sach" FromRole="Sach" ToRole="CtPhieuXuat" />
           <NavigationProperty Name="CtThanhToans" Relationship="Self.FK_CtThanhToan_Sach" FromRole="Sach" ToRole="CtThanhToan" />
+          <NavigationProperty Name="NhaXuatBan" Relationship="Self.FK_Sach_NhaXuatBan" FromRole="Sach" ToRole="NhaXuatBan" />
           <NavigationProperty Name="TonKhoes" Relationship="Self.FK_TonKho_Sach" FromRole="Sach" ToRole="TonKho" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -980,6 +1000,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sach_NhaXuatBan">
+          <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="0..1" />
+          <End Role="Sach" Type="Self.Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaXuatBan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sach">
+              <PropertyRef Name="IdNXB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ThanhToan_NhaXuatBan">
           <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
@@ -1098,6 +1130,10 @@
           <AssociationSet Name="FK_PhieuNhap_NhaXuatBan" Association="Self.FK_PhieuNhap_NhaXuatBan">
             <End Role="NhaXuatBan" EntitySet="NhaXuatBans" />
             <End Role="PhieuNhap" EntitySet="PhieuNhaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sach_NhaXuatBan" Association="Self.FK_Sach_NhaXuatBan">
+            <End Role="NhaXuatBan" EntitySet="NhaXuatBans" />
+            <End Role="Sach" EntitySet="Saches" />
           </AssociationSet>
           <AssociationSet Name="FK_ThanhToan_NhaXuatBan" Association="Self.FK_ThanhToan_NhaXuatBan">
             <End Role="NhaXuatBan" EntitySet="NhaXuatBans" />
@@ -1288,6 +1324,7 @@
             <EntityTypeMapping TypeName="PhatHanhSachV2Model.Sach">
               <MappingFragment StoreEntitySet="Sach">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdNXB" ColumnName="IdNXB" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
                 <ScalarProperty Name="TacGia" ColumnName="TacGia" />
                 <ScalarProperty Name="LinhVuc" ColumnName="LinhVuc" />

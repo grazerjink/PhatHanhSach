@@ -62,6 +62,7 @@
     <Compile Include="Services\SachService.cs" />
     <Compile Include="Services\ThanhToanService.cs" />
     <Compile Include="Services\TinhTrangService.cs" />
+    <Compile Include="Services\DoanhThuService.cs" />
     <Compile Include="Services\TonKhoService.cs" />
   </ItemGroup>
   <ItemGroup>

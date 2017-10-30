@@ -19,6 +19,7 @@ namespace PhatHanhSach.Model
         {
             this.CongNoNXBs = new HashSet<CongNoNXB>();
             this.PhieuNhaps = new HashSet<PhieuNhap>();
+            this.Saches = new HashSet<Sach>();
             this.ThanhToans = new HashSet<ThanhToan>();
         }
     
@@ -33,6 +34,8 @@ namespace PhatHanhSach.Model
         public virtual ICollection<CongNoNXB> CongNoNXBs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuNhap> PhieuNhaps { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sach> Saches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ThanhToan> ThanhToans { get; set; }
     }

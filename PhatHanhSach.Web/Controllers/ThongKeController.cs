@@ -20,6 +20,7 @@ namespace PhatHanhSach.Web.Controllers
         ICongNoNXBService congNoNXBService;
         IPhieuNhapService phieuNhapService;
         IPhieuXuatService phieuXuatService;
+        IDoanhThuService doanhThuService;
 
         public ThongKeController(
             ITonKhoService tonKhoService, 
@@ -29,7 +30,8 @@ namespace PhatHanhSach.Web.Controllers
             INhaXuatBanService nxbService,
             ICongNoNXBService congNoNXBService,
             IPhieuNhapService phieuNhapService,
-            IPhieuXuatService phieuXuatService)
+            IPhieuXuatService phieuXuatService,
+            IDoanhThuService doanhThuService)
         {
             this.tonKhoService = tonKhoService;
             this.sachService = sachService;
@@ -39,6 +41,7 @@ namespace PhatHanhSach.Web.Controllers
             this.congNoNXBService = congNoNXBService;
             this.phieuNhapService = phieuNhapService;
             this.phieuXuatService = phieuXuatService;
+            this.doanhThuService = doanhThuService;
         }
 
 
@@ -124,6 +127,35 @@ namespace PhatHanhSach.Web.Controllers
         public ActionResult DoanhThu()
         {
             return View();
+        }
+
+        [Route("doanh-thu")]
+        [HttpPost]
+        public JsonResult DoanhThu(DateTime startDate, DateTime endDate)
+        {
+            var listRevenue = doanhThuService.GetListRevenueStatistic(startDate, endDate);
+
+            double tt = 0;
+            double tc = 0;
+            var DanhSachTieuDe = new List<string>();
+            var DanhSachThu = new List<double>();
+            var DanhSachChi = new List<double>();
+            var DanhSachLoiNhuan = new List<double>();
+            listRevenue.ForEach(x =>
+            {
+                tt += x.TongThu;
+                tc += x.TongChi;
+                DanhSachTieuDe.Add(x.ThoiGian);
+                DanhSachThu.Add(x.TongThu);
+                DanhSachChi.Add(x.TongChi);
+                DanhSachLoiNhuan.Add(x.TongThu - x.TongChi);
+            });
+
+            var TongThu = tt.ToString("N2");
+            var TongChi = tc.ToString("N2");
+            var TongLoiNhuan = (tt - tc).ToString("N2");
+            var jsonObj = new { TongChi, TongThu, TongLoiNhuan, DanhSachTieuDe, DanhSachThu, DanhSachChi, DanhSachLoiNhuan };        
+            return Json(jsonObj);
         }
 
     }

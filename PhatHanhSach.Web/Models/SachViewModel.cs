@@ -3,6 +3,7 @@
     public class SachViewModel
     {
         public int Id { get; set; }
+        public int IdNXB { get; set; }
         public string TenSach { get; set; }
         public string TacGia { get; set; }
         public string LinhVuc { get; set; }

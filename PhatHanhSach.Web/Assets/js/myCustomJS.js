@@ -8,15 +8,16 @@
             }
         });
     },
+    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $("#IdNXB").val(ui.item.value);
-    }
-    /*focus: function (event, ui) {
+    },
+    focus: function (event, ui) {
         event.preventDefault();
         $("#listNXB").val(ui.item.label);
-    }*/
+    }
 });
 
 $("#listDaiLy").autocomplete({
@@ -29,10 +30,15 @@ $("#listDaiLy").autocomplete({
             }
         });
     },
+    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#IdDaiLy').val(ui.item.value);
+    },
+    focus: function (event, ui) {
+        event.preventDefault();
+        $("#listDaiLy").val(ui.item.label);
     }
 });
 
@@ -46,13 +52,41 @@ $("#listSach").autocomplete({
             }
         });
     },
+    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault(); 
-        $('#ctPhieuNhap_IdSach').val(ui.item.value);
-        $('#ctPhieuXuat_IdSach').val(ui.item.value);
+    },
+    focus: function (event, ui) {
+        event.preventDefault();
+        $("#listSach").val(ui.item.label);
     }
 });
+
+var maNXB = $('#IdNXB').val();
+$("#listSachByIdNXB").autocomplete({
+    source: function (req, res) {
+        $.ajax({
+            url: "/api/danh-sach-sach/" + maNXB,
+            dataType: "json",
+            success: function (data) {
+                res(data);
+            }
+        });
+    },
+    autoFocus: true,
+    minLength: 1,
+    select: function (event, ui) {
+        event.preventDefault();
+        $('#ctPhieuNhap_IdSach').val(ui.item.value);
+        $('#ctPhieuXuat_IdSach').val(ui.item.value);
+    },
+    focus: function (event, ui) {
+        event.preventDefault();
+        $("#listSachByIdNXB").val(ui.item.label);
+    }
+});
+
 
 var maDaiLy = $('#IdDaiLy').val();
 var ngayBatDau = $('#NgayBatDau').val();
@@ -72,10 +106,15 @@ $("#listSachDaXuat").autocomplete({
             }
         });
     },
+    autoFocus: true,
     minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#ctBaoCao_IdSach').val(ui.item.value);
         $('#ctBaoCao_IdSach').val(ui.item.value);
+    },
+    focus: function (event, ui) {
+        event.preventDefault();
+        $("#listSachDaXuat").val(ui.item.label);
     }
 });

@@ -80,6 +80,7 @@ namespace PhatHanhSach.Service
                 {
                     var baoCaoNXB = new ThongKeBaoCaoNXBViewModel();
                     baoCaoNXB.Id = x.Id;
+                    baoCaoNXB.TenSach = x.TenSach;
                     baoCaoNXB.SoLuongNhap = x.SoLuongNhap;
                     baoCaoNXB.DonGiaNhap = x.DonGiaNhap;
                     baoCaoNXB.TongTienNhap = x.SoLuongNhap * x.DonGiaNhap;
@@ -88,7 +89,7 @@ namespace PhatHanhSach.Service
                     if(existItem != null)
                     {
                         baoCaoNXB.SoLuongXuat = existItem.SoLuongXuat;
-                        baoCaoNXB.TongTienThanhToan = existItem.DonGiaNhap * existItem.SoLuongXuat;
+                        baoCaoNXB.TongTienThanhToan = existItem.TongTienXuat;
                         baoCaoNXB.TongTienNo = x.TongTienNhap - existItem.TongTienXuat;
                     }
                     else

@@ -15,6 +15,8 @@ namespace PhatHanhSach.Service
 
         IEnumerable<Sach> GetAll(bool status = true);
 
+        IEnumerable<Sach> GetMulti(int idNXB, bool status = true);
+
         Sach GetById(int id);
 
         void Save();
@@ -59,6 +61,11 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public IEnumerable<Sach> GetMulti(int idNXB, bool status = true)
+        {
+            return sachRepository.GetMulti(x => x.IdNXB == idNXB && x.TrangThai == status);
         }
     }
 }

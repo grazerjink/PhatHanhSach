@@ -35,7 +35,7 @@
     <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
     <script src="~/Assets/js/myCustomJS.js"></script>
 }
-
+<input class="hidden" id="IdNXB" value="@pn.IdNXB" />
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -120,11 +120,11 @@
                                 @Html.EditorForModel()
                             </div>
                             <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listSach">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="listSachByIdNXB">
                                     Thông tin sách <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    <input id="listSach" class="form-control col-md-7 col-xs-12" placeholder = "Nhập thông tin sách..." required />
+                                    <input id="listSachByIdNXB" class="form-control col-md-7 col-xs-12" placeholder = "Nhập thông tin sách..." required />
                                     @Html.HiddenFor(m => m.ctPhieuNhap.IdSach)                                    
                                 </div>
                             </div>

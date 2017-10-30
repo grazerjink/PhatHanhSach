@@ -3,10 +3,122 @@
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 
+@section headerStyles {
+    <!-- bootstrap-datetimepicker -->
+    <link href="~/Assets/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="~/Assets/vendors/normalize-css/normalize.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="~/Assets/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+    <link href="~/Assets/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+
+    <link href="~/Assets/css/myCustom.css" rel="stylesheet">
+}
+
 @section footerJS {
-    <!-- ECharts -->
-    <script src="~/Assets/vendors/echarts/dist/echarts.min.js"></script>
-    <script src="~/Assets/vendors/echarts/map/js/world.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/Assets/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Ion.RangeSlider -->
+    <script src="~/Assets/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <!-- Bootstrap Colorpicker -->
+    <script src="~/Assets/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/Assets/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- jQuery Knob -->
+    <script src="~/Assets/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+    <!-- Cropper -->
+    <script src="~/Assets/vendors/cropper/dist/cropper.min.js"></script>
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
+    <!-- autocomplete jquery -->
+    <script src="~/Assets/js/myCustomJS.js"></script>
+     <!-- Chart.js -->
+    <script src="~/Assets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <script>
+        $('#myStartDate').datetimepicker({
+            format: 'DD / MM / YYYY',
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#myEndDate').datetimepicker({
+            format: 'DD / MM / YYYY',
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $("#myStartDate").on("dp.change", function (e) {
+            $('#myEndDate').data("DateTimePicker").minDate(e.date);
+        });      
+
+        var ctx = document.getElementById("revenueChart");
+        var myChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        $("#btnThongKe").off().click(function () {
+            var startDate = $("#NgayBatDau").val().trim();
+            var endDate = $("#NgayKetThuc").val().trim();
+            if (startDate !== undefined && endDate !== undefined)
+            {
+                $.ajax({
+                    url: "/thong-ke/doanh-thu/",
+                    type: "POST",
+                    data: {
+                        startDate: startDate,
+                        endDate: endDate
+                    },
+                    dataType: "json",
+                    success: function (res) {
+                        var data = {
+                            labels: res.DanhSachTieuDe,
+                            datasets: [
+                                {
+                                    label: "Tổng chi",
+                                    backgroundColor: "#FF5252",
+                                    data: res.DanhSachChi,
+                                    stack: 1
+                                },
+                                {
+                                    label: "Tổng thu",
+                                    backgroundColor: "#03A9F4",
+                                    data: res.DanhSachThu,
+                                    stack: 2
+                                },
+                                {
+                                    label: "Lợi nhuận",
+                                    backgroundColor: "#009688",
+                                    data: res.DanhSachLoiNhuan,
+                                    stack: 3
+                                }
+                            ]
+                        };
+
+                        $("#TongTienChi").text(res.TongChi);
+                        $("#TongTienThu").text(res.TongThu);
+                        $("#TongLoiNhuan").text(res.TongLoiNhuan);
+
+                        myChart.data.labels = data.labels;
+                        myChart.data.datasets = data.datasets;
+                        myChart.update();
+                    }
+                });
+            }    
+            else {
+                alert("Chưa xác định thời gian thống kê.");
+            }
+        });                
+    </script>
 }
 
 <!-- page content -->
@@ -20,10 +132,72 @@
         </div>
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">                
                 <div class="x_panel">
-                    <div class="x_content col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
-                        <div id="echart_mini_pie" style="height:350px;"></div>
+                    <div class="x_content">
+                        <form method="post" action="javascript:void(0);" class="form-horizontal form-label-left" style="margin-top:20px">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">
+                                    Khoảng thời gian cần thống kê <span class="required">*</span>
+                                </label>
+                                <div class="control-group col-md-5 col-sm-5 col-xs-5">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class='input-group date' id="myStartDate">
+                                                <input class="form-control" placeholder="Thời gian bắt đầu..." id="NgayBatDau" name="NgayBatDau" required>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class='input-group date' id="myEndDate">
+                                                <input class="form-control" placeholder="Thời gian kết thúc..." id="NgayKetThuc" name="NgayKetThuc" required>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group col-md-4 col-sm-4 col-xs-4">
+                                    <div class='input-group pull-left'>
+                                        <button class="btn btn-default" type="reset">Hủy</button>
+                                    </div>
+                                    <div class='input-group pull-left'>
+                                        <button class="btn btn-success" type="submit" id="btnThongKe">Xem thống kê</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ln_solid"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-10">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                                <label>
+                                    Tổng tiền đã chi:                                     
+                                </label>
+                                <p id="TongTienChi">0.00</p>
+                                <hr />
+                                <label>
+                                    Tổng tiền đã thu:
+                                </label>
+                                <p id="TongTienThu">0.00</p>
+                                <hr />
+                                <label>
+                                    Tổng lợi nhuận thống kê:
+                                </label>
+                                <p id="TongLoiNhuan">0.00</p>
+                            </div>
+                        </div>                        
+                        <div class="ln_solid"></div>
+                        <div class="pull-left">
+                            <a class="btn btn-default" href="/">Về trang chính</a>
+                        </div>
                     </div>
                 </div>
             </div>

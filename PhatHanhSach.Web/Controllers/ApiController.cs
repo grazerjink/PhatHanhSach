@@ -65,7 +65,7 @@ namespace PhatHanhSach.Web.Controllers
             return Json(listDaiLy, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("danh-sach-sach")]
+        [Route("danh-sach-sach/")]
         [HttpGet]
         public JsonResult DanhSachSach()
         {
@@ -84,34 +84,23 @@ namespace PhatHanhSach.Web.Controllers
             return Json(listSach, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("dai-ly/{id}")]
+        [Route("danh-sach-sach/{idNXB}")]
         [HttpGet]
-        public JsonResult GetThongTinDaiLy(int id)
+        public JsonResult DanhSachSachByIdNXB(int idNXB)
         {
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
-            var daiLy = daiLyService.GetById(id);
-            return Json(daiLy, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("nxb/{id}")]
-        [HttpGet]
-        public JsonResult GetThongTinNXB(int id)
-        {
-            Request.ContentEncoding = Encoding.UTF8;
-            Response.ContentEncoding = Encoding.UTF8;
-            var nxb = nxbService.GetById(id);
-            return Json(nxb, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("sach/{id}")]
-        [HttpGet]
-        public JsonResult GetThongTinSach(int id)
-        {
-            Request.ContentEncoding = Encoding.UTF8;
-            Response.ContentEncoding = Encoding.UTF8;
-            var sach = sachService.GetById(id);
-            return Json(sach, JsonRequestBehavior.AllowGet);
+            var dsSach = sachService.GetMulti(idNXB);
+            var listSach = new List<object>();
+            foreach (var s in dsSach)
+            {
+                listSach.Add(new
+                {
+                    label = s.TenSach,
+                    value = s.Id
+                });
+            }
+            return Json(listSach, JsonRequestBehavior.AllowGet);
         }
 
         [Route("danh-sach-da-xuat/{id}")]

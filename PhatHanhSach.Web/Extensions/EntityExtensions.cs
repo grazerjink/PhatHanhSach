@@ -38,6 +38,7 @@ namespace PhatHanhSach.Web.Extensions
         public static void UpdateSach(this Sach sach, SachViewModel sachVm)
         {
             sach.Id = sachVm.Id;
+            sach.IdNXB = sachVm.IdNXB;
             sach.TenSach = sachVm.TenSach;
             sach.TacGia = sachVm.TacGia;
             sach.LinhVuc = sachVm.LinhVuc;

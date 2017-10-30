@@ -1,6 +1,6 @@
 ALTER TRIGGER trgThemCapNhatCtPhieuNhap
 ON CtPhieuNhap
-AFTER INSERT, UPDATE
+AFTER INSERT
 AS
 BEGIN
 	DECLARE @ngayNhap datetime = (SELECT pn.ThoiGianNhap FROM inserted ct JOIN PhieuNhap pn ON pn.ID = ct.IdPhieuNhap)
@@ -12,6 +12,6 @@ BEGIN
 	IF @soLuongTon IS NULL	
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongNhap,@ngayNhap, @soLuongNhap)
 	ELSE		
-		UPDATE TonKho SET SoLuong = @soLuongTon + @soLuongNhap WHERE ThoiGian > @ngayNhap
+		UPDATE TonKho SET SoLuong = @soLuongTon + @soLuongNhap WHERE ThoiGian > @ngayNhap AND IdSach = @maSach
 		INSERT INTO TonKho (IdSach,SoLuong,ThoiGian,TangGiam) VALUES (@maSach,@soLuongTon+@soLuongNhap,@ngayNhap, @soLuongNhap)
 END

@@ -17,7 +17,6 @@
 + Chức năng thống kê **sách tồn kho** tại một thời điểm.
 + Chức năng thống kê **công nợ đại lý** tại một thời điểm.
 + Chức năng thống kê **công nợ nhà xuất bản** tại một thời điểm.
-+ Phần thống kê doanh thu đang phát triển. =='
-
++ Chức năng thống kê **doanh thu** theo khoảng thời gian.
 ___
 > **KJAPPS**

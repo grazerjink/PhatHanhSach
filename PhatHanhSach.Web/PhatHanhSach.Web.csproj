@@ -190,6 +190,7 @@
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\BaoCaoDLViewModel.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\CongNoDLViewModel.cs" />
     <Compile Include="Models\CongNoNXBViewModel.cs" />
     <Compile Include="Models\CtBaoCaoDLViewModel.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Assets\js\myCustomJS.js" />
     <Content Include="Assets\js\report.js" />
     <Content Include="Assets\js\revenue.js" />
+    <Content Include="Assets\js\showToast.js" />
     <Content Include="Assets\vendors\animate.css\animate.css" />
     <Content Include="Assets\vendors\animate.css\animate.min.css" />
     <Content Include="Assets\vendors\animate.css\gulpfile.js" />
@@ -4527,13 +4529,13 @@
     <Content Include="Assets\vendors\transitionize\.bower.json" />
     <Content Include="Assets\vendors\transitionize\bower.json" />
     <Content Include="Assets\vendors\transitionize\package.json" />
-    <Content Include="Assets\vendors\validator\.bower.json" />
-    <Content Include="Assets\vendors\validator\README.md" />
-    <Content Include="Assets\vendors\validator\validator.jquery.json" />
     <Content Include="ConnectionString.config" />
     <Content Include="Assets\vendors\jquery-toast-plugin\bower.json" />
     <Content Include="Assets\vendors\jquery-toast-plugin\package.json" />
     <Content Include="Assets\vendors\jquery-toast-plugin\README.md" />
+    <Content Include="Assets\vendors\validator\.bower.json" />
+    <Content Include="Assets\vendors\validator\README.md" />
+    <Content Include="Assets\vendors\validator\validator.jquery.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />

@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Them";
     Layout = "~/Views/Shared/Layout.cshtml";
+    var successMessage = (string)TempData["Success"];
 }
 
 @section headerStyles {
@@ -9,8 +10,13 @@
 }
 
 @section footerJS {
-    <!-- validator -->
-    <script src="~/Assets/vendors/validator/validator.js"></script>
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+    </script>
 }
 
 <!-- page content -->
@@ -40,37 +46,37 @@
                     <div class="x_content">
                         @using (Html.BeginForm("ThemDaiLy", "DaiLy", FormMethod.Post, new { @class = "form-horizontal form-label-left", @novalidate = "" }))
                         {
-                            @Html.AntiForgeryToken()
-                            <span class="section">Thông tin đại lý</span>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tên đại lý <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.TenDaiLy, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tên của đại lý...", @required = "" })
+                                @Html.AntiForgeryToken()
+                                <span class="section">Thông tin đại lý</span>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tên đại lý <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => m.TenDaiLy, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập tên của đại lý...", @required = "" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Số điện thoại <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập số điện thoại...", type = "tel", @required = "" })
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Số điện thoại <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập số điện thoại...", type = "tel", @required = "" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Địa chỉ <span class="required">*</span>
-                                </label>
-                                <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin địa chỉ của đại lý...", @required = "" })
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Địa chỉ <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nhập thông tin địa chỉ của đại lý...", @required = "" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item form-group">
-                                <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
-                                    @Html.ValidationSummary(false, "", new { @class = "error" })
-                                </div>                               
-                            </div>
+                                <div class="item form-group">
+                                    <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
+                                        @Html.ValidationSummary(false, "", new { @class = "error" })
+                                    </div>
+                                </div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">

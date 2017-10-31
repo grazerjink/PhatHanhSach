@@ -1,4 +1,4 @@
-/*
+﻿/*
     Validator v1.1.0
     (c) Yair Even Or
     https://github.com/yairEO/validator
@@ -15,21 +15,22 @@ var validator = (function($){
     /* general text messages
     */
     message = {
-        invalid         : 'Nhập không đúng định dạng.',
-        checked         : 'must be checked',
-        empty           : 'Thông tin bắt buộc, không được bỏ trống.',
-        min             : 'input is too short',
-        max             : 'input is too long',
-        number_min      : 'too low',
-        number_max      : 'too high',
-        url             : 'invalid URL',
-        number          : 'not a number',
-        email           : 'email address is invalid',
-        email_repeat    : 'emails do not match',
-        password_repeat : 'passwords do not match',
-        repeat          : 'no match',
-        complete        : 'input is not complete',
-        select          : 'Please select an option'
+        invalid: 'Nhập không đúng định dạng.',
+        min: 'Thông tin nhập vào quá ngắn.',
+        max: 'Thông tin nhập vào quá dài.',
+        empty: 'Thông tin bắt buộc, không được bỏ trống.',
+        select: 'Vui lòng chọn dữ liệu.',
+        number_min: 'Số nhập quá nhỏ.',
+        number_max: 'Số nhập quá lớn.',
+        url: 'Đường dẫn không đúng.',
+        number: 'Không phải là số.',
+        email: 'Không đúng định dạng email.',
+        email_repeat: 'Email xác nhận không khớp.',
+        password_repeat: 'Mật khẩu xác nhận không khớp.',
+        no_match: 'Không khớp với nhau.',
+        complete: 'Thông tin chưa nhập đầy đủ.', 
+        checked: 'must be checked',
+        repeat: 'no match'
     };
 
     if(!window.console){
@@ -127,7 +128,7 @@ var validator = (function($){
                         regex = /^[0-9]+$/i;
                         break;
                     case 'phone' :
-                        regex = /^\+?([0-9]|[-|' ']){10,11}$/i;
+                        regex = /^\+?([0-9]|[-|' ']){10,12}$/i;
                         break;
                     default :
                         regex = pattern;

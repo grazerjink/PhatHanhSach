@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PhatHanhSach.Web.Models
 {
-    public class DaiLyViewModel
+    public class DaiLyViewModel : BaseViewModel
     {
         [Required]
         public int Id { get; set; }

@@ -47,7 +47,8 @@ namespace PhatHanhSach.Web.Controllers
                 // Commit
                 daiLyService.Save();
 
-                return RedirectToAction("ThemDaiLy", "DaiLy");
+                TempData["Success"] = "Đã thêm thành công đại lý.";
+                return RedirectToAction("ThemDaiLy");
             }
             else
             {

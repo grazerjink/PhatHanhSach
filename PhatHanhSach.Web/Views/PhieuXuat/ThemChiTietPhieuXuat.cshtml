@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtPx = (List<PhatHanhSach.Web.Models.CtPhieuXuatViewModel>) Session["dsCtPhieuXuat"];
     var px = (PhatHanhSach.Web.Models.PhieuXuatViewModel)Session["PhieuXuat"];
+    var successMessage = (string)TempData["Success"];
 }
 
 @section headerStyles {
@@ -34,6 +35,15 @@
     <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
     <script src="~/Assets/js/myCustomJS.js"></script>
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+    </script>
 }
 
 <!-- page content -->
@@ -133,7 +143,7 @@
                                     Số lượng <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuXuat.SoLuongXuat, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số lượng sách xuất", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuXuat.SoLuongXuat, new { @class = "form-control col-md-7 col-xs-12", type = "number", @data_validate_minmax = "1," , placeholder = "Nhập số lượng sách xuất", @required = "" })
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -148,15 +158,16 @@
                                         <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
                                     </div>
                                     <div class="pull-right">
-                                        <button id="next" type="submit" class="btn btn-primary" name="save">Lưu</button>
+                                        <button id="next" type="submit" class="btn btn-primary">Lưu</button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="ln_solid"></div>
-
+                        }
+                        <div class="ln_solid"></div>
+                        @using (Html.BeginForm("TaoPhieuXuat", "PhieuXuat", FormMethod.Post))
+                        {
                             <div class="pull-right">
-                                <button class="btn btn-success" name="create">Tạo phiếu xuất</button>
+                                <button class="btn btn-success">Tạo phiếu xuất</button>
                             </div>
                             <div class="pull-left">
                                 <a class="btn btn-default" href="/phieu-xuat/them-phieu-xuat">Trở lại</a>

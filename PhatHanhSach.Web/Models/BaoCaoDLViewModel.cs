@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PhatHanhSach.Web.Models
 {
-    public class BaoCaoDLViewModel
+    public class BaoCaoDLViewModel : BaseViewModel
     {
         public int Id { get; set; }
         public int IdDaiLy { get; set; }
@@ -20,7 +20,7 @@ namespace PhatHanhSach.Web.Models
         public DaiLyViewModel DaiLy { get; set; }
         public CtBaoCaoDLViewModel ctBaoCao { get; set; }
         public IEnumerable<CtBaoCaoDLViewModel> CtBaoCaoDLs { get; set; }
-        public TinhTrangViewModel TinhTrang { get; set; }        
+        public TinhTrangViewModel TinhTrang { get; set; }
 
         public double TienNoThangTruoc { get; set; }
     }

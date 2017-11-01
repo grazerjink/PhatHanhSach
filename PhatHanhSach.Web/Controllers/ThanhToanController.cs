@@ -5,7 +5,6 @@ using PhatHanhSach.Service;
 using PhatHanhSach.Service.Services;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -63,8 +62,8 @@ namespace PhatHanhSach.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     var listThongKe = thanhToanService.GetListAnalysisReport(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau, thanhToanVm.NgayKetThuc);
-                    
-                    if(listThongKe.Count == 0)
+
+                    if (listThongKe.Count == 0)
                     {
                         ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
                     }
@@ -89,41 +88,38 @@ namespace PhatHanhSach.Web.Controllers
                         }
                         Session["ThanhToan"] = thanhToanVm;
                     }
-                        
                 }
             }
             else if (Request.Form["create"] != null)
             {
-                if (ModelState.IsValid)
-                {
-                    var tt = (ThanhToanViewModel)Session["ThanhToan"];
-                    var newThanhToan = new ThanhToan();
-                    newThanhToan.UpdateThanhToan(tt);
-                    newThanhToan.TongTienConNo += tt.TienNoThangTruoc;
-                    newThanhToan.IdTinhTrang = CommonConstant.DA_BAO_CAO;
-                    newThanhToan.NgayXacNhan = newThanhToan.ThoiGianLapPhieu;
-                    thanhToanService.Add(newThanhToan);
-                    thanhToanService.Save();
+                var tt = (ThanhToanViewModel)Session["ThanhToan"];
+                var newThanhToan = new ThanhToan();
+                newThanhToan.UpdateThanhToan(tt);
+                newThanhToan.TongTienConNo += tt.TienNoThangTruoc;
+                newThanhToan.IdTinhTrang = CommonConstant.DA_BAO_CAO;
+                newThanhToan.NgayXacNhan = newThanhToan.ThoiGianLapPhieu;
+                thanhToanService.Add(newThanhToan);
+                thanhToanService.Save();
 
-                    foreach (var ct in tt.dsThongKeNXB)
+                foreach (var ct in tt.dsThongKeNXB)
+                {
+                    var ctThanhToan = new CtThanhToan
                     {
-                        var ctThanhToan = new CtThanhToan
-                        {
-                            IdSach = ct.Id,
-                            IdThanhToan = newThanhToan.Id,
-                            SoLuongCon = ct.SoLuongNhap - ct.SoLuongXuat,
-                            SoLuongXuat = ct.SoLuongXuat,
-                            ThanhTien = ct.TongTienThanhToan,
-                            TienNo = ct.TongTienNo,
-                            DonGiaNhap = ct.DonGiaNhap
-                        };
-                        ctThanhToanService.Add(ctThanhToan);
-                    }
-                    thanhToanService.Save();
-                    Session["ThanhToan"] = null;
-                    Session.RemoveAll();
-                    return Redirect("/bao-cao/nxb/");
+                        IdSach = ct.Id,
+                        IdThanhToan = newThanhToan.Id,
+                        SoLuongCon = ct.SoLuongNhap - ct.SoLuongXuat,
+                        SoLuongXuat = ct.SoLuongXuat,
+                        ThanhTien = ct.TongTienThanhToan,
+                        TienNo = ct.TongTienNo,
+                        DonGiaNhap = ct.DonGiaNhap
+                    };
+                    ctThanhToanService.Add(ctThanhToan);
                 }
+                thanhToanService.Save();
+                Session["ThanhToan"] = null;
+                TempData["Success"] = "Đã thêm thành công một báo cáo NXB.";
+                Session.RemoveAll();
+                return Redirect("/bao-cao/nxb/");
             }
             return View(thanhToanVm);
         }
@@ -139,6 +135,7 @@ namespace PhatHanhSach.Web.Controllers
             thanhToanVm.CtThanhToans = Mapper.Map<IEnumerable<CtThanhToan>, IEnumerable<CtThanhToanViewModel>>(ctThanhToan);
 
             Session["TinhTrangBanDau"] = thanhToanVm.IdTinhTrang;
+            Session["TongTienSachBan"] = thanhToanVm.TongTienSachBan;
             Session["dsCtBaoCao"] = thanhToanVm.CtThanhToans;
 
             if (TempData["Changed"] != null)
@@ -163,18 +160,31 @@ namespace PhatHanhSach.Web.Controllers
             if (ModelState.IsValid)
             {
                 int tinhTrangBanDau = (int)Session["TinhTrangBanDau"];
-                if (tinhTrangBanDau == CommonConstant.DA_THANH_TOAN || tinhTrangBanDau == CommonConstant.DA_HUY)
+                if (tinhTrangBanDau == CommonConstant.DA_THANH_TOAN)
                 {
-                    ModelState.AddModelError("", "Báo cáo đã thanh toán hoặc đã bị hủy không thể cập nhật.");
+                    TempData["Error"] = "Không thể cập nhật khi báo cáo đã thanh toán.";
+                }
+                else if (tinhTrangBanDau == CommonConstant.DA_HUY)
+                {
+                    TempData["Error"] = "Không thể cập nhật khi báo cáo đã hủy.";
                 }
                 else
                 {
-                    var updateThanhToan = thanhToanService.GetById(thanhToanVm.Id);
-                    updateThanhToan.IdTinhTrang = thanhToanVm.IdTinhTrang;
-                    updateThanhToan.NgayXacNhan = thanhToanVm.NgayXacNhan;
-                    updateThanhToan.TongTienThanhToan = thanhToanVm.TongTienThanhToan;
-                    thanhToanService.Update(updateThanhToan);
-                    thanhToanService.Save();
+                    if (thanhToanVm.TongTienThanhToan < (double)Session["TongTienSachBan"])
+                    {
+                        TempData["Error"] = "Yêu cầu trả đủ số tiền sách bán được.";
+                    }
+                    else
+                    {
+                        var updateThanhToan = thanhToanService.GetById(thanhToanVm.Id);
+                        updateThanhToan.IdTinhTrang = thanhToanVm.IdTinhTrang;
+                        updateThanhToan.NgayXacNhan = thanhToanVm.NgayXacNhan;
+                        updateThanhToan.TongTienThanhToan = thanhToanVm.TongTienThanhToan;
+                        thanhToanService.Update(updateThanhToan);
+                        thanhToanService.Save();
+                        Session.RemoveAll();
+                        TempData["Success"] = "Cập nhật trạng thái thành công.";
+                    }
                 }
             }
 

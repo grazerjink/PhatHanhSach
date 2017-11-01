@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtPn = (List<PhatHanhSach.Web.Models.CtPhieuNhapViewModel>) Session["dsCtPhieuNhap"];
     var pn = (PhatHanhSach.Web.Models.PhieuNhapViewModel)Session["PhieuNhap"];
+    var successMessage = (string)TempData["Success"];
 }
 
 @section headerStyles {
@@ -33,7 +34,17 @@
     <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
     <script src="~/Assets/js/myCustomJS.js"></script>
+
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+    </script>
 }
 <input class="hidden" id="IdNXB" value="@pn.IdNXB" />
 <!-- page content -->
@@ -125,7 +136,7 @@
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     <input id="listSachByIdNXB" class="form-control col-md-7 col-xs-12" placeholder = "Nhập thông tin sách..." required />
-                                    @Html.HiddenFor(m => m.ctPhieuNhap.IdSach)                                    
+                                    @Html.HiddenFor(m => m.ctPhieuNhap.IdSach, new { @required="" })                                    
                                 </div>
                             </div>
                             <div class="item form-group ui-widget">
@@ -133,7 +144,7 @@
                                     Số lượng <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctPhieuNhap.SoLuongNhap, new { @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách nhập", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctPhieuNhap.SoLuongNhap, new { @class = "form-control col-md-7 col-xs-12", type="number", placeholder = "Nhập số lượng sách nhập", @required = "", @data_validate_minmax = "1," })
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -153,18 +164,21 @@
                             <div class="form-group">
                                 <div class="col-md-5 col-sm-5 col-xs-12 col-md-offset-3">
                                     <div class="pull-left">
-                                        <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
+                                        <button type="reset" class="btn btn-info" name="cancel">Hủy bỏ</button>
                                     </div>
                                     <div class="pull-right">
-                                        <button id="next" type="submit" class="btn btn-primary" name="save">Lưu</button>
+                                        <button type="submit" class="btn btn-primary" id="save" name="save">Lưu</button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="ln_solid"></div>
-
+                        }
+                        <div class="ln_solid"></div>
+                        @using (Html.BeginForm("TaoPhieuNhap", "PhieuNhap", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
                             <div class="pull-right">
-                                <button class="btn btn-success" name="create">Tạo phiếu nhập</button>
+                                <button class="btn btn-success">Tạo phiếu nhập</button>
                             </div>
                             <div class="pull-left">
                                 <a class="btn btn-default" href="/phieu-nhap/them-phieu-nhap/">Trở lại</a>

@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtBaoCao = (IEnumerable<PhatHanhSach.Web.Models.CtThanhToanViewModel>)Session["dsCtBaoCao"];
     var dsTinhTrang = ViewBag.dsTinhTrang;
+    var successMessage = (string)TempData["Success"];
+    var errorMessage = (string)TempData["Error"];
 }
 
 @section headerStyles {
@@ -62,6 +64,19 @@
     <!-- autocomplete jquery -->
     <script src="~/Assets/js/myCustomJS.js"></script>
     <script src="~/Assets/js/report.js"></script>
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+
+        @if(errorMessage != null && errorMessage.Length != 0)
+        {
+            @:showErrorToast("@errorMessage");
+        }
+    </script>
+
     <!-- Initialize datetimepicker -->
     <script>
         /*var $form = $('form');

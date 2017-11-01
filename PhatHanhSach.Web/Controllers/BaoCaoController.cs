@@ -5,7 +5,6 @@ using PhatHanhSach.Service;
 using PhatHanhSach.Service.Services;
 using PhatHanhSach.Web.Extensions;
 using PhatHanhSach.Web.Models;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -97,104 +96,106 @@ namespace PhatHanhSach.Web.Controllers
         [HttpPost]
         public ActionResult ThemChiTietBaoCao(BaoCaoDLViewModel baoCaoDLVm)
         {
-            if (Request.Form["create"] != null)
+            if (ModelState.IsValid)
             {
-                var baoCao = (BaoCaoDLViewModel)Session["BaoCao"];
-                baoCao.NgayXacNhan = baoCao.ThoiGianLapPhieu;
-                baoCao.TongTienConNo += baoCao.TienNoThangTruoc;
-                var dsSachDaKhaiSL = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
-
-                BaoCaoDL newBaoCao = new BaoCaoDL();
-                newBaoCao.UpdateBaoCaoDL(baoCao);
-                newBaoCao.NgayXacNhan = newBaoCao.ThoiGianLapPhieu;
-                newBaoCao.IdTinhTrang = CommonConstant.DA_BAO_CAO;
-                baoCaoDLService.Add(newBaoCao);
-                baoCaoDLService.Save();
-
-                var dsSachChuaKhaiSL = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                foreach (var ctbc in dsSachDaKhaiSL)
+                var sach = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach);
+                if (sach == null)
                 {
-                    ctbc.IdBaoCao = newBaoCao.Id;
-                    var ctBaoCao = new CtBaoCaoDL();
-                    ctBaoCao.UpdateCtBaoCaoDL(ctbc);
-                    ctBaoCaoDLService.Add(ctBaoCao);
-
-                    dsSachChuaKhaiSL.RemoveAll(t => t.Id == ctbc.IdSach);
+                    ModelState.AddModelError("", "Thông tin sách không tồn tại.");
                 }
-
-                foreach (var s in dsSachChuaKhaiSL)
+                else
                 {
-                    var giaBan = sachService.GetById(s.Id).GiaBan;
-                    var ctBaoCao = new CtBaoCaoDL();
-                    ctBaoCao.IdBaoCao = newBaoCao.Id;
-                    ctBaoCao.IdSach = s.Id;
-                    ctBaoCao.DonGiaXuat = (double)giaBan;
-                    ctBaoCao.SoLuongCon = s.SoLuongMua;
-                    ctBaoCao.TienNo = ctBaoCao.DonGiaXuat * ctBaoCao.SoLuongCon;
-                    ctBaoCao.SoLuongBan = 0;
-                    ctBaoCao.ThanhTien = 0;
-
-                    newBaoCao.TongTienSachBan += (double)ctBaoCao.ThanhTien;
-                    newBaoCao.TongTienConNo += (double)ctBaoCao.TienNo;
-
-                    ctBaoCaoDLService.Add(ctBaoCao);
-                }
-                baoCaoDLService.Update(newBaoCao);
-                baoCaoDLService.Save();
-
-                Session["BaoCao"] = null;
-                Session["dsCtBaoCao"] = null;
-                Session.RemoveAll();
-
-                return Redirect("/bao-cao/dai-ly/");
-            }
-            else if (Request.Form["save"] != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    var sach = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach);
-                    if (sach == null)
+                    var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
+                    int soLuongDaMua = dsThongKeBaoCao.Find(x => x.Id == baoCaoDLVm.ctBaoCao.IdSach).SoLuongMua;
+                    if (baoCaoDLVm.ctBaoCao.SoLuongBan > soLuongDaMua)
                     {
-                        ModelState.AddModelError("", "Thông tin sách không tồn tại.");
+                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + soLuongDaMua);
                     }
                     else
                     {
-                        var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                        int soLuongDaMua = dsThongKeBaoCao.Find(x => x.Id == baoCaoDLVm.ctBaoCao.IdSach).SoLuongMua;
-                        if (baoCaoDLVm.ctBaoCao.SoLuongBan > soLuongDaMua)
+                        var giaBan = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
+                        CtBaoCaoDLViewModel newCtBaoCaoDL = new CtBaoCaoDLViewModel();
+                        newCtBaoCaoDL = baoCaoDLVm.ctBaoCao;
+                        newCtBaoCaoDL.IdBaoCao = baoCaoDLVm.Id;
+                        newCtBaoCaoDL.DonGiaXuat = (double)giaBan;
+                        newCtBaoCaoDL.ThanhTien = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongBan;
+                        newCtBaoCaoDL.SoLuongCon = soLuongDaMua - baoCaoDLVm.ctBaoCao.SoLuongBan;
+                        newCtBaoCaoDL.TienNo = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongCon;
+                        newCtBaoCaoDL.Sach = Mapper.Map<Sach, SachViewModel>(sach);
+
+                        var sachDaNhap = ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Find(x => x.IdSach == newCtBaoCaoDL.IdSach);
+                        if (sachDaNhap == null)
                         {
-                            ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + soLuongDaMua);
+                            baoCaoDLVm.ctBaoCao = null;
+                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienSachBan += newCtBaoCaoDL.ThanhTien;
+                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienConNo += newCtBaoCaoDL.TienNo;
+                            ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Add(newCtBaoCaoDL);
+
+                            TempData["Success"] = "Đã lưu thành công một báo cáo đại lý.";
+                            return Redirect("them-chi-tiet/");
                         }
                         else
                         {
-                            var giaBan = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
-                            CtBaoCaoDLViewModel newCtBaoCaoDL = new CtBaoCaoDLViewModel();
-                            newCtBaoCaoDL = baoCaoDLVm.ctBaoCao;
-                            newCtBaoCaoDL.IdBaoCao = baoCaoDLVm.Id;
-                            newCtBaoCaoDL.DonGiaXuat = (double)giaBan;
-                            newCtBaoCaoDL.ThanhTien = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongBan;
-                            newCtBaoCaoDL.SoLuongCon = soLuongDaMua - baoCaoDLVm.ctBaoCao.SoLuongBan;
-                            newCtBaoCaoDL.TienNo = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongCon;
-                            newCtBaoCaoDL.Sach = Mapper.Map<Sach, SachViewModel>(sach);
-
-                            var sachDaNhap = ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Find(x => x.IdSach == newCtBaoCaoDL.IdSach);
-                            if (sachDaNhap == null)
-                            {
-                                baoCaoDLVm.ctBaoCao = null;
-                                ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienSachBan += newCtBaoCaoDL.ThanhTien;
-                                ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienConNo += newCtBaoCaoDL.TienNo;
-                                ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Add(newCtBaoCaoDL);
-                                return Redirect("them-chi-tiet/");
-                            }
-                            else
-                            {
-                                ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
-                            }
+                            ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
                         }
                     }
                 }
             }
             return View(baoCaoDLVm);
+        }
+        
+        [HttpPost]
+        public ActionResult ThemMoiBaoCao()
+        {
+            var baoCao = (BaoCaoDLViewModel)Session["BaoCao"];
+            baoCao.NgayXacNhan = baoCao.ThoiGianLapPhieu;
+            baoCao.TongTienConNo += baoCao.TienNoThangTruoc;
+            var dsSachDaKhaiSL = (List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
+
+            BaoCaoDL newBaoCao = new BaoCaoDL();
+            newBaoCao.UpdateBaoCaoDL(baoCao);
+            newBaoCao.NgayXacNhan = newBaoCao.ThoiGianLapPhieu;
+            newBaoCao.IdTinhTrang = CommonConstant.DA_BAO_CAO;
+            baoCaoDLService.Add(newBaoCao);
+            baoCaoDLService.Save();
+
+            var dsSachChuaKhaiSL = baoCaoDLService.GetListAnalysisReport(baoCao.IdDaiLy, baoCao.NgayBatDau, baoCao.NgayKetThuc);
+            foreach (var ctbc in dsSachDaKhaiSL)
+            {
+                ctbc.IdBaoCao = newBaoCao.Id;
+                var ctBaoCao = new CtBaoCaoDL();
+                ctBaoCao.UpdateCtBaoCaoDL(ctbc);
+                ctBaoCaoDLService.Add(ctBaoCao);
+
+                dsSachChuaKhaiSL.RemoveAll(t => t.Id == ctbc.IdSach);
+            }
+
+            foreach (var s in dsSachChuaKhaiSL)
+            {
+                var giaBan = sachService.GetById(s.Id).GiaBan;
+                var ctBaoCao = new CtBaoCaoDL();
+                ctBaoCao.IdBaoCao = newBaoCao.Id;
+                ctBaoCao.IdSach = s.Id;
+                ctBaoCao.DonGiaXuat = (double)giaBan;
+                ctBaoCao.SoLuongCon = s.SoLuongMua;
+                ctBaoCao.TienNo = ctBaoCao.DonGiaXuat * ctBaoCao.SoLuongCon;
+                ctBaoCao.SoLuongBan = 0;
+                ctBaoCao.ThanhTien = 0;
+
+                newBaoCao.TongTienSachBan += (double)ctBaoCao.ThanhTien;
+                newBaoCao.TongTienConNo += (double)ctBaoCao.TienNo;
+
+                ctBaoCaoDLService.Add(ctBaoCao);
+            }
+            baoCaoDLService.Update(newBaoCao);
+            baoCaoDLService.Save();
+
+            Session["BaoCao"] = null;
+            Session["dsCtBaoCao"] = null;
+            Session.RemoveAll();
+
+            TempData["Success"] = "Đã thêm mới một báo cáo đại lý.";
+            return Redirect("/bao-cao/dai-ly/");           
         }
 
         [Route("xoa-chi-tiet-bc.{id}")]
@@ -227,6 +228,7 @@ namespace PhatHanhSach.Web.Controllers
             baoCaoDLVM.CtBaoCaoDLs = Mapper.Map<IEnumerable<CtBaoCaoDL>, IEnumerable<CtBaoCaoDLViewModel>>(dsCtBaoCaoDL);
 
             Session["TinhTrangBanDau"] = baoCaoDLVM.IdTinhTrang;
+            Session["TongTienSachBan"] = baoCaoDLVM.TongTienSachBan;
             Session["dsCtBaoCao"] = baoCaoDLVM.CtBaoCaoDLs;
 
             if (TempData["Changed"] != null)
@@ -250,18 +252,31 @@ namespace PhatHanhSach.Web.Controllers
             if (ModelState.IsValid)
             {
                 int tinhTrangBanDau = (int)Session["TinhTrangBanDau"];
-                if (tinhTrangBanDau == CommonConstant.DA_THANH_TOAN || tinhTrangBanDau == CommonConstant.DA_HUY)
+                if (tinhTrangBanDau == CommonConstant.DA_THANH_TOAN)
                 {
-                    ModelState.AddModelError("", "Báo cáo đã thanh toán hoặc đã bị hủy không thể cập nhật.");
+                    TempData["Error"] = "Không thể cập nhật khi báo cáo đã thanh toán.";
+                }
+                else if(tinhTrangBanDau == CommonConstant.DA_HUY)
+                {
+                    TempData["Error"] = "Không thể cập nhật khi báo cáo đã hủy.";
                 }
                 else
                 {
-                    var updateBaoCaoDL = baoCaoDLService.GetById(baoCaoDLVm.Id);
-                    updateBaoCaoDL.IdTinhTrang = baoCaoDLVm.IdTinhTrang;
-                    updateBaoCaoDL.NgayXacNhan = baoCaoDLVm.NgayXacNhan;
-                    updateBaoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
-                    baoCaoDLService.Update(updateBaoCaoDL);
-                    baoCaoDLService.Save();
+                    if (baoCaoDLVm.TongTienThanhToan < (double)Session["TongTienSachBan"])
+                    {
+                        TempData["Error"] = "Yêu cầu trả đủ số tiền sách bán được.";
+                    }
+                    else
+                    {
+                        var updateBaoCaoDL = baoCaoDLService.GetById(baoCaoDLVm.Id);
+                        updateBaoCaoDL.IdTinhTrang = baoCaoDLVm.IdTinhTrang;
+                        updateBaoCaoDL.NgayXacNhan = baoCaoDLVm.NgayXacNhan;
+                        updateBaoCaoDL.TongTienThanhToan = baoCaoDLVm.TongTienThanhToan;
+                        baoCaoDLService.Update(updateBaoCaoDL);
+                        baoCaoDLService.Save();
+                        Session.RemoveAll();
+                        TempData["Success"] = "Cập nhật trạng thái thành công.";
+                    }
                 }
             }
 

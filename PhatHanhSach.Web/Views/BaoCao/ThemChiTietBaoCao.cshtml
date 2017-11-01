@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtBaoCao = (List<PhatHanhSach.Web.Models.CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
     var bc = (PhatHanhSach.Web.Models.BaoCaoDLViewModel)Session["BaoCao"];
+    var successMessage = (string)TempData["Success"];
 }
 
 @section headerStyles {
@@ -33,8 +34,17 @@
     <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+    <!-- validator -->
+    <script src="~/Assets/vendors/validator/validator.js"></script>
     <script src="~/Assets/js/myCustomJS.js"></script>
+
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+    </script>
 }
 
 <input class="hidden" id="IdDaiLy" value="@Model.IdDaiLy" />
@@ -136,7 +146,7 @@
                                     Số lượng đã bán <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctBaoCao.SoLuongBan, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số lượng sách xuất", @required = "" })
+                                    @Html.TextBoxFor(m => m.ctBaoCao.SoLuongBan, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số lượng sách xuất", @required = "", @data_validate_minmax = "1," })
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -151,15 +161,18 @@
                                         <button id="reset" type="reset" class="btn btn-info">Hủy bỏ</button>
                                     </div>
                                     <div class="pull-right">
-                                        <button id="next" type="submit" class="btn btn-primary" name="save">Lưu</button>
+                                        <button id="next" type="submit" class="btn btn-primary">Lưu</button>
                                     </div>
                                 </div>
                             </div>
 
+                        }
                             <div class="ln_solid"></div>
-
+                        @using (Html.BeginForm("ThemMoiBaoCao", "BaoCao", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
                             <div class="pull-right">
-                                <button class="btn btn-success" name="create">Tạo báo cáo</button>
+                                <button class="btn btn-success">Tạo báo cáo</button>
                             </div>
                             <div class="pull-left">
                                 <a class="btn btn-default" href="/">Về trang chính</a>

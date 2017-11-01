@@ -6,7 +6,7 @@
         icon: 'success',
         stack: 3,
         allowToastClose: true,
-        position: 'top-center',
+        position: 'top-right',
         showHideTransition: 'fade'
     })
 }
@@ -19,7 +19,7 @@ function showErrorToast(mess) {
         icon: 'error',
         stack: 3,
         allowToastClose: true,
-        position: 'top-center',
+        position: 'top-right',
         showHideTransition: 'fade'
     })
 }

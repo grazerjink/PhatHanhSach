@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace PhatHanhSach.Web.Models
 {
-    public class PhieuNhapViewModel
+    public class PhieuNhapViewModel : BaseViewModel
     {
         public int Id { get; set; }
         public int IdNXB { get; set; }

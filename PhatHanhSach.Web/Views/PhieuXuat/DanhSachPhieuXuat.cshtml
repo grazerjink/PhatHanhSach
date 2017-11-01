@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "DanhSachPhieuXuat";
     Layout = "~/Views/Shared/Layout.cshtml";
+    var successMessage = (string)TempData["Success"];
 }
 
 @section headerStyles {
@@ -31,6 +32,14 @@
     <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+            @if(successMessage != null && successMessage.Length != 0)
+            {
+                @:showSuccessToast("@successMessage");
+            }
+    </script>
 }
 
 <!-- page content -->

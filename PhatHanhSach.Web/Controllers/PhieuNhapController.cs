@@ -90,70 +90,71 @@ namespace PhatHanhSach.Web.Controllers
         [Route("them-chi-tiet")]
         public ActionResult ThemChiTietPhieuNhap(PhieuNhapViewModel pnViewModel)
         {
-            if (Request.Form["create"] != null)
+            if (ModelState.IsValid)
             {
-                var pn = (PhieuNhapViewModel)Session["PhieuNhap"];
-                PhieuNhap newPhieuNhap = new PhieuNhap();
-                newPhieuNhap.UpdatePhieuNhap(pn);
-
-                phieuNhapService.Add(newPhieuNhap);
-                phieuNhapService.Save();
-
-                foreach (var ctpn in (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"])
+                var sach = sachService.GetById(pnViewModel.ctPhieuNhap.IdSach);
+                if (sach == null)
                 {
-                    ctpn.IdPhieuNhap = newPhieuNhap.Id;
-                    CtPhieuNhap ctPhieuNhap = new CtPhieuNhap();
-                    ctPhieuNhap.UpdateCtPhieuNhap(ctpn);
-                    ctPhieuNhapService.Add(ctPhieuNhap);
-
-                    var sach = sachService.GetById(ctpn.IdSach);
-                    if (sach.GiaNhap != ctpn.DonGiaNhap)
-                    {
-                        sach.GiaNhap = ctpn.DonGiaNhap;
-                        sachService.Update(sach);
-                    }
+                    ModelState.AddModelError("", "Thông tin sách không tồn tại.");
                 }
-                phieuNhapService.Save();
-
-                Session["dsCtPhieuNhap"] = null;
-                Session["PhieuNhap"] = null;
-                Session.RemoveAll();
-
-                return Redirect("/phieu-nhap/");
-            }
-            else if (Request.Form["save"] != null)
-            {
-                if (ModelState.IsValid)
+                else
                 {
-                    var sach = sachService.GetById(pnViewModel.ctPhieuNhap.IdSach);
-                    if (sach == null)
+                    var newCtPhieuNhapVm = new CtPhieuNhapViewModel();
+                    newCtPhieuNhapVm = pnViewModel.ctPhieuNhap;
+                    newCtPhieuNhapVm.ThanhTien = newCtPhieuNhapVm.SoLuongNhap * newCtPhieuNhapVm.DonGiaNhap;
+                    newCtPhieuNhapVm.Sach = Mapper.Map<Sach, SachViewModel>(sach);
+                    var sachDaNhap = ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Find(x => x.IdSach == newCtPhieuNhapVm.IdSach);
+                    if (sachDaNhap == null)
                     {
-                        ModelState.AddModelError("", "Thông tin sách không tồn tại.");
+                        pnViewModel.ctPhieuNhap = null;
+                        ((PhieuNhapViewModel)Session["PhieuNhap"]).TongTien += newCtPhieuNhapVm.ThanhTien;
+                        ((PhieuNhapViewModel)Session["PhieuNhap"]).TongSoLuong += newCtPhieuNhapVm.SoLuongNhap;
+                        ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapVm);
+
+                        TempData["Success"] = "Đã lưu thành công một chi tiết.";
+                        return Redirect("them-chi-tiet/");
                     }
                     else
                     {
-                        var newCtPhieuNhapVm = new CtPhieuNhapViewModel();
-                        newCtPhieuNhapVm = pnViewModel.ctPhieuNhap;
-                        newCtPhieuNhapVm.ThanhTien = newCtPhieuNhapVm.SoLuongNhap * newCtPhieuNhapVm.DonGiaNhap;
-                        newCtPhieuNhapVm.Sach = Mapper.Map<Sach, SachViewModel>(sach);
-                        var sachDaNhap = ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Find(x => x.IdSach == newCtPhieuNhapVm.IdSach);
-                        if (sachDaNhap == null)
-                        {
-                            pnViewModel.ctPhieuNhap = null;
-                            ((PhieuNhapViewModel)Session["PhieuNhap"]).TongTien += newCtPhieuNhapVm.ThanhTien;
-                            ((PhieuNhapViewModel)Session["PhieuNhap"]).TongSoLuong += newCtPhieuNhapVm.SoLuongNhap;
-                            ((List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"]).Add(newCtPhieuNhapVm);
-
-                            return Redirect("them-chi-tiet/");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
-                        }
+                        ModelState.AddModelError("", "Mã sách đã được thêm vào danh sách chi tiết rồi.");
                     }
                 }
             }
             return View(pnViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult TaoPhieuNhap()
+        {
+            var pn = (PhieuNhapViewModel)Session["PhieuNhap"];
+            PhieuNhap newPhieuNhap = new PhieuNhap();
+            newPhieuNhap.UpdatePhieuNhap(pn);
+
+            phieuNhapService.Add(newPhieuNhap);
+            phieuNhapService.Save();
+
+            foreach (var ctpn in (List<CtPhieuNhapViewModel>)Session["dsCtPhieuNhap"])
+            {
+                ctpn.IdPhieuNhap = newPhieuNhap.Id;
+                CtPhieuNhap ctPhieuNhap = new CtPhieuNhap();
+                ctPhieuNhap.UpdateCtPhieuNhap(ctpn);
+                ctPhieuNhapService.Add(ctPhieuNhap);
+
+                var sach = sachService.GetById(ctpn.IdSach);
+                if (sach.GiaNhap != ctpn.DonGiaNhap)
+                {
+                    sach.GiaNhap = ctpn.DonGiaNhap;
+                    sachService.Update(sach);
+                }
+            }
+            phieuNhapService.Save();
+
+            Session["dsCtPhieuNhap"] = null;
+            Session["PhieuNhap"] = null;
+            Session.RemoveAll();
+
+            TempData["Success"] = "Đã thêm mới một phiếu nhập.";
+            return Redirect("/phieu-nhap/");            
         }
 
         [HttpGet]

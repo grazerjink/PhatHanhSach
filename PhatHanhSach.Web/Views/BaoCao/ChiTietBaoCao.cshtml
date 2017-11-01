@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/Layout.cshtml";
     var dsCtBaoCao = (IEnumerable<PhatHanhSach.Web.Models.CtBaoCaoDLViewModel>)Session["dsCtBaoCao"];
     var dsTinhTrang = ViewBag.dsTinhTrang;
+    var successMessage = (string)TempData["Success"];
+    var errorMessage = (string)TempData["Error"];
 }
 
 @section headerStyles {
@@ -63,6 +65,19 @@
     <script src="~/Assets/js/myCustomJS.js"></script>
     <!-- Initialize datetimepicker -->
     <script src="~/Assets/js/report.js"></script>    
+
+    <script src="~/Assets/js/showToast.js"></script>
+    <script>
+        @if(successMessage != null && successMessage.Length != 0)
+        {
+            @:showSuccessToast("@successMessage");
+        }
+
+        @if(errorMessage != null && errorMessage.Length != 0)
+        {
+            @:showErrorToast("@errorMessage");
+        }
+    </script>
 }
 
 <!-- page content -->
@@ -169,7 +184,7 @@
                                         Tổng tiền thanh toán <span class="required">*</span>
                                     </label>
                                     <div class="col-md-5 col-sm-6 col-xs-12">
-                                        @Html.TextBoxFor(m => m.TongTienThanhToan, new { @class = "editable form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số tiền thanh toán", @required = "" })
+                                        @Html.TextBoxFor(m => m.TongTienThanhToan, new { @class = "editable form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số tiền thanh toán", @required = "", @data_validate_minmax = Model.TongTienSachBan.ToString()+"," })
                                     </div>
                                 </div>
                                 <div class="item form-group hidden acceptDay">
@@ -178,7 +193,7 @@
                                     </label>
                                     <div class="control-group col-md-5 col-sm-6 col-xs-12">
                                         <div class='input-group date' id="myConfirmDate">
-                                            @Html.TextBoxFor(m => m.NgayXacNhan, "{0:dd/MM/yyyy}", new { @class = "editable form-control" })
+                                            @Html.TextBoxFor(m => m.NgayXacNhan, "{0:dd/MM/yyyy}", new { @class = "editable form-control", @required = "" })
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>

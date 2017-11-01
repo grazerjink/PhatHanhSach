@@ -7,7 +7,7 @@
 + **B4**: Build project lần nữa.
 + **B5**: Nhấn Ctrl+F5 để chạy chương trình hoặc click nút Run trong Visual Studio nhưng sẽ build lâu vđ :)))
 
-+ Chú ý: Nếu mà hệ thống báo tsc.exe gì gì đó...ta gõ vào khung search trong khung search của tab **Solution Explore** từ **.ts** rùi xóa tất cả những file đuôi .ts được tìm thấy. Sau đó build project lại và chạy.
++ **Chú ý**: Nếu mà hệ thống báo tsc.exe gì gì đó...ta gõ vào khung search trong tab **Solution Explore** từ **.ts** rùi xóa tất cả những file đuôi .ts được tìm thấy. Sau đó build project lại và chạy.
 
 ### Chức năng đã xây dựng
 + Chức năng thêm, xóa, sửa danh sách **đại lý**.

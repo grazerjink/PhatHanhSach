@@ -2,11 +2,12 @@
 
 ### Hướng dẫn cấu hình và build để chạy được project
 + **B1**: Open file .sql bằng SQL Server -> Select all(hoặc Ctrl+A) rồi chọn Execute(hoặc F5) để hệ thống tạo ra Database tên là **PhatHanhSachV2**.
-+ **B2**: Mở project ra (double click vào file đuôi là .sln) chạy build project trước cái đã để cập nhật các Libs liên quan cần sử dụng.
++ **B2**: Mở project ra (double click vào file đuôi là .sln) chạy build project trước cái đã để cập nhật các **Libs liên quan cần sử dụng**.(Lưu ý: Visual Studio phải có cài **NuGet Packages** để hỗ trợ việc tìm và tải thư viện đúng version của project)
 + **B3**: Trong mỗi mục module có file tên **ConnectionString.config** vào sửa lại cái tên **localhost** (tên server trong sql) (vd. **DESKTOP/SQLServerExpress**) để connect database. Sau đó save lại.
 + **B4**: Build project lần nữa.
 + **B5**: Nhấn Ctrl+F5 để chạy chương trình hoặc click nút Run trong Visual Studio nhưng sẽ build lâu vđ :)))
-+ **Lưu ý:** Database mình đã sửa đổi nhiều thứ và chuyển thành PhatHanhSachV2, mình có reUP những file SQL về Database mới rồi.
+
++ Chú ý: Nếu mà hệ thống báo tsc.exe gì gì đó...ta gõ vào khung search trong khung search của tab **Solution Explore** từ **.ts** rùi xóa tất cả những file đuôi .ts được tìm thấy. Sau đó build project lại và chạy.
 
 ### Chức năng đã xây dựng
 + Chức năng thêm, xóa, sửa danh sách **đại lý**.

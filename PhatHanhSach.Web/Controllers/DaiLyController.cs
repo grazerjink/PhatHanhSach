@@ -11,7 +11,7 @@ namespace PhatHanhSach.Web.Controllers
     [RoutePrefix("dai-ly")]
     public class DaiLyController : Controller
     {
-        private IDaiLyService daiLyService;
+        IDaiLyService daiLyService;
 
         public DaiLyController(IDaiLyService daiLyService)
         {

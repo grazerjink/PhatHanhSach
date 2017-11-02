@@ -17,6 +17,8 @@ namespace PhatHanhSach.Service
 
         NhaXuatBan GetById(int id);
 
+        NhaXuatBan GetSingleByName(string name, bool status = true);
+
         void Save();
     }
 
@@ -54,6 +56,11 @@ namespace PhatHanhSach.Service
         public NhaXuatBan GetById(int id)
         {
             return nhaXuatBanRepository.GetSingleById(id);
+        }
+
+        public NhaXuatBan GetSingleByName(string name, bool status = true)
+        {
+            return nhaXuatBanRepository.GetSingleByCondition(x => x.TenNXB.Equals(name) && x.TrangThai == status);
         }
 
         public void Save()

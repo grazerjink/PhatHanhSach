@@ -19,6 +19,8 @@ namespace PhatHanhSach.Service
 
         DaiLy GetById(int code);
 
+        DaiLy GetSingleByName(string name, bool status = true);
+
         void Save();
     }
 
@@ -61,6 +63,11 @@ namespace PhatHanhSach.Service
         public DaiLy GetById(int id)
         {
             return daiLyRepository.GetSingleById(id);
+        }
+
+        public DaiLy GetSingleByName(string name, bool status = true)
+        {
+            return daiLyRepository.GetSingleByCondition(x => x.TenDaiLy.Equals(name) && x.TrangThai == status);
         }
 
         public void Save()

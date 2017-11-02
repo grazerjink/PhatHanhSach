@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PhatHanhSach.Common;
 using PhatHanhSach.Model;
 using PhatHanhSach.Service;
 using PhatHanhSach.Web.Extensions;
@@ -11,24 +12,27 @@ namespace PhatHanhSach.Web.Controllers
     [RoutePrefix("phieu-xuat")]
     public class PhieuXuatController : Controller
     {
-        private IPhieuXuatService phieuXuatService;
-        private ISachService sachService;
-        private IDaiLyService daiLyService;
-        private ICtPhieuXuatService ctPhieuXuatService;
-        private ITonKhoService tonKhoService;
+        IPhieuXuatService phieuXuatService;
+        ISachService sachService;
+        IDaiLyService daiLyService;
+        ICtPhieuXuatService ctPhieuXuatService;
+        ITonKhoService tonKhoService;
+        ICongNoDLService congNoDLService;
 
         public PhieuXuatController(
             IPhieuXuatService phieuXuatService,
             ISachService sachService,
             IDaiLyService daiLyService,
             ICtPhieuXuatService ctPhieuXuatService,
-            ITonKhoService tonKhoService)
+            ITonKhoService tonKhoService,
+            ICongNoDLService congNoDLService)
         {
             this.phieuXuatService = phieuXuatService;
             this.sachService = sachService;
             this.daiLyService = daiLyService;
             this.ctPhieuXuatService = ctPhieuXuatService;
             this.tonKhoService = tonKhoService;
+            this.congNoDLService = congNoDLService;
         }
 
         [Route("")]
@@ -50,32 +54,37 @@ namespace PhatHanhSach.Web.Controllers
 
         [Route("them-phieu-xuat")]
         [HttpPost]
-        public ActionResult ThemPhieuXuat(PhieuXuatViewModel pxViewModel)
+        public ActionResult ThemPhieuXuat(PhieuXuatViewModel pxViewModel, string TenDaiLy)
         {
             if (ModelState.IsValid)
             {
-                var daiLy = daiLyService.GetById(pxViewModel.IdDaiLy);
+                var daiLy = daiLyService.GetSingleByName(TenDaiLy);                
                 if (daiLy == null)
                 {
                     ModelState.AddModelError("", "Thông tin đại lý không tồn tại.");
-                    return View(pxViewModel);
                 }
                 else
                 {
-                    pxViewModel.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
-                    pxViewModel.TongTien = 0;
-                    pxViewModel.TongSoLuong = 0;
-                    Session["PhieuXuat"] = pxViewModel;
-                    // Open current session to save the Export data info
-                    Session["dsCtPhieuXuat"] = new List<CtPhieuXuatViewModel>();
-
-                    return Redirect("them-chi-tiet/");
+                    pxViewModel.IdDaiLy = daiLy.Id;
+                    var soTienNo = congNoDLService.GetDeptInLastMonth(daiLy.Id, pxViewModel.ThoiGianXuat);
+                    if (soTienNo > CommonConstant.NO_CHO_PHEP)
+                    {
+                        ModelState.AddModelError("", "Đã vượt quá số tiền cho phép nợ, không thể lập phiếu nữa.");
+                    }
+                    else
+                    {
+                        pxViewModel.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
+                        pxViewModel.TongTien = 0;
+                        pxViewModel.TongSoLuong = 0;
+                        Session["PhieuXuat"] = pxViewModel;
+                        // Open current session to save the Export data info
+                        Session["dsCtPhieuXuat"] = new List<CtPhieuXuatViewModel>();
+                        return Redirect("them-chi-tiet/");
+                    }
                 }
             }
-            else
-            {
-                return View(pxViewModel);
-            }
+
+            return View(pxViewModel);
         }
 
         [Route("them-chi-tiet")]
@@ -88,17 +97,19 @@ namespace PhatHanhSach.Web.Controllers
 
         [Route("them-chi-tiet")]
         [HttpPost]
-        public ActionResult ThemChiTietPhieuXuat(PhieuXuatViewModel pxViewModel)
+        public ActionResult ThemChiTietPhieuXuat(PhieuXuatViewModel pxViewModel, string TenSach)
         {
             if (ModelState.IsValid)
             {
-                var sach = sachService.GetById(pxViewModel.ctPhieuXuat.IdSach);
+                var sach = sachService.GetSingleByName(TenSach);
                 if (sach == null)
                 {
                     ModelState.AddModelError("", "Thông tin sách không tồn tại.");
                 }
                 else
                 {
+                    pxViewModel.ctPhieuXuat.IdSach = sach.Id;
+
                     var giaBan = sach.GiaBan;
                     var newCtPhieuXuatVm = new CtPhieuXuatViewModel();
                     newCtPhieuXuatVm = pxViewModel.ctPhieuXuat;

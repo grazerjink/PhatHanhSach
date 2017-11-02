@@ -55,28 +55,34 @@ namespace PhatHanhSach.Web.Controllers
 
         [Route("tao-bao-cao")]
         [HttpPost]
-        public ActionResult TaoBaoCao(BaoCaoDLViewModel baoCaoDLVm)
+        public ActionResult TaoBaoCao(BaoCaoDLViewModel baoCaoDLVm, string TenDaiLy)
         {
             if (ModelState.IsValid)
             {
-                var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                if (dsSachDaMua == null || dsSachDaMua.Count == 0)
+                var daiLy = daiLyService.GetSingleByName(TenDaiLy);
+                if (daiLy == null)
                 {
-                    ModelState.AddModelError("", "Đại lý chưa có nhập sách vào khoảng thời gian này.");
-                }
-                else if (baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
-                {
-                    ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                    ModelState.AddModelError("", "Thông tin đại lý không tồn tại.");
                 }
                 else
                 {
-                    var daiLy = daiLyService.GetById(baoCaoDLVm.IdDaiLy);
-                    baoCaoDLVm.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
-
-                    Session["BaoCao"] = baoCaoDLVm;
-                    Session["dsCtBaoCao"] = new List<CtBaoCaoDLViewModel>();
-
-                    return Redirect("them-chi-tiet/");
+                    baoCaoDLVm.IdDaiLy = daiLy.Id;
+                    var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
+                    if (dsSachDaMua == null || dsSachDaMua.Count == 0)
+                    {
+                        ModelState.AddModelError("", "Đại lý chưa có nhập sách vào khoảng thời gian này.");
+                    }
+                    else if (baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
+                    {
+                        ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                    }
+                    else
+                    {
+                        baoCaoDLVm.DaiLy = Mapper.Map<DaiLy, DaiLyViewModel>(daiLy);
+                        Session["BaoCao"] = baoCaoDLVm;
+                        Session["dsCtBaoCao"] = new List<CtBaoCaoDLViewModel>();
+                        return Redirect("them-chi-tiet/");
+                    }
                 }
             }
 
@@ -94,32 +100,38 @@ namespace PhatHanhSach.Web.Controllers
 
         [Route("them-chi-tiet")]
         [HttpPost]
-        public ActionResult ThemChiTietBaoCao(BaoCaoDLViewModel baoCaoDLVm)
+        public ActionResult ThemChiTietBaoCao(BaoCaoDLViewModel baoCaoDLVm, string TenSach)
         {
             if (ModelState.IsValid)
             {
-                var sach = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach);
+                var sach = sachService.GetSingleByName(TenSach);
                 if (sach == null)
                 {
                     ModelState.AddModelError("", "Thông tin sách không tồn tại.");
                 }
                 else
                 {
+                    baoCaoDLVm.ctBaoCao.IdSach = sach.Id;
                     var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                    int soLuongDaMua = dsThongKeBaoCao.Find(x => x.Id == baoCaoDLVm.ctBaoCao.IdSach).SoLuongMua;
-                    if (baoCaoDLVm.ctBaoCao.SoLuongBan > soLuongDaMua)
+                    var tonTaiSachXuat = dsThongKeBaoCao.Find(X => X.Id == baoCaoDLVm.ctBaoCao.IdSach);
+                    if (tonTaiSachXuat == null)
                     {
-                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + soLuongDaMua);
+                        ModelState.AddModelError("", "Không thể khai số lượng sách chưa lập phiếu.");
+                    }
+                    else if (baoCaoDLVm.ctBaoCao.SoLuongBan > tonTaiSachXuat.SoLuongMua)
+                    {
+                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + tonTaiSachXuat.SoLuongMua);
                     }
                     else
                     {
+                        var slMua = tonTaiSachXuat.SoLuongMua;
                         var giaBan = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
                         CtBaoCaoDLViewModel newCtBaoCaoDL = new CtBaoCaoDLViewModel();
                         newCtBaoCaoDL = baoCaoDLVm.ctBaoCao;
                         newCtBaoCaoDL.IdBaoCao = baoCaoDLVm.Id;
                         newCtBaoCaoDL.DonGiaXuat = (double)giaBan;
                         newCtBaoCaoDL.ThanhTien = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongBan;
-                        newCtBaoCaoDL.SoLuongCon = soLuongDaMua - baoCaoDLVm.ctBaoCao.SoLuongBan;
+                        newCtBaoCaoDL.SoLuongCon = slMua - baoCaoDLVm.ctBaoCao.SoLuongBan;
                         newCtBaoCaoDL.TienNo = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongCon;
                         newCtBaoCaoDL.Sach = Mapper.Map<Sach, SachViewModel>(sach);
 

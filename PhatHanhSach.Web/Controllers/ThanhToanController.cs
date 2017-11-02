@@ -13,12 +13,12 @@ namespace PhatHanhSach.Web.Controllers
     [RoutePrefix("bao-cao/nxb")]
     public class ThanhToanController : Controller
     {
-        private IThanhToanService thanhToanService;
-        private ISachService sachService;
-        private INhaXuatBanService nxbService;
-        private ICtThanhToanService ctThanhToanService;
-        private ITinhTrangService tinhTrangService;
-        private ICongNoNXBService congNoNXBService;
+        IThanhToanService thanhToanService;
+        ISachService sachService;
+        INhaXuatBanService nxbService;
+        ICtThanhToanService ctThanhToanService;
+        ITinhTrangService tinhTrangService;
+        ICongNoNXBService congNoNXBService;
 
         public ThanhToanController(
                IThanhToanService thanhToanService,
@@ -55,38 +55,45 @@ namespace PhatHanhSach.Web.Controllers
 
         [Route("tao-bao-cao")]
         [HttpPost]
-        public ActionResult TaoBaoCao(ThanhToanViewModel thanhToanVm)
+        public ActionResult TaoBaoCao(ThanhToanViewModel thanhToanVm, string TenNXB)
         {
             if (Request.Form["analyze"] != null)
             {
                 if (ModelState.IsValid)
                 {
-                    var listThongKe = thanhToanService.GetListAnalysisReport(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau, thanhToanVm.NgayKetThuc);
-
-                    if (listThongKe.Count == 0)
+                    var nxb = nxbService.GetSingleByName(TenNXB);
+                    if (nxb == null)
                     {
-                        ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
-                    }
-                    else if (thanhToanService.CheckReportIsCreated(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau))
-                    {
-                        ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                        ModelState.AddModelError("", "Thông tin nhà xuất bản không tồn tại.");
                     }
                     else
                     {
-                        // Clear at the second click
-                        Session["ThanhToan"] = null;
+                        thanhToanVm.IdNXB = nxb.Id;
 
-                        // Add new value for session
-                        var nxb = nxbService.GetById(thanhToanVm.IdNXB);
-                        thanhToanVm.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
-                        thanhToanVm.TienNoThangTruoc = congNoNXBService.GetDeptInLastMonth(nxb.Id, thanhToanVm.NgayBatDau);
-                        thanhToanVm.dsThongKeNXB = listThongKe;
-                        foreach (var ct in listThongKe)
+                        var listThongKe = thanhToanService.GetListAnalysisReport(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau, thanhToanVm.NgayKetThuc);
+                        if (listThongKe.Count == 0)
                         {
-                            thanhToanVm.TongTienConNo += ct.TongTienNo;
-                            thanhToanVm.TongTienSachBan += ct.TongTienThanhToan;
+                            ModelState.AddModelError("", "Chưa nhập hàng từ nhà xuất bản này.");
                         }
-                        Session["ThanhToan"] = thanhToanVm;
+                        else if (thanhToanService.CheckReportIsCreated(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau))
+                        {
+                            ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                        }
+                        else
+                        {
+                            // Clear at the second click
+                            Session["ThanhToan"] = null;
+                            // Add new value for session
+                            thanhToanVm.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
+                            thanhToanVm.TienNoThangTruoc = congNoNXBService.GetDeptInLastMonth(nxb.Id, thanhToanVm.NgayBatDau);
+                            thanhToanVm.dsThongKeNXB = listThongKe;
+                            foreach (var ct in listThongKe)
+                            {
+                                thanhToanVm.TongTienConNo += ct.TongTienNo;
+                                thanhToanVm.TongTienSachBan += ct.TongTienThanhToan;
+                            }
+                            Session["ThanhToan"] = thanhToanVm;
+                        }
                     }
                 }
             }

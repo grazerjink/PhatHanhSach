@@ -90,7 +90,7 @@ namespace PhatHanhSach.Web.Controllers
         {
             Request.ContentEncoding = Encoding.UTF8;
             Response.ContentEncoding = Encoding.UTF8;
-            var dsSach = sachService.GetMulti(idNXB);
+            var dsSach = sachService.GetAllByIdNXB(idNXB);
             var listSach = new List<object>();
             foreach (var s in dsSach)
             {

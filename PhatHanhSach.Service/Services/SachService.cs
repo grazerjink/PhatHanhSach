@@ -15,7 +15,9 @@ namespace PhatHanhSach.Service
 
         IEnumerable<Sach> GetAll(bool status = true);
 
-        IEnumerable<Sach> GetMulti(int idNXB, bool status = true);
+        IEnumerable<Sach> GetAllByIdNXB(int idNXB, bool status = true);
+
+        Sach GetSingleByName(string name, bool status = true);
 
         Sach GetById(int id);
 
@@ -63,9 +65,14 @@ namespace PhatHanhSach.Service
             unitOfWork.Commit();
         }
 
-        public IEnumerable<Sach> GetMulti(int idNXB, bool status = true)
+        public IEnumerable<Sach> GetAllByIdNXB(int idNXB, bool status = true)
         {
             return sachRepository.GetMulti(x => x.IdNXB == idNXB && x.TrangThai == status);
+        }
+
+        public Sach GetSingleByName(string name, bool status = true)
+        {
+            return sachRepository.GetSingleByCondition(x => x.TenSach.Equals(name) && x.TrangThai == status);
         }
     }
 }

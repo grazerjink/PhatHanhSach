@@ -8,7 +8,6 @@
             }
         });
     },
-    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $("#IdNXB").val(ui.item.value);
@@ -29,7 +28,6 @@ $("#listDaiLy").autocomplete({
             }
         });
     },
-    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#IdDaiLy').val(ui.item.value);
@@ -50,7 +48,6 @@ $("#listSach").autocomplete({
             }
         });
     },
-    minLength: 1,
     select: function (event, ui) {
         event.preventDefault(); 
         $('#ctPhieuXuat_IdSach').val(ui.item.value);
@@ -72,7 +69,6 @@ $("#listSachByIdNXB").autocomplete({
             }
         });
     },
-    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#ctPhieuNhap_IdSach').val(ui.item.value);        
@@ -102,7 +98,6 @@ $("#listSachDaXuat").autocomplete({
             }
         });
     },
-    minLength: 1,
     select: function (event, ui) {
         event.preventDefault();
         $('#ctBaoCao_IdSach').val(ui.item.value);

@@ -110,6 +110,11 @@ namespace PhatHanhSach.Web.Controllers
 
                 foreach (var ct in tt.dsThongKeNXB)
                 {
+                    if(ct.SoLuongXuat == null)
+                    {
+                        ct.TongTienXuat = 0;
+                        ct.SoLuongXuat = 0;
+                    }
                     var ctThanhToan = new CtThanhToan
                     {
                         IdSach = ct.Id,
@@ -119,7 +124,7 @@ namespace PhatHanhSach.Web.Controllers
                         TongTienNhap = ct.TongTienNhap,
                         SoLuongXuat = ct.SoLuongXuat,
                         TongTienXuat = ct.TongTienXuat,
-                        SoLuongCon = ct.SoLuongNhap + ct.SoLuongTonDotTruoc - ct.SoLuongXuat,
+                        SoLuongCon = (ct.SoLuongNhap + ct.SoLuongTonDotTruoc) - ct.SoLuongXuat,
                         TienNo = ct.TongTienNo,
                         DonGiaNhap = ct.DonGiaNhap
                     };

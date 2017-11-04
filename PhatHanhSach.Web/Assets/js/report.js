@@ -73,3 +73,5 @@ $('#myEndDate').datetimepicker({
 $("#myStartDate").on("dp.change", function (e) {
     $('#myEndDate').data("DateTimePicker").minDate(e.date);
 });
+
+$('#myConfirmDate').data("DateTimePicker").minDate($("#NgayXacNhan").val());

@@ -1,7 +1,7 @@
-﻿using PhatHanhSach.Data.Infrastructure;
+﻿using PhatHanhSach.Common;
+using PhatHanhSach.Data.Infrastructure;
 using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
-using PhatHanhSach.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace PhatHanhSach.Service
 
         BaoCaoDL GetByCodeHasIncluded(int id, string[] includes);
 
-        List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
+        List<ThongKeBaoCaoDaiLyViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
         bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate);
 
@@ -89,21 +89,29 @@ namespace PhatHanhSach.Service
             return false;
         }
 
-        public List<ThongKeBaoCaoViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
+        public List<ThongKeBaoCaoDaiLyViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
+            var listThongKe = new List<ThongKeBaoCaoDaiLyViewModel>();
             var newMonthList = baoCaoDLRepository.GetListAnalysisReport(id, fromDate, toDate);
             var oldMonthExistList = baoCaoDLRepository.GetListExistAtLastMonth(id, fromDate);
-            if (oldMonthExistList.Count > 0)
+            newMonthList.ForEach(n =>
             {
-                newMonthList.ForEach(x =>
+                var newThongKeDL = new ThongKeBaoCaoDaiLyViewModel();
+                newThongKeDL.Id = n.Id;
+                newThongKeDL.TenSach = n.TenSach;
+                newThongKeDL.SoLuongNhap = n.SoLuongTon;
+                if (oldMonthExistList.Count > 0)
                 {
-                    var existItem = oldMonthExistList.Find(y => y.Id == x.Id);
+                    var existItem = oldMonthExistList.Find(y => y.Id == n.Id);
                     if (existItem != null)
-                        x.SoLuongTon += existItem.SoLuongTon;
-                });
-            }
+                    {
+                        newThongKeDL.SoLuongTonDotTruoc = existItem.SoLuongTon;
+                    }
+                }
+                listThongKe.Add(newThongKeDL);
+            });
 
-            return newMonthList;
+            return listThongKe;
         }
     }
 }

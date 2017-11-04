@@ -60,16 +60,17 @@ AS
 BEGIN
 	SELECT 
 		s.Id,
-		SUM(ct.SoLuongXuat) SoLuongMua,
+		s.TenSach,
+		SUM(ct.SoLuongXuat) SoLuongTon,
 		SUM(ct.ThanhTien) ThanhTien
 	FROM CtPhieuXuat ct
 	JOIN PhieuXuat px ON ct.IdPhieuXuat = px.Id
 	JOIN Sach s ON s.Id = ct.IdSach
 	WHERE px.ThoiGianXuat BETWEEN @batDau AND @ketThuc AND px.IdDaiLy = @maDaiLy
-	GROUP BY s.Id
+	GROUP BY s.Id,s.TenSach
 END
 
-EXEC procThongKeBaoCaoDL 1000,'10/01/2017','10/31/2017'
+EXEC procThongKeBaoCaoDL 1000,'9/1/2017','9/30/2017'
 
 -- CHỨC NĂNG THỐNG KÊ DOANH THU TRONG KHOẢNG THỜI GIAN --
 ALTER PROC proThongKeDoanhThu @batDau date, @ketThuc date
@@ -118,7 +119,7 @@ JOIN Sach s ON ct.IdSach = s.Id
 WHERE IdDaiLy = @maDaiLy AND bc.NgayKetThuc < @ngayTaoMoi
 ORDER BY bc.NgayKetThuc DESC
 
-EXEC proThongKeSLConThangTruocTheoDaiLy 1000, '10/1/2017'
+EXEC proThongKeSLConThangTruocTheoDaiLy 1000, '9/1/2017'
 
 -- CHỨC NĂNG THỐNG KÊ SỐ LƯỢNG SÁCH CHƯA ĐƯỢC BÁO CÁO TRONG THÁNG TRƯỚC 
 -- CHO NXB ĐỂ CỘNG DỒN VÀO DANH SÁCH BÁO CÁO MỚI

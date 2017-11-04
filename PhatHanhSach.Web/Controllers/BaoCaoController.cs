@@ -94,7 +94,6 @@ namespace PhatHanhSach.Web.Controllers
         public ActionResult ThemChiTietBaoCao()
         {
             var baoCaoDLVm = (BaoCaoDLViewModel)Session["BaoCao"];
-            baoCaoDLVm.TienNoThangTruoc = congNoDLService.GetDeptInLastMonth(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau);
             return View(baoCaoDLVm);
         }
 
@@ -111,36 +110,47 @@ namespace PhatHanhSach.Web.Controllers
                 }
                 else
                 {
+                    // Cuốn sách tồn tại thì gán id sách vào đối tượng ctBaoCao
                     baoCaoDLVm.ctBaoCao.IdSach = sach.Id;
+                    // Truy xuất cuốn sách trong danh sách đã mua của Đại lý
                     var dsThongKeBaoCao = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
                     var tonTaiSachXuat = dsThongKeBaoCao.Find(X => X.Id == baoCaoDLVm.ctBaoCao.IdSach);
                     if (tonTaiSachXuat == null)
                     {
+                        // Sách khai không có trong danh sách phiếu xuất của đại lý
                         ModelState.AddModelError("", "Không thể khai số lượng sách chưa lập phiếu.");
                     }
-                    else if (baoCaoDLVm.ctBaoCao.SoLuongBan > tonTaiSachXuat.SoLuongTon)
+                    else if (baoCaoDLVm.ctBaoCao.SoLuongXuat > (tonTaiSachXuat.SoLuongNhap+tonTaiSachXuat.SoLuongTonDotTruoc))
                     {
-                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + tonTaiSachXuat.SoLuongTon);
+                        // Nếu có mà khai số lượng ảo sẽ cảnh báo
+                        ModelState.AddModelError("", "Số lượng bán không thể lớn hơn số lượng đã mua là: " + (tonTaiSachXuat.SoLuongNhap + tonTaiSachXuat.SoLuongTonDotTruoc));
                     }
                     else
                     {
-                        var slMua = tonTaiSachXuat.SoLuongTon;
-                        var giaBan = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
+                        // Còn lại hợp lệ
+                        var slMua = tonTaiSachXuat.SoLuongNhap + tonTaiSachXuat.SoLuongTonDotTruoc;
+                        var giaBan = (double)sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
+
                         CtBaoCaoDLViewModel newCtBaoCaoDL = new CtBaoCaoDLViewModel();
                         newCtBaoCaoDL = baoCaoDLVm.ctBaoCao;
                         newCtBaoCaoDL.IdBaoCao = baoCaoDLVm.Id;
-                        newCtBaoCaoDL.DonGiaXuat = (double)giaBan;
-                        newCtBaoCaoDL.ThanhTien = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongBan;
-                        newCtBaoCaoDL.SoLuongCon = slMua - baoCaoDLVm.ctBaoCao.SoLuongBan;
-                        newCtBaoCaoDL.TienNo = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongCon;
+                        newCtBaoCaoDL.DonGiaXuat = giaBan;
+                        newCtBaoCaoDL.SoLuongNhap = tonTaiSachXuat.SoLuongNhap;
+                        newCtBaoCaoDL.SoLuongTonDotTruoc = tonTaiSachXuat.SoLuongTonDotTruoc;
+                        newCtBaoCaoDL.TongTienNhap = slMua * giaBan;
+
+                        newCtBaoCaoDL.SoLuongXuat = baoCaoDLVm.ctBaoCao.SoLuongXuat;
+                        newCtBaoCaoDL.TongTienXuat = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongXuat;
+                        newCtBaoCaoDL.SoLuongCon = slMua - baoCaoDLVm.ctBaoCao.SoLuongXuat;
+                        newCtBaoCaoDL.TongTienNo = newCtBaoCaoDL.DonGiaXuat * newCtBaoCaoDL.SoLuongCon;
                         newCtBaoCaoDL.Sach = Mapper.Map<Sach, SachViewModel>(sach);
 
                         var sachDaNhap = ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Find(x => x.IdSach == newCtBaoCaoDL.IdSach);
                         if (sachDaNhap == null)
                         {
                             baoCaoDLVm.ctBaoCao = null;
-                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienSachBan += newCtBaoCaoDL.ThanhTien;
-                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienConNo += newCtBaoCaoDL.TienNo;
+                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienSachBan += newCtBaoCaoDL.TongTienXuat;
+                            ((BaoCaoDLViewModel)Session["BaoCao"]).TongTienConNo += newCtBaoCaoDL.TongTienNo;
                             ((List<CtBaoCaoDLViewModel>)Session["dsCtBaoCao"]).Add(newCtBaoCaoDL);
 
                             TempData["Success"] = "Đã lưu thành công một báo cáo đại lý.";
@@ -184,18 +194,21 @@ namespace PhatHanhSach.Web.Controllers
 
             foreach (var s in dsSachChuaKhaiSL)
             {
-                var giaBan = sachService.GetById(s.Id).GiaBan;
+                var giaBan = (double)sachService.GetById(s.Id).GiaBan;
                 var ctBaoCao = new CtBaoCaoDL();
                 ctBaoCao.IdBaoCao = newBaoCao.Id;
                 ctBaoCao.IdSach = s.Id;
-                ctBaoCao.DonGiaXuat = (double)giaBan;
-                ctBaoCao.SoLuongCon = s.SoLuongTon;
-                ctBaoCao.TienNo = ctBaoCao.DonGiaXuat * ctBaoCao.SoLuongCon;
-                ctBaoCao.SoLuongBan = 0;
-                ctBaoCao.ThanhTien = 0;
+                ctBaoCao.DonGiaXuat = giaBan;
+                ctBaoCao.SoLuongNhap = s.SoLuongNhap;
+                ctBaoCao.SoLuongTonDotTruoc = s.SoLuongTonDotTruoc;
+                ctBaoCao.TongTienNhap = (s.SoLuongNhap + s.SoLuongTonDotTruoc)*giaBan;
+                ctBaoCao.SoLuongCon = s.SoLuongNhap+s.SoLuongTonDotTruoc;
+                ctBaoCao.TongTienNo = giaBan * ctBaoCao.SoLuongCon;
+                ctBaoCao.SoLuongXuat = 0;
+                ctBaoCao.TongTienXuat = 0;
 
-                newBaoCao.TongTienSachBan += (double)ctBaoCao.ThanhTien;
-                newBaoCao.TongTienConNo += (double)ctBaoCao.TienNo;
+                newBaoCao.TongTienSachBan += (double)ctBaoCao.TongTienXuat;
+                newBaoCao.TongTienConNo += (double)ctBaoCao.TongTienNo;
 
                 ctBaoCaoDLService.Add(ctBaoCao);
             }
@@ -219,8 +232,8 @@ namespace PhatHanhSach.Web.Controllers
             var ctbc = listCtBc[index];
 
             var updatedBc = (BaoCaoDLViewModel)Session["BaoCao"];
-            updatedBc.TongTienSachBan -= ctbc.ThanhTien;
-            updatedBc.TongTienConNo -= ctbc.TienNo;
+            updatedBc.TongTienSachBan -= ctbc.TongTienXuat;
+            updatedBc.TongTienConNo -= ctbc.TongTienNo;
             listCtBc.RemoveAt(index);
 
             Session["BaoCao"] = updatedBc;

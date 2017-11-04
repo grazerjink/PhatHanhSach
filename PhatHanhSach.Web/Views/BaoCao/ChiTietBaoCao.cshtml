@@ -278,9 +278,12 @@
                                         <tr>
                                             <th>STT </th>
                                             <th>Tên sách </th>
-                                            <th>Đơn giá </th>
+                                            <th>Đơn giá bán </th>
+                                            <th>Số lượng nhập </th>
+                                            <th>Số lượng tồn đợt trước </th>
+                                            <th>Tổng tiền nhập </th>
                                             <th>Số lượng bán </th>
-                                            <th>Thành tiền </th>
+                                            <th>Tổng tiền bán </th>
                                             <th>Số lượng còn </th>
                                             <th>Tiền còn nợ </th>
                                         </tr>
@@ -295,10 +298,13 @@
                                                     <td>@i</td>
                                                     <td>@ct.Sach.TenSach</td>
                                                     <td>@ct.DonGiaXuat.ToString("N0")</td>
-                                                    <td>@ct.SoLuongBan</td>
-                                                    <td>@ct.ThanhTien.ToString("N0")</td>
+                                                    <td>@ct.SoLuongNhap</td>
+                                                    <td>@ct.SoLuongTonDotTruoc</td>
+                                                    <td>@ct.TongTienNhap.ToString("N0")</td>
+                                                    <td>@ct.SoLuongXuat</td>
+                                                    <td>@ct.TongTienXuat.ToString("N0")</td>
                                                     <td>@ct.SoLuongCon</td>
-                                                    <td>@ct.TienNo.ToString("N0")</td>
+                                                    <td>@ct.TongTienNo.ToString("N0")</td>
                                                 </tr>
                                                 i++;
                                             }

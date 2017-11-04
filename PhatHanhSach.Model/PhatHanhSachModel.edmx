@@ -49,10 +49,13 @@
           <Property Name="IdBaoCao" Type="int" />
           <Property Name="IdSach" Type="int" />
           <Property Name="DonGiaXuat" Type="float" />
-          <Property Name="SoLuongBan" Type="int" />
-          <Property Name="ThanhTien" Type="float" />
+          <Property Name="SoLuongNhap" Type="int" />
+          <Property Name="SoLuongTonDotTruoc" Type="int" />
+          <Property Name="TongTienNhap" Type="float" />
+          <Property Name="SoLuongXuat" Type="int" />
+          <Property Name="TongTienXuat" Type="float" />
           <Property Name="SoLuongCon" Type="int" />
-          <Property Name="TienNo" Type="float" />
+          <Property Name="TongTienNo" Type="float" />
         </EntityType>
         <EntityType Name="CtDoanhThu">
           <Key>
@@ -600,10 +603,13 @@
           <Property Name="IdBaoCao" Type="Int32" />
           <Property Name="IdSach" Type="Int32" />
           <Property Name="DonGiaXuat" Type="Double" />
-          <Property Name="SoLuongBan" Type="Int32" />
-          <Property Name="ThanhTien" Type="Double" />
+          <Property Name="SoLuongNhap" Type="Int32" />
+          <Property Name="SoLuongTonDotTruoc" Type="Int32" />
+          <Property Name="TongTienNhap" Type="Double" />
+          <Property Name="SoLuongXuat" Type="Int32" />
+          <Property Name="TongTienXuat" Type="Double" />
           <Property Name="SoLuongCon" Type="Int32" />
-          <Property Name="TienNo" Type="Double" />
+          <Property Name="TongTienNo" Type="Double" />
           <NavigationProperty Name="BaoCaoDL" Relationship="Self.FK_CtBaoCaoDL_BaoCaoDL" FromRole="CtBaoCaoDL" ToRole="BaoCaoDL" />
           <NavigationProperty Name="Sach" Relationship="Self.FK_CtBaoCaoDL_Sach" FromRole="CtBaoCaoDL" ToRole="Sach" />
         </EntityType>
@@ -1184,10 +1190,13 @@
                 <ScalarProperty Name="IdBaoCao" ColumnName="IdBaoCao" />
                 <ScalarProperty Name="IdSach" ColumnName="IdSach" />
                 <ScalarProperty Name="DonGiaXuat" ColumnName="DonGiaXuat" />
-                <ScalarProperty Name="SoLuongBan" ColumnName="SoLuongBan" />
-                <ScalarProperty Name="ThanhTien" ColumnName="ThanhTien" />
+                <ScalarProperty Name="SoLuongNhap" ColumnName="SoLuongNhap" />
+                <ScalarProperty Name="SoLuongTonDotTruoc" ColumnName="SoLuongTonDotTruoc" />
+                <ScalarProperty Name="TongTienNhap" ColumnName="TongTienNhap" />
+                <ScalarProperty Name="SoLuongXuat" ColumnName="SoLuongXuat" />
+                <ScalarProperty Name="TongTienXuat" ColumnName="TongTienXuat" />
                 <ScalarProperty Name="SoLuongCon" ColumnName="SoLuongCon" />
-                <ScalarProperty Name="TienNo" ColumnName="TienNo" />
+                <ScalarProperty Name="TongTienNo" ColumnName="TongTienNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

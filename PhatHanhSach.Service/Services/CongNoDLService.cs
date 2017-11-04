@@ -14,7 +14,6 @@ namespace PhatHanhSach.Service
         CongNoDL Delete(CongNoDL congNoDL);
         IEnumerable<CongNoDL> GetAll();
         CongNoDL GetById(int id);
-        double GetDeptInLastMonth(int id, DateTime startDate);
         void Save();
         CongNoDL GetSingleByIdAndDate(int id, DateTime date);
     }
@@ -53,12 +52,6 @@ namespace PhatHanhSach.Service
         public CongNoDL GetById(int id)
         {
             return congNoDLRepository.GetSingleById(id);
-        }
-
-        public double GetDeptInLastMonth(int id, DateTime startDate)
-        {
-            var dept = congNoDLRepository.GetMulti(x => x.IdDaiLy == id && x.NgayCapNhat < startDate && x.TongTienThanhToan != 0).OrderByDescending(x => x.NgayCapNhat).Take(1).FirstOrDefault();
-            return dept == null ? 0 : (double)dept.TongTienConNo;
         }
 
         public void Save()

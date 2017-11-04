@@ -72,6 +72,9 @@
                                     <th>STT </th>
                                     <th>Tên sách </th>
                                     <th>Đơn giá xuất </th>
+                                    <th>Số lượng nhập </th>
+                                    <th>Số lượng tồn đợt trước </th>
+                                    <th>Tổng tiền nhập </th>
                                     <th>Số lượng xuất </th>
                                     <th>Thành tiền </th>
                                     <th>Số lượng còn </th>
@@ -88,11 +91,14 @@
                                         <tr>
                                             <td>@i</td>
                                             <td>@ct.Sach.TenSach</td>
-                                            <td>@ct.DonGiaXuat</td>
-                                            <td>@ct.SoLuongBan</td>
-                                            <td>@ct.ThanhTien</td>
+                                            <td>@ct.DonGiaXuat.ToString("N0")</td>
+                                            <td>@ct.SoLuongNhap</td>
+                                            <td>@ct.SoLuongTonDotTruoc</td>
+                                            <td>@ct.TongTienNhap.ToString("N0")</td>
+                                            <td>@ct.SoLuongXuat</td>
+                                            <td>@ct.TongTienXuat.ToString("N0")</td>
                                             <td>@ct.SoLuongCon</td>
-                                            <td>@ct.TienNo</td>
+                                            <td>@ct.TongTienNo.ToString("N0")</td>
                                             <td class="text-center"><a href="/bao-cao/dai-ly/xoa-chi-tiet-bc.@i" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>
                                         </tr>
                                         i++;
@@ -101,17 +107,17 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="11">
                                         <label class="pull-left">
                                             Đại lý: @bc.DaiLy.TenDaiLy - SĐT: @bc.DaiLy.SoDienThoai
                                         </label>
                                         <label class="pull-right">
-                                            Tổng tiền sách bán: @bc.TongTienSachBan.ToString("N0") - Còn nợ: @bc.TongTienConNo.ToString("N0") - Nợ đợt trước: @bc.TienNoThangTruoc.ToString("N0")
+                                            Tổng tiền sách bán: @bc.TongTienSachBan.ToString("N0") - Còn nợ: @bc.TongTienConNo.ToString("N0")
                                         </label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="11">
                                         <label class="pull-left">
                                             Địa chỉ: @bc.DaiLy.DiaChi
                                         </label>
@@ -145,7 +151,7 @@
                                     Số lượng đã bán <span class="required">*</span>
                                 </label>
                                 <div class="col-md-5 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(m => m.ctBaoCao.SoLuongBan, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số lượng sách xuất", @required = "", @data_validate_minmax = "1," })
+                                    @Html.TextBoxFor(m => m.ctBaoCao.SoLuongXuat, new { @class = "form-control col-md-7 col-xs-12", type = "number", placeholder = "Nhập số lượng sách xuất", @required = "", @data_validate_minmax = "1," })
                                 </div>
                             </div>
                             <div class="item form-group">

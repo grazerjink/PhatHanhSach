@@ -26,8 +26,7 @@ namespace PhatHanhSach.Data.Repositories
                 new SqlParameter("@batDau",fromDate),
                 new SqlParameter("@ketThuc",toDate)
             };
-
-            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc",parameters).ToListAsync().Result;
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("procThongKeBaoCaoDL @maDaiLy, @batDau, @ketThuc", parameters).ToListAsync().Result;
         }
 
         public List<ThongKeBaoCaoViewModel> GetListExistAtLastMonth(int id, DateTime newCreateDate)
@@ -36,8 +35,7 @@ namespace PhatHanhSach.Data.Repositories
                 new SqlParameter("@maDaiLy",id),
                 new SqlParameter("@ngayTaoMoi",newCreateDate)
             };
-
-            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("proThongKeSLConThangTruoc @maDaiLy, @ngayTaoMoi", parameters).ToListAsync().Result;
+            return DbContext.Database.SqlQuery<ThongKeBaoCaoViewModel>("proThongKeSLConThangTruocTheoDaiLy @maDaiLy, @ngayTaoMoi", parameters).ToListAsync().Result;
         }
         
     }

@@ -98,10 +98,13 @@ namespace PhatHanhSach.Web.Extensions
             ctBaoCaoDL.IdBaoCao = ctBaoCaoDLVm.IdBaoCao;
             ctBaoCaoDL.IdSach = ctBaoCaoDLVm.IdSach;
             ctBaoCaoDL.DonGiaXuat = ctBaoCaoDLVm.DonGiaXuat;
-            ctBaoCaoDL.SoLuongBan = ctBaoCaoDLVm.SoLuongBan;
+            ctBaoCaoDL.SoLuongNhap= ctBaoCaoDLVm.SoLuongNhap;
+            ctBaoCaoDL.SoLuongTonDotTruoc = ctBaoCaoDLVm.SoLuongTonDotTruoc;
+            ctBaoCaoDL.TongTienNhap = ctBaoCaoDLVm.TongTienNhap;
+            ctBaoCaoDL.SoLuongXuat = ctBaoCaoDLVm.SoLuongXuat;
             ctBaoCaoDL.SoLuongCon = ctBaoCaoDLVm.SoLuongCon;
-            ctBaoCaoDL.TienNo = ctBaoCaoDLVm.TienNo;
-            ctBaoCaoDL.ThanhTien = ctBaoCaoDLVm.ThanhTien;
+            ctBaoCaoDL.TongTienNo = ctBaoCaoDLVm.TongTienNo;
+            ctBaoCaoDL.TongTienXuat = ctBaoCaoDLVm.TongTienXuat;
         }
 
         public static void UpdateThanhToan(this ThanhToan thanhToan, ThanhToanViewModel thanhToanVm)

@@ -67,7 +67,6 @@
                                     <th>Ngày lập phiếu </th>
                                     <th>Tình trạng</th>
                                     <th>*</th>
-                                    @*<th>*</th>*@
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,10 +79,9 @@
                                         <td>@bc.TongTienSachBan.ToString("N0")</td>
                                         <td>@bc.TongTienConNo.ToString("N0")</td>
                                         <td>@bc.TongTienThanhToan.ToString("N0")</td>
-                                        <td>@bc.ThoiGianLapPhieu.ToString("dd/MM/yyyy")</td>
+                                        <td>@bc.ThoiGianLapPhieu.ToString("dd / MM / yyyy")</td>
                                         <td>@bc.TinhTrang.MoTa</td>
                                         <td class="text-center"><a href="/bao-cao/dai-ly/chi-tiet-bc.@bc.Id/" class="btn btn-xs btn-primary">Xem chi tiết</a></td>
-                                        @*<td class="text-center"><a href="/BaoCao/XoaBaoCao/@bc.MaBaoCao" class="btn btn-xs btn-danger"><i><span class="fa fa-close"></span></i></a></td>*@
                                     </tr>
                                 }
                             </tbody>

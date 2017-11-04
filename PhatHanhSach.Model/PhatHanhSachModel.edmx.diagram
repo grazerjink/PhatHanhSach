@@ -4,24 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="36d76c02894c4fec98db90c75874df92" Name="Diagram1">
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.BaoCaoDL" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CongNoDL" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CongNoNXB" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtBaoCaoDL" Width="1.5" PointX="5.25" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtDoanhThu" Width="1.5" PointX="8.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtPhieuNhap" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtPhieuXuat" Width="1.5" PointX="8.25" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtThanhToan" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.DaiLy" Width="1.5" PointX="3.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.DoanhThu" Width="1.5" PointX="6" PointY="24.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.NhaXuatBan" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.PhieuNhap" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.PhieuXuat" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.Sach" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.ThanhToan" Width="1.5" PointX="6" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.TinhTrang" Width="1.5" PointX="3.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhatHanhSachV2Model.TonKho" Width="1.5" PointX="5.25" PointY="33.375" IsExpanded="true" />
+      <Diagram DiagramId="34b1c9cff56f4ba89718d9d9007b995a" Name="Diagram1">
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.BaoCaoDL" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CongNoDL" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CongNoNXB" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtBaoCaoDL" Width="1.5" PointX="5.25" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtDoanhThu" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtPhieuNhap" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtPhieuXuat" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.CtThanhToan" Width="1.5" PointX="8.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.DaiLy" Width="1.5" PointX="3.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.DoanhThu" Width="1.5" PointX="6" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.NhaXuatBan" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.PhieuNhap" Width="1.5" PointX="3" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.PhieuXuat" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.Sach" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.ThanhToan" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.TinhTrang" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhatHanhSachV2Model.TonKho" Width="1.5" PointX="5.25" PointY="34.25" IsExpanded="true" />
         <AssociationConnector Association="PhatHanhSachV2Model.FK_BaoCaoDL_DaiLy" ManuallyRouted="false" />
         <AssociationConnector Association="PhatHanhSachV2Model.FK_BaoCaoDL_TinhTrang" ManuallyRouted="false" />
         <AssociationConnector Association="PhatHanhSachV2Model.FK_CtBaoCaoDL_BaoCaoDL" ManuallyRouted="false" />

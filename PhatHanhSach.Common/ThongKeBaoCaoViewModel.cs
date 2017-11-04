@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string TenSach { get; set; }
-        public int SoLuongMua { get; set; }
-        public double ThanhTien { get; set; }
+        public int SoLuongTon { get; set; }
+        //public double ThanhTien { get; set; }
     }
 }

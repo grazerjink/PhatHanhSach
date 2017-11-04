@@ -70,49 +70,34 @@ namespace PhatHanhSach.Service
 
         public List<ThongKeBaoCaoNXBViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate)
         {
-            var listImported = thanhToanRepository.GetListImported(id, fromDate, toDate);
-            var listExported = thanhToanRepository.GetListExported(id, fromDate, toDate);
-
-            var newMonthList = new List<ThongKeBaoCaoNXBViewModel>();
-            if (listExported.Count > 0)
+            var listImportExport = thanhToanRepository.GetListImportedAndExported(id, fromDate, toDate);
+            var oldMonthExistList = thanhToanRepository.GetListExistAtLastMonth(id, fromDate);            
+            listImportExport.ForEach(x =>
             {
-                listImported.ForEach(x =>
-                {
-                    var baoCaoNXB = new ThongKeBaoCaoNXBViewModel();
-                    baoCaoNXB.Id = x.Id;
-                    baoCaoNXB.TenSach = x.TenSach;
-                    baoCaoNXB.SoLuongNhap = x.SoLuongNhap;
-                    baoCaoNXB.DonGiaNhap = x.DonGiaNhap;
-                    baoCaoNXB.TongTienNhap = x.SoLuongNhap * x.DonGiaNhap;
-
-                    var existItem = listExported.Find(y => y.Id == x.Id);
-                    if(existItem != null)
-                    {
-                        baoCaoNXB.SoLuongXuat = existItem.SoLuongXuat;
-                        baoCaoNXB.TongTienThanhToan = existItem.TongTienXuat;
-                        baoCaoNXB.TongTienNo = x.TongTienNhap - existItem.TongTienXuat;
-                    }
-                    else
-                    {
-                        baoCaoNXB.SoLuongXuat = 0;
-                        baoCaoNXB.TongTienThanhToan = 0;
-                        baoCaoNXB.TongTienNo = x.TongTienNhap;
-                    }
-                    newMonthList.Add(baoCaoNXB);
-                });
-            }
-
-            var oldMonthExistList = thanhToanRepository.GetListExistAtLastMonth(id, fromDate);
-            if (oldMonthExistList.Count > 0)
-            {
-                newMonthList.ForEach(x =>
+                int TongSoLuong = x.SoLuongNhap;
+                if (oldMonthExistList.Count > 0)
                 {
                     var existItem = oldMonthExistList.Find(y => y.Id == x.Id);
                     if (existItem != null)
-                        x.SoLuongNhap += existItem.SoLuongMua;
-                });
-            }
-            return newMonthList;
+                    {
+                        x.SoLuongTonDotTruoc += existItem.SoLuongTon;
+                        TongSoLuong += existItem.SoLuongTon;
+                    }
+                }
+                x.TongTienNhap = TongSoLuong * x.DonGiaNhap;
+
+                if(x.TongTienXuat != null)
+                {
+                    x.TongTienNo = x.TongTienNhap - (double)x.TongTienXuat;
+                }
+                else
+                {
+                    x.TongTienNo = x.TongTienNhap;
+                }
+                
+                
+            });
+            return listImportExport;
         }
 
         public bool CheckReportIsCreated(int idNXB, DateTime currentCreateDate)

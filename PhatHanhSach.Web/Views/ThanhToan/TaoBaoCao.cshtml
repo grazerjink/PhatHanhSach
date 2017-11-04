@@ -175,6 +175,7 @@
                                                     <th>Tên sách </th>
                                                     <th>Đơn giá nhập </th>
                                                     <th>Số lượng nhập </th>
+                                                    <th>Số lượng tồn đợt trước </th>
                                                     <th>Tổng tiền nhập </th>
                                                     <th>Số lượng xuất </th>
                                                     <th>Tổng tiền sách bán </th>
@@ -184,14 +185,23 @@
                                             <tbody>
                                                 @foreach (var ct in Model.dsThongKeNXB)
                                                 {
+                                                    double TongTienXuat = 0;
+                                                    int SoLuongXuat = 0;
+                                                    if(ct.TongTienXuat != null)
+                                                    {
+                                                        SoLuongXuat = (int)ct.SoLuongXuat;
+                                                        TongTienXuat = (double)ct.TongTienXuat;
+                                                    }
+
                                                     <tr>
                                                         <td>@i</td>
                                                         <td>@ct.TenSach</td>
                                                         <td>@ct.DonGiaNhap.ToString("N0")</td>
                                                         <td>@ct.SoLuongNhap</td>
+                                                        <td>@ct.SoLuongTonDotTruoc</td>
                                                         <td>@ct.TongTienNhap.ToString("N0")</td>
-                                                        <td>@ct.SoLuongXuat</td>
-                                                        <td>@ct.TongTienThanhToan.ToString("N0")</td>
+                                                        <td>@SoLuongXuat</td>
+                                                        <td>@TongTienXuat.ToString("N0")</td>
                                                         <td>@ct.TongTienNo.ToString("N0")</td>
                                                     </tr>
                                                     i++;
@@ -199,17 +209,17 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="8">
+                                                    <td colspan="9">
                                                         <label class="pull-left">
                                                             Đại lý: @Model.NhaXuatBan.TenNXB - SĐT: @Model.NhaXuatBan.SoDienThoai
                                                         </label>
                                                         <label class="pull-right">
-                                                            Tổng tiền sách bán: @Model.TongTienSachBan.ToString("N0") - Còn nợ: @Model.TongTienConNo.ToString("N0") - Nợ đợt trước: @Model.TienNoThangTruoc.ToString("N0")
+                                                            Tổng tiền sách bán: @Model.TongTienSachBan.ToString("N0") - Còn nợ: @Model.TongTienConNo.ToString("N0")
                                                         </label>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8">
+                                                    <td colspan="9">
                                                         <label class="pull-left">
                                                             Địa chỉ: @Model.NhaXuatBan.DiaChi
                                                         </label>

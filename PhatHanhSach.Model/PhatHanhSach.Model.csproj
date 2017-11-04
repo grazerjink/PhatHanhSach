@@ -107,9 +107,6 @@
     <Compile Include="Sach.cs">
       <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ThanhToan.cs">
       <DependentUpon>PhatHanhSachModel.tt</DependentUpon>
     </Compile>

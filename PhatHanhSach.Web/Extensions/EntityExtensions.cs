@@ -124,45 +124,14 @@ namespace PhatHanhSach.Web.Extensions
             ctThanhToan.Id = ctThanhToanVm.Id;
             ctThanhToan.IdSach = ctThanhToanVm.IdSach;
             ctThanhToan.IdThanhToan = ctThanhToanVm.IdThanhToan;
+            ctThanhToan.DonGiaNhap = ctThanhToanVm.DonGiaNhap;
             ctThanhToan.SoLuongCon = ctThanhToanVm.SoLuongCon;
             ctThanhToan.SoLuongXuat = ctThanhToanVm.SoLuongXuat;
-            ctThanhToan.ThanhTien = ctThanhToanVm.ThanhTien;
+            ctThanhToan.SoLuongTonDotTruoc = ctThanhToanVm.SoLuongTonDotTruoc;
+            ctThanhToan.TongTienNhap = ctThanhToanVm.TongTienNhap;
+            ctThanhToan.TongTienXuat = ctThanhToanVm.TongTienXuat;
             ctThanhToan.DonGiaNhap = ctThanhToanVm.DonGiaNhap;
             ctThanhToan.TienNo = ctThanhToanVm.TienNo;
         }
-
-        /*       
-        public static void UpdateTonKho(this TonKho tonKho, TonKhoViewModel tonKhoVm)
-        {
-            tonKho.Id = tonKhoVm.Id;
-            tonKho.MaSach = tonKhoVm.MaSach;
-            tonKho.SoLuong = tonKhoVm.SoLuong;
-            tonKho.ThoiGian = tonKhoVm.ThoiGian;
-        }     
-
-        public static void UpdateCtDoanhThu(this CtDoanhThu ctDoanhThu, CtDoanhThuViewModel ctDoanhThuVm)
-        {
-            //// TODO:
-        }
-
-        
-
-        public static void UpdateCongNoDL(this CongNoDL congNoDL, CongNoDLViewModel congNoDLVm)
-        {
-            //// TODO:
-        }
-
-        public static void UpdateCongNoNXB(this CongNoNXB congNoNXB, CongNoNXBViewModel congNoNXBVm)
-        {
-            //// TODO:
-        }
-
-        
-
-        public static void UpdateDoanhThu(this DoanhThu doanhThu, DoanhThuViewModel doanhThuVm)
-        {
-            //// TODO:
-        }
-        */
     }
 }

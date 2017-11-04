@@ -66,7 +66,7 @@ namespace PhatHanhSach.Web.Controllers
                 else
                 {
                     pxViewModel.IdDaiLy = daiLy.Id;
-                    var soTienNo = congNoDLService.GetDeptInLastMonth(daiLy.Id, pxViewModel.ThoiGianXuat);
+                    var soTienNo = congNoDLService.GetSingleByIdAndDate(daiLy.Id, pxViewModel.ThoiGianXuat).TongTienConNo;
                     if (soTienNo > CommonConstant.NO_CHO_PHEP)
                     {
                         ModelState.AddModelError("", "Đã vượt quá số tiền cho phép nợ, không thể lập phiếu nữa.");

@@ -40,7 +40,6 @@ namespace PhatHanhSach.Model
         public virtual DbSet<PhieuNhap> PhieuNhaps { get; set; }
         public virtual DbSet<PhieuXuat> PhieuXuats { get; set; }
         public virtual DbSet<Sach> Saches { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThanhToan> ThanhToans { get; set; }
         public virtual DbSet<TinhTrang> TinhTrangs { get; set; }
         public virtual DbSet<TonKho> TonKhoes { get; set; }

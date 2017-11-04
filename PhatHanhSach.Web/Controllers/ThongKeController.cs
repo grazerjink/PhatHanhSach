@@ -153,9 +153,9 @@ namespace PhatHanhSach.Web.Controllers
                 DanhSachLoiNhuan.Add(tongThu - tongChi);
             });
 
-            var TongThu = tt.ToString("N2");
-            var TongChi = tc.ToString("N2");
-            var TongLoiNhuan = (tt - tc).ToString("N2");
+            var TongThu = tt.ToString("N0");
+            var TongChi = tc.ToString("N0");
+            var TongLoiNhuan = (tt - tc).ToString("N0");
             var jsonObj = new { TongChi, TongThu, TongLoiNhuan, DanhSachTieuDe, DanhSachThu, DanhSachChi, DanhSachLoiNhuan };        
             return Json(jsonObj);
         }

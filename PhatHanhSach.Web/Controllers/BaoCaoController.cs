@@ -118,13 +118,13 @@ namespace PhatHanhSach.Web.Controllers
                     {
                         ModelState.AddModelError("", "Không thể khai số lượng sách chưa lập phiếu.");
                     }
-                    else if (baoCaoDLVm.ctBaoCao.SoLuongBan > tonTaiSachXuat.SoLuongMua)
+                    else if (baoCaoDLVm.ctBaoCao.SoLuongBan > tonTaiSachXuat.SoLuongTon)
                     {
-                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + tonTaiSachXuat.SoLuongMua);
+                        ModelState.AddModelError("", "Số lượng bán không được lớn hơn số lượng đã mua là " + tonTaiSachXuat.SoLuongTon);
                     }
                     else
                     {
-                        var slMua = tonTaiSachXuat.SoLuongMua;
+                        var slMua = tonTaiSachXuat.SoLuongTon;
                         var giaBan = sachService.GetById(baoCaoDLVm.ctBaoCao.IdSach).GiaBan;
                         CtBaoCaoDLViewModel newCtBaoCaoDL = new CtBaoCaoDLViewModel();
                         newCtBaoCaoDL = baoCaoDLVm.ctBaoCao;
@@ -189,7 +189,7 @@ namespace PhatHanhSach.Web.Controllers
                 ctBaoCao.IdBaoCao = newBaoCao.Id;
                 ctBaoCao.IdSach = s.Id;
                 ctBaoCao.DonGiaXuat = (double)giaBan;
-                ctBaoCao.SoLuongCon = s.SoLuongMua;
+                ctBaoCao.SoLuongCon = s.SoLuongTon;
                 ctBaoCao.TienNo = ctBaoCao.DonGiaXuat * ctBaoCao.SoLuongCon;
                 ctBaoCao.SoLuongBan = 0;
                 ctBaoCao.ThanhTien = 0;

@@ -99,7 +99,7 @@ namespace PhatHanhSach.Service
                 {
                     var existItem = oldMonthExistList.Find(y => y.Id == x.Id);
                     if (existItem != null)
-                        x.SoLuongMua += existItem.SoLuongMua;
+                        x.SoLuongTon += existItem.SoLuongTon;
                 });
             }
 

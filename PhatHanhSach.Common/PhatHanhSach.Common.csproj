@@ -46,8 +46,6 @@
     <Compile Include="ThongKeBaoCaoNXBViewModel.cs" />
     <Compile Include="ThongKeDoanhThuViewModel.cs" />
     <Compile Include="ThongKeBaoCaoViewModel.cs" />
-    <Compile Include="ThongKeSachXuatViewModel.cs" />
-    <Compile Include="ThongKeSachNhapViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

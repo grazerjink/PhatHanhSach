@@ -18,8 +18,11 @@ namespace PhatHanhSach.Model
         public Nullable<int> IdThanhToan { get; set; }
         public Nullable<int> IdSach { get; set; }
         public Nullable<double> DonGiaNhap { get; set; }
+        public Nullable<int> SoLuongNhap { get; set; }
+        public Nullable<int> SoLuongTonDotTruoc { get; set; }
+        public Nullable<double> TongTienNhap { get; set; }
         public Nullable<int> SoLuongXuat { get; set; }
-        public Nullable<double> ThanhTien { get; set; }
+        public Nullable<double> TongTienXuat { get; set; }
         public Nullable<int> SoLuongCon { get; set; }
         public Nullable<double> TienNo { get; set; }
     

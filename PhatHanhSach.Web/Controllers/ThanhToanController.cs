@@ -85,12 +85,12 @@ namespace PhatHanhSach.Web.Controllers
                             Session["ThanhToan"] = null;
                             // Add new value for session
                             thanhToanVm.NhaXuatBan = Mapper.Map<NhaXuatBan, NhaXuatBanViewModel>(nxb);
-                            thanhToanVm.TienNoThangTruoc = congNoNXBService.GetDeptInLastMonth(nxb.Id, thanhToanVm.NgayBatDau);
                             thanhToanVm.dsThongKeNXB = listThongKe;
                             foreach (var ct in listThongKe)
                             {
                                 thanhToanVm.TongTienConNo += ct.TongTienNo;
-                                thanhToanVm.TongTienSachBan += ct.TongTienThanhToan;
+                                if(ct.TongTienXuat != null)
+                                    thanhToanVm.TongTienSachBan += (double)ct.TongTienXuat;
                             }
                             Session["ThanhToan"] = thanhToanVm;
                         }
@@ -114,9 +114,12 @@ namespace PhatHanhSach.Web.Controllers
                     {
                         IdSach = ct.Id,
                         IdThanhToan = newThanhToan.Id,
-                        SoLuongCon = ct.SoLuongNhap - ct.SoLuongXuat,
+                        SoLuongNhap = ct.SoLuongNhap,
+                        SoLuongTonDotTruoc = ct.SoLuongTonDotTruoc,
+                        TongTienNhap = ct.TongTienNhap,
                         SoLuongXuat = ct.SoLuongXuat,
-                        ThanhTien = ct.TongTienThanhToan,
+                        TongTienXuat = ct.TongTienXuat,
+                        SoLuongCon = ct.SoLuongNhap + ct.SoLuongTonDotTruoc - ct.SoLuongXuat,
                         TienNo = ct.TongTienNo,
                         DonGiaNhap = ct.DonGiaNhap
                     };

@@ -19,6 +19,7 @@ namespace PhatHanhSach.Web.Controllers
         ICtThanhToanService ctThanhToanService;
         ITinhTrangService tinhTrangService;
         ICongNoNXBService congNoNXBService;
+        IPhieuNhapService phieuNhapService;
 
         public ThanhToanController(
                IThanhToanService thanhToanService,
@@ -26,7 +27,8 @@ namespace PhatHanhSach.Web.Controllers
                INhaXuatBanService nxbService,
                ICtThanhToanService ctThanhToanService,
                ITinhTrangService tinhTrangService,
-               ICongNoNXBService congNoNXBService)
+               ICongNoNXBService congNoNXBService,
+               IPhieuNhapService phieuNhapService)
         {
             this.thanhToanService = thanhToanService;
             this.sachService = sachService;
@@ -34,6 +36,7 @@ namespace PhatHanhSach.Web.Controllers
             this.ctThanhToanService = ctThanhToanService;
             this.tinhTrangService = tinhTrangService;
             this.congNoNXBService = congNoNXBService;
+            this.phieuNhapService = phieuNhapService;
         }
 
         [Route("")]
@@ -69,6 +72,36 @@ namespace PhatHanhSach.Web.Controllers
                     else
                     {
                         thanhToanVm.IdNXB = nxb.Id;
+                        var ngayBatDau = thanhToanService.GetStartDateToCreateReport(nxb.Id);
+                        if (ngayBatDau != null)
+                        {
+                            if (ngayBatDau <= thanhToanVm.NgayKetThuc)
+                                thanhToanVm.NgayBatDau = ngayBatDau.Value;
+                            else
+                            {
+                                ModelState.AddModelError("", "Thời gian báo cáo không hợp lệ.");
+                                return View(thanhToanVm);
+                            }
+                        }
+                        else
+                        {
+                            var ngayBatDauTaoPhieuXuat = phieuNhapService.GetFirstDateToCreateReport(nxb.Id).Value;
+                            if (ngayBatDauTaoPhieuXuat != null)
+                            {
+                                if (ngayBatDauTaoPhieuXuat <= thanhToanVm.NgayKetThuc)
+                                    thanhToanVm.NgayBatDau = ngayBatDauTaoPhieuXuat;
+                                else
+                                {
+                                    ModelState.AddModelError("", "Thời gian báo cáo không hợp lệ.");
+                                    return View(thanhToanVm);
+                                }
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Chưa nhập sách từ NXB này, không thể lập báo cáo.");
+                                return View(thanhToanVm);
+                            }
+                        }
 
                         var listThongKe = thanhToanService.GetListAnalysisReport(thanhToanVm.IdNXB, thanhToanVm.NgayBatDau, thanhToanVm.NgayKetThuc);
                         if (listThongKe.Count == 0)

@@ -3,6 +3,7 @@ using PhatHanhSach.Data.Repositories;
 using PhatHanhSach.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PhatHanhSach.Service
 {
@@ -21,6 +22,8 @@ namespace PhatHanhSach.Service
         IEnumerable<PhieuXuat> GetAllByRangeDate(DateTime startDate, DateTime endDate);
 
         void Save();
+
+        DateTime? GetFirstDateToCreateReport(int id);
     }
 
     public class PhieuXuatService : IPhieuXuatService
@@ -70,6 +73,15 @@ namespace PhatHanhSach.Service
         public void Save()
         {
             unitOfWork.Commit();
+        }
+
+        public DateTime? GetFirstDateToCreateReport(int id)
+        {
+            var phieuXuatOldest =  phieuXuatRepository.GetMulti(x => x.IdDaiLy == id).OrderBy(x => x.ThoiGianXuat).FirstOrDefault();
+            if (phieuXuatOldest != null)
+                return phieuXuatOldest.ThoiGianXuat.Value;
+            else
+                return null;
         }
     }
 }

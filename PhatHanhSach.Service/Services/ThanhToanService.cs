@@ -24,6 +24,8 @@ namespace PhatHanhSach.Service
 
         void Save();
 
+        DateTime? GetStartDateToCreateReport(int id);
+
         bool CheckReportIsCreated(int idNXB, DateTime currentCreateDate);
     }
 
@@ -105,6 +107,15 @@ namespace PhatHanhSach.Service
             var dsBaoCaoDaTao = thanhToanRepository.GetMulti(x => x.NgayKetThuc >= currentCreateDate && x.IdNXB == idNXB && (x.IdTinhTrang == 1 || x.IdTinhTrang == 2)).ToList();
             if (dsBaoCaoDaTao.Count != 0) return true; // Report has created before.
             return false;
+        }
+
+        public DateTime? GetStartDateToCreateReport(int id)
+        {
+            var baoCao = thanhToanRepository.GetMulti(x => x.IdNXB == id).OrderByDescending(x => x.NgayKetThuc).FirstOrDefault();
+            if (baoCao != null)
+                return baoCao.NgayKetThuc.Value.AddDays(1);
+            else
+                return null;
         }
     }
 }

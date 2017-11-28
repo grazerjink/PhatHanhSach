@@ -24,6 +24,8 @@ namespace PhatHanhSach.Service
 
         List<ThongKeBaoCaoDaiLyViewModel> GetListAnalysisReport(int id, DateTime fromDate, DateTime toDate);
 
+        DateTime? GetStartDateToCreateReport(int id);
+
         bool CheckReportIsCreated(int idDaiLy, DateTime currentCreateDate);
 
         void Save();
@@ -112,6 +114,15 @@ namespace PhatHanhSach.Service
             });
 
             return listThongKe;
+        }
+
+        public DateTime? GetStartDateToCreateReport(int id)
+        {
+            var baoCao = baoCaoDLRepository.GetMulti(x => x.IdDaiLy == id).OrderByDescending(x => x.NgayKetThuc).FirstOrDefault();
+            if (baoCao != null)
+                return baoCao.NgayKetThuc.Value.AddDays(1);
+            else
+                return null;
         }
     }
 }

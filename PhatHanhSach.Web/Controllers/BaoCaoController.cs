@@ -19,6 +19,7 @@ namespace PhatHanhSach.Web.Controllers
         private ICtBaoCaoDLService ctBaoCaoDLService;
         private ITinhTrangService tinhTrangService;
         private ICongNoDLService congNoDLService;
+        private IPhieuXuatService phieuXuatService;
 
         public BaoCaoController(
             IBaoCaoDLService baoCaoDLService,
@@ -26,7 +27,8 @@ namespace PhatHanhSach.Web.Controllers
             IDaiLyService daiLyService,
             ICtBaoCaoDLService ctBaoCaoDLService,
             ITinhTrangService tinhTrangService,
-            ICongNoDLService congNoDLService)
+            ICongNoDLService congNoDLService,
+            IPhieuXuatService phieuXuatService)
         {
             this.baoCaoDLService = baoCaoDLService;
             this.sachService = sachService;
@@ -34,6 +36,7 @@ namespace PhatHanhSach.Web.Controllers
             this.ctBaoCaoDLService = ctBaoCaoDLService;
             this.tinhTrangService = tinhTrangService;
             this.congNoDLService = congNoDLService;
+            this.phieuXuatService = phieuXuatService;
         }
 
         [Route("")]
@@ -67,14 +70,45 @@ namespace PhatHanhSach.Web.Controllers
                 else
                 {
                     baoCaoDLVm.IdDaiLy = daiLy.Id;
-                    var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
-                    if (dsSachDaMua == null || dsSachDaMua.Count == 0)
+                    var ngayBatDau = baoCaoDLService.GetStartDateToCreateReport(daiLy.Id);
+                    if (ngayBatDau != null)
                     {
-                        ModelState.AddModelError("", "Đại lý chưa có nhập sách vào khoảng thời gian này.");
+                        if(ngayBatDau <= baoCaoDLVm.NgayKetThuc)
+                            baoCaoDLVm.NgayBatDau = ngayBatDau.Value;                        
+                        else
+                        {
+                            ModelState.AddModelError("", "Thời gian báo cáo không hợp lệ.");
+                            return View(baoCaoDLVm);
+                        }
                     }
-                    else if (baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau))
+                    else
+                    {
+                        var ngayBatDauTaoPhieuXuat = phieuXuatService.GetFirstDateToCreateReport(daiLy.Id).Value;
+                        if (ngayBatDauTaoPhieuXuat != null)
+                        {
+                            if(ngayBatDauTaoPhieuXuat <= baoCaoDLVm.NgayKetThuc) 
+                                baoCaoDLVm.NgayBatDau = ngayBatDauTaoPhieuXuat;
+                            else
+                            {
+                                ModelState.AddModelError("", "Thời gian báo cáo không hợp lệ.");
+                                return View(baoCaoDLVm);
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Chưa xuất sách cho đại lý này, không thể lập báo cáo.");
+                            return View(baoCaoDLVm);
+                        }
+                    }
+
+                    var dsSachDaMua = baoCaoDLService.GetListAnalysisReport(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayBatDau, baoCaoDLVm.NgayKetThuc);
+                    if (baoCaoDLService.CheckReportIsCreated(baoCaoDLVm.IdDaiLy, baoCaoDLVm.NgayKetThuc))
                     {
                         ModelState.AddModelError("", "Khoảng thời gian đã được lập báo cáo rồi.");
+                    }
+                    else if (dsSachDaMua == null || dsSachDaMua.Count == 0)
+                    {
+                        ModelState.AddModelError("", "Đại lý chưa có nhập sách vào khoảng thời gian này.");
                     }
                     else
                     {
@@ -85,7 +119,6 @@ namespace PhatHanhSach.Web.Controllers
                     }
                 }
             }
-
             return View(baoCaoDLVm);
         }
 
@@ -120,7 +153,7 @@ namespace PhatHanhSach.Web.Controllers
                         // Sách khai không có trong danh sách phiếu xuất của đại lý
                         ModelState.AddModelError("", "Không thể khai số lượng sách chưa lập phiếu.");
                     }
-                    else if (baoCaoDLVm.ctBaoCao.SoLuongXuat > (tonTaiSachXuat.SoLuongNhap+tonTaiSachXuat.SoLuongTonDotTruoc))
+                    else if (baoCaoDLVm.ctBaoCao.SoLuongXuat > (tonTaiSachXuat.SoLuongNhap + tonTaiSachXuat.SoLuongTonDotTruoc))
                     {
                         // Nếu có mà khai số lượng ảo sẽ cảnh báo
                         ModelState.AddModelError("", "Số lượng bán không thể lớn hơn số lượng đã mua là: " + (tonTaiSachXuat.SoLuongNhap + tonTaiSachXuat.SoLuongTonDotTruoc));
@@ -165,7 +198,7 @@ namespace PhatHanhSach.Web.Controllers
             }
             return View(baoCaoDLVm);
         }
-        
+
         [HttpPost]
         public ActionResult ThemMoiBaoCao()
         {
@@ -201,8 +234,8 @@ namespace PhatHanhSach.Web.Controllers
                 ctBaoCao.DonGiaXuat = giaBan;
                 ctBaoCao.SoLuongNhap = s.SoLuongNhap;
                 ctBaoCao.SoLuongTonDotTruoc = s.SoLuongTonDotTruoc;
-                ctBaoCao.TongTienNhap = (s.SoLuongNhap + s.SoLuongTonDotTruoc)*giaBan;
-                ctBaoCao.SoLuongCon = s.SoLuongNhap+s.SoLuongTonDotTruoc;
+                ctBaoCao.TongTienNhap = (s.SoLuongNhap + s.SoLuongTonDotTruoc) * giaBan;
+                ctBaoCao.SoLuongCon = s.SoLuongNhap + s.SoLuongTonDotTruoc;
                 ctBaoCao.TongTienNo = giaBan * ctBaoCao.SoLuongCon;
                 ctBaoCao.SoLuongXuat = 0;
                 ctBaoCao.TongTienXuat = 0;
@@ -220,7 +253,7 @@ namespace PhatHanhSach.Web.Controllers
             Session.RemoveAll();
 
             TempData["Success"] = "Đã thêm mới một báo cáo đại lý.";
-            return Redirect("/bao-cao/dai-ly/");           
+            return Redirect("/bao-cao/dai-ly/");
         }
 
         [Route("xoa-chi-tiet-bc.{id}")]
@@ -281,7 +314,7 @@ namespace PhatHanhSach.Web.Controllers
                 {
                     TempData["Error"] = "Không thể cập nhật khi báo cáo đã thanh toán.";
                 }
-                else if(tinhTrangBanDau == CommonConstant.DA_HUY)
+                else if (tinhTrangBanDau == CommonConstant.DA_HUY)
                 {
                     TempData["Error"] = "Không thể cập nhật khi báo cáo đã hủy.";
                 }

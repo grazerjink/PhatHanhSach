@@ -45,20 +45,10 @@
             allowInputToggle: true
         });
 
-        $('#myStartDate').datetimepicker({
-            format: 'DD / MM / YYYY',
-            ignoreReadonly: true,
-            allowInputToggle: true
-        });
-
         $('#myEndDate').datetimepicker({
             format: 'DD / MM / YYYY',
             ignoreReadonly: true,
             allowInputToggle: true            
-        });
-
-        $("#myStartDate").on("dp.change", function (e) {
-            $('#myEndDate').data("DateTimePicker").minDate(e.date);
         });
     </script>
 }
@@ -115,29 +105,17 @@
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Thời gian bắt đầu - kết thúc <span class="required">*</span>
+                                    Thời gian báo cáo <span class="required">*</span>
                                 </label>
                                 <div class="control-group col-md-5 col-sm-6 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class='input-group date' id="myStartDate">
-                                                @Html.TextBoxFor(m => m.NgayBatDau, new { @class = "form-control", placeholder = "Nhấp chọn thời gian bắt đầu...", @required = "" })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class='input-group date' id="myEndDate">
-                                                @Html.TextBoxFor(m => m.NgayKetThuc, new { @class = "form-control", placeholder = "Nhấp chọn thời gian kết thúc...", @required = "" })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class='input-group date' id="myEndDate">
+                                        @Html.TextBoxFor(m => m.NgayKetThuc, new { @class = "form-control", placeholder = "Nhấp chọn thời điểm kết thúc của báo cáo...", @required = "" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                           
                             <div class="item form-group">
                                 <div class="col-md-5 col-sm-6 col-xs-12 col-lg-offset-3">
                                     @Html.ValidationSummary(false, "", new { @class = "error" })
